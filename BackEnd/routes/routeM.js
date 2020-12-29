@@ -73,7 +73,7 @@ router.get(
   controllerMaterial.confirmarMaterialUsado
 );
 router.put(
-  "/materials/:id_material/withdraw",
+  "/materials/:id_ocorrencia/:id_material/withdraw",
   controllerMaterial.confirmarLevantamento
 );
 

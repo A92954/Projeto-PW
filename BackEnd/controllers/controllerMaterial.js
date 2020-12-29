@@ -9,7 +9,7 @@ function read(req, res) {
   );
 }
 
-function confirmarLevantamento(req, res) {
+/*function confirmarLevantamento(req, res) {
   const id_material = req.params.id_material;
   let quantidade_saida = req.body.quantidade_saida;
   quantidade_saida = parseInt(quantidade_saida, 10);
@@ -32,15 +32,23 @@ function confirmarLevantamento(req, res) {
       );
     }
   );
+}*/
+
+function confirmarLevantamento(req, res) {
+  const id_ocorrencia = req.params.id_ocorrencia;
+  const id_material = req.params.id_material;
+  update = [id_ocorrencia, id_material];
+  const query = connect.con.query('UPDATE ocorrencia_material SET confirmado_material = 1 WHERE id_ocorrencia = ? and id_material = ?', update, 
+    function(err, rows, fields) {
+      res.send("O material " +id_material+ " foi levantado para a " +id_ocorrencia);
+    })
 }
 
 function confirmarMaterialUsado(req, res) {
   const id_material = req.params.id_material;
-  let quantidade_usada = req.body.quantidade_usada;
-  quantidade_usada = parseInt(quantidade_usada, 10);
   const query = connect.con.query(
     "SELECT m.nome_material, om.quantidade_usada FROM ocorrencia_material om, material m WHERE id_material = ? and om.id_material = m.id_material",
-    [id_material, quantidade_usada],
+    id_material,
     function (err, rows, fields) {
       res.send("Material confirmado");
     }
