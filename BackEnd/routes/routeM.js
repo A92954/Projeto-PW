@@ -52,6 +52,7 @@ router.put(
   "/occurrences/:id_ocorrencia/duration",
   controllerOcorrencia.duracaoOcorrencia
 );
+
 //Operacional
 
 router.get("/agents", controllerOperacional.read);

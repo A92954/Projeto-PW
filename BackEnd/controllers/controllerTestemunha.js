@@ -30,12 +30,10 @@ function registo(req, res) {
   const query2 =
     "SELECT id_testemunha FROM testemunha WHERE nome_testemunha = ? and email_testemunha = ?";
   connect.con.query(query2, post, function (err, rows, fields) {
-    console.log(query3);
     if (err) {
       console.log(err);
     } else {
       id_testemunha = rows[0].id_testemunha;
-      console.log(id_testemunha);
       const post2 = [id_ocorrencia, id_testemunha];
       const query3 = connect.con.query(
         "INSERT INTO depoimento SET id_ocorrencia = ?, id_testemunha = ?",

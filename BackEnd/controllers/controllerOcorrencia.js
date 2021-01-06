@@ -138,7 +138,7 @@ function duracaoOcorrencia(req, res) {
   );
 }
 
-function readGrafico(req, res) {
+/*function readGrafico(req, res) {
   const data_ocorrencia;
   let query = "SELECT id_ocorrencia, [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12] FROM (SELECT DATEPART(m, data_ocorrencia) TheMonth, id_ocorrencia FROM ocorrencia WHERE data_ocorrencia >= '20200101' AND data_ocorrencia <= '20201231') as src PIVOT (COUNT(TheMonth) FOR TheMonth IN ([1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12])) as pvt')";
   connect.con.query(query, function(err, rows, fields){
@@ -152,7 +152,7 @@ function readGrafico(req, res) {
     } else
     console.log('Error while performing Query.', err);
   }); 
-}
+}*/
 
 /*Select *
   From (Select UserName, DateName(Month, DateColumn) As Month_Name, Count(*) As Month_Count
@@ -170,5 +170,5 @@ module.exports = {
   confirmarPartidaOcorrencia: confirmarPartidaOcorrencia,
   creditoEquipa: creditoEquipa,
   duracaoOcorrencia: duracaoOcorrencia,
-  readGrafico: readGrafico
+  //readGrafico: readGrafico
 };
