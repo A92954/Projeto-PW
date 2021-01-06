@@ -138,6 +138,30 @@ function duracaoOcorrencia(req, res) {
   );
 }
 
+function readGrafico(req, res) {
+  const data_ocorrencia;
+  let query = "SELECT id_ocorrencia, [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12] FROM (SELECT DATEPART(m, data_ocorrencia) TheMonth, id_ocorrencia FROM ocorrencia WHERE data_ocorrencia >= '20200101' AND data_ocorrencia <= '20201231') as src PIVOT (COUNT(TheMonth) FOR TheMonth IN ([1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12])) as pvt')";
+  connect.con.query(query, function(err, rows, fields){
+    if (!err) {
+      //verifica os resultados se o número de linhas for 0 devolve dados não encontrados, caso contrário envia os resultados (rows).
+      if (rows.length == 0) {
+          res.status(404).send("Data not found");
+      } else {
+      res.status(200).send(rows);
+      }
+    } else
+    console.log('Error while performing Query.', err);
+  }); 
+}
+
+/*Select *
+  From (Select UserName, DateName(Month, DateColumn) As Month_Name, Count(*) As Month_Count
+          From TestPivot
+         Group By UserName, DateName(Month, DateColumn)) As SourcePart
+  Pivot (Sum(Month_Count)
+         For Month_Name In (January, February, March, April, May, June, 
+                            July, August, September, October, November, December)) As PivotPart*/
+
 module.exports = {
   read: read,
   readOcorrenciaX: readOcorrenciaX,
@@ -146,4 +170,5 @@ module.exports = {
   confirmarPartidaOcorrencia: confirmarPartidaOcorrencia,
   creditoEquipa: creditoEquipa,
   duracaoOcorrencia: duracaoOcorrencia,
+  readGrafico: readGrafico
 };
