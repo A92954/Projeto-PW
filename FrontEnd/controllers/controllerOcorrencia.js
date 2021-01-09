@@ -31,7 +31,7 @@ function validator() {
 }
 //REFRESH DA TABELA
 function verHistOcorrencias() {
-  fetch("http://127.0.0.1:8080/occurrences/finished", {
+  fetch("http://127.0.0.1:3000/occurrences/finished", {
     headers: { "Content-Type": "application/json" },
     method: "GET",
   })
