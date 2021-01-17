@@ -20,11 +20,15 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-  $("#tabela-geral-das-equipas").DataTable();
+  $("#tabela-equipa-oco-atual").DataTable();
+});
+
+$(document).ready(function () {
+  $("#tabela-equipa-oco-decorrer").DataTable();
 });
 
 $(
-  "#tabela-historico-ocorrencias , #tabela-geral-das-equipas , #tabela-ranking-equipa , #tabela-ranking-operacionais , #tabela-testemunhas "
+  "#tabela-historico-ocorrencias , #tabela-ranking-equipa , #tabela-ranking-operacionais , #tabela-testemunhas , #tabela-equipa-oco-atual , #tabela-equipa-oco-decorrer"
 ).DataTable({
   language: {
     sprocessing: "Tratamento em curso...",
