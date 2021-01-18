@@ -10,9 +10,9 @@ async function readRankOp() {
   })
     .then((res) => res.json())
     .then((out) => {
-      $("#tabela-ranking-operacionais").empty();
+      $("#tabela-ranking-operacionais tbody").empty();
       $.each(out, function (index, valor) {
-        $("#tabela-ranking-operacionais").append(
+        $("#tabela-ranking-operacionais tbody").append(
           "<tr>" +
             "<td>" +
             valor.Ranking_operacionais +
@@ -39,9 +39,9 @@ async function readRankEq() {
   })
     .then((res) => res.json())
     .then((out) => {
-      $("#tabela-ranking-equipa").empty();
+      $("#tabela-ranking-equipa tbody").empty();
       $.each(out, function (index, valor) {
-        $("#tabela-ranking-equipa").append(
+        $("#tabela-ranking-equipa tbody").append(
           "<tr>" +
             "<td>" +
             valor.Ranking_equipa +
