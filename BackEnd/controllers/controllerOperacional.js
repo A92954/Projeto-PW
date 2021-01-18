@@ -59,8 +59,14 @@ function readOcorrenciasOperacional(req, res) {
 
 function readRankingOperacional(req, res) {
   const pontos_gamificacao = req.body.pontos_gamificacao;
-  const query = connect.con.query(
-    "SELECT id_operacional, pontos_gamificacao, DENSE_RANK() OVER  (ORDER BY pontos_gamificacao DESC) AS Ranking_operacionais FROM operacional",
+  /*const query = connect.con.query(
+    "SELECT ca.descricao_cargo  FROM cargo ca, operacional op WHERE ca.id_cargo = op.id_cargo",
+    function(err, rows,fields) {
+      res.send(rows)
+    }
+  )*/
+  const query2 = connect.con.query(
+    "SELECT username, pontos_gamificacao,id_cargo, DENSE_RANK() OVER  (ORDER BY pontos_gamificacao DESC) AS Ranking_operacionais FROM operacional",
     pontos_gamificacao,
     function (err, rows, fields) {
       res.send(rows);
