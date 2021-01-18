@@ -44,7 +44,7 @@ function listUsers() {
             value.id_equipa,
             value.descricao_urgencia,
             value.data_ocorrencia,
-            value.id_ocorrencia,
+            value.creditos_ocorrencia,
           ])
           .draw();
       });
