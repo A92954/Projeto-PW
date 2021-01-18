@@ -8,6 +8,10 @@ function read(req, res) {
     }
   );
 }
+/*
+function readUtilizadorX(req, res){
+  let sql = "SELECT username, name, email FROM utilizador"
+}*/
 
 function updateUtilizador(req, res) {
   const username = req.params.username;
