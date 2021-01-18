@@ -74,12 +74,12 @@ function readRankingOperacional(req, res) {
     }
   )*/
   const query2 = connect.con.query(
-    "SELECT username, pontos_gamificacao,id_cargo, DENSE_RANK() OVER  (ORDER BY pontos_gamificacao DESC) AS Ranking_operacionais FROM operacional",
+    "SELECT op.username, op.pontos_gamificacao, c.descricao_cargo, DENSE_RANK() OVER  (ORDER BY pontos_gamificacao DESC) AS Ranking_operacionais FROM operacional op, cargo c WHERE op.id_cargo=c.id_cargo",
     pontos_gamificacao,
     function (err, rows, fields) {
       res.send(rows);
     }
-  );
+  );  
 }
 
 function readOcorrenciaAtual(req, res) {

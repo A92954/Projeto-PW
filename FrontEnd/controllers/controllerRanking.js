@@ -10,7 +10,7 @@ function readRankOp() {
             value.Ranking_operacionais,
             value.pontos_gamificacao,
             value.username,
-            value.id_cargo,
+            value.descricao_cargo,
           ])
           .draw();
       });
