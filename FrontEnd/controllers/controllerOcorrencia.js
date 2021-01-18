@@ -53,6 +53,9 @@ function verHistOcorrencias() {
             "<td>" +
             valor.descricao_urgencia +
             "</td>" +
+            "<td>" +
+            valor.data_ocorrencia +
+            "</td>" +
             "</tr>"
         );
       });
