@@ -93,16 +93,22 @@ function confirmarPartidaOcorrencia(req, res) {
 function creditoEquipa(req, res) {
   const id_ocorrencia = req.params.id_ocorrencia;
   let id_equipa;
-  let creditos_equipa = req.body.creditos_equipa;
-  creditos_equipa = parseInt(creditos_equipa, 10);
   let id_estado;
+  let duracao_ocorrencia;
+  let id_nivel;
+  let creditos_equipa;
   const query = connect.con.query(
-    "SELECT id_estado, id_equipa FROM ocorrencia WHERE id_ocorrencia = ?",
+    "SELECT id_estado, id_equipa, duracao_ocorrencia, id_nivel FROM ocorrencia WHERE id_ocorrencia = ?",
     id_ocorrencia,
     function (err, rows, fields) {
-      id_estado = rows[0].id_estado;
       if (id_estado == 2) {
+        id_estado = rows[0].id_estado;
+        duracao_ocorrencia = rows[0].duracao_ocorrencia;
+        id_nivel = rows[0].id_nivel;
         id_equipa = rows[0].id_equipa;
+        if (id_nivel == 5) {
+
+        }
         const update = [creditos_equipa, id_equipa];
         const secondquery = connect.con.query(
           "UPDATE equipa SET creditos_equipa = ? WHERE id_equipa = ?",

@@ -43,6 +43,14 @@ function readOcorrenciasOperacional(req, res) {
   );
 }
 
+function readCreditosOperacional(req, res) {
+  const id_operacional = req.params.id_operacional;
+  const query = connect.con.query('SELECT op.id_operacional, eq.id_equipa, eq.creditos_equipa FROM equipa eq, operacional op WHERE op.id_operacional = ? and eq.id_equipa = op.id_equipa', id_operacional,
+    function(err, rows, fields) {
+
+    });
+}
+
 /*function readRankingOperacional(req, res) {
     const query = connect.con.query('SELECT pontos_gamificacao DENSE_RANK() OVER (ORDER BY pontos_gamificacao) Rank FROM operacional',
         function(err, rows, fields) {
