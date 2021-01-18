@@ -21,41 +21,21 @@ function readEquipaOcorrencia(req, res) {
 }
 
 function confirmarEquipa(req, res) {
-  const id_operacional = req.params.id_operacional;
-  let disponibilidade_operacional;
-  let id_equipa;
-  let disponibilidade_equipa;
-  const query = connect.con.query(
-    "SELECT disponibilidade_operacional, id_equipa FROM operacional WHERE id_operacional = ?",
-    id_operacional,
+  const id_equipa = req.params.id_equipa;
+  let disponibilidade;
+  const query = connect.con.query("SELECT disponibilidade FROM equipa WHERE id_equipa = ?", id_equipa,
     function (err, rows, fields) {
-      disponibilidade_operacional = rows[0].disponibilidade_operacional;
-      id_equipa = rows[0].id_equipa;
-      if (disponibilidade_operacional == "indisponivel") {
-        const secondquery = connect.con.query(
-          "SELECT disponibilidade_equipa FROM equipa WHERE id_equipa = ?",
-          id_equipa,
+      disponibilidade = rows[0].disponibilidade;
+      if (disponibilidade == "Disponivel") {
+        const update = id_equipa;
+        const secondquery = connect.con.query('UPDATE equipa SET disponibilidade = "Indisponivel" WHERE id_equipa = ?', update, 
           function (err, rows, fields) {
-            disponibilidade_equipa = rows[0].disponibilidade_equipa;
-            if (disponibilidade_equipa == "disponivel") {
-              const update = id_equipa;
-              const thirdquery = connect.con.query(
-                'UPDATE equipa SET disponibilidade_equipa = "indisponivel" WHERE id_equipa = ?',
-                update,
-                function (err, rows, fields) {
-                  res.send("A equipa esta confirmada");
-                }
-              );
-            } else {
-              res.send("A equipa continua indisponivel para ir a terreno");
-            }
-          }
-        );
+            res.send("A equipa esta confirmada");
+          });
       } else {
-        res.send("O operacional nao se encontra numa equipa");
+        res.send("A equipa continua indisponivel para ir a terreno");
       }
-    }
-  );
+    });
 }
 
 /*function creditoEquipa(req, res) {

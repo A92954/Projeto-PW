@@ -20,7 +20,7 @@ router.put("/users/:username", controllerUtilizador.update);
 
 router.get("/teams", controllerEquipa.read);
 router.get("/teams/:creditos_equipa/ranking", controllerEquipa.readRankingEquipa);
-router.put("/teams/:id_operacional/check_team", controllerEquipa.confirmarEquipa);
+router.put("/teams/:id_equipa/check_team", controllerEquipa.confirmarEquipa);
 
 //Ocorrencia
 
