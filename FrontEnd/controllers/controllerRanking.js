@@ -1,9 +1,4 @@
-window.onload = async function () {
-  readRankEq();
-  readRankOp();
-};
-
-async function readRankOp() {
+function readRankOp() {
   let table = $("#tabela-ranking-operacionais").DataTable();
 
   fetch("http://127.0.0.1:3000/agents/:pontos_gamificacao/ranking")

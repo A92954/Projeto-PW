@@ -1,7 +1,6 @@
 //quando inicia a página faz
 window.onload = function () {
   //chama a função para atualizar a lista de pedidos
-  verHistOcorrencias();
   //adicionar função de validação ao formulário
   /*  validator();
     document.getElementById("formNewPedidoAjuda").onsubmit = function (e) {
