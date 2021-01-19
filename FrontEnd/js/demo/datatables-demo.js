@@ -54,11 +54,16 @@ $(
   },
 });
 
-$("#tabela-historico-ocorrencias").on("click", "td", function () {
-  var name = $("td", this).eq(1).text();
-  $("#historico-popup").modal("show");
+$(document).ready(function () {
+  $("#tabela-historico-ocorrencias").DataTable();
+  $("#tabela-historico-ocorrencias").on("click", "tr", function () {
+    $("#historico-popup").modal("show");
+    var id_ocorr = $("td", this).eq(0).text(); //eq(2) increase the value inside eq() will display the txt column wise.
+    $("#id_ocorr_selec").text(id_ocorr);
+    var credito_equipa = $("td", this).eq(5).text();
+    $("#credito_ocorr").text(credito_equipa);
+  });
 });
-
 $("#tabela-historico-ocorrencias").on("keyup", function () {
   tableInstance.search(this.value).draw(); // try this easy code and check if works at first
 });
