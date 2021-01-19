@@ -30,6 +30,7 @@ router.get("/occurrences", controllerOcorrencia.read);
 router.get('/occurrences/finished', controllerOcorrencia.readAcabada);
 router.get("/occurrences/:id_ocorrencia", controllerOcorrencia.readOcorrenciaX);
 router.get("/occurrences/:id_ocorrencia/read_credit", controllerOcorrencia.readCreditoOcorrenciaX);
+router.get("/occurrencesAccuring/", controllerOcorrencia.readOcorrenciaDecorrer);
 router.get("/occurrencesGraphic", controllerOcorrencia.readGrafico);
 router.put("/occurrences/:id_ocorrencia/credit", controllerOcorrencia.updateCreditoOcorrencia);
 router.put("/occurrences/:id_ocorrencia/check_departure", controllerOcorrencia.updateConfirmarPartidaOcorrencia);
@@ -48,6 +49,7 @@ router.get("/agentsRanking", controllerOperacional.readRankingOperacional);
 //Material
 
 router.get("/materials", controllerMaterial.read);
+router.get("/materials/:id_ocorrencia/material", controllerMaterial.readMaterialOcorrencia);
 router.get("/materials/:id_material/confirm", controllerMaterial.readConfirmarMaterialUsado);
 router.put("/materials/:id_ocorrencia/:id_material/withdraw", controllerMaterial.updateConfirmarLevantamento);
 

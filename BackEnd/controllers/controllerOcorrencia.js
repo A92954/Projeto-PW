@@ -44,6 +44,15 @@ function readCreditoOcorrenciaX(req, res) {
   );
 }
 
+//Este metodo imprime apenas as ocorrencias que teem uma equipa atribuida e ainda esta a decorrer
+function readOcorrenciaDecorrer(req, res) {
+  const query = connect.con.query('SELECT oc.id_ocorrencia, loc.morada, eq.nome_equipa FROM localizacao loc, equipa eq, ocorrencia oc WHERE data_fim_ocorrencia IS NULL and oc.id_local = loc.id_local and oc.id_equipa = eq.id_equipa',
+    function(err, rows, fields) {
+      if (err) return res.status(500).end();
+      res.send(rows);
+    });
+}
+
 function readGrafico(req, res) {
     const query = connect.con.query('SELECT COUNT(*) AS Janeiro, (SELECT COUNT(*) FROM ocorrencia WHERE DATE_FORMAT(data_ocorrencia, "%Y-%m")=DATE_FORMAT(CURDATE(),"%Y-02")) AS Fevereiro, (SELECT COUNT(*) FROM ocorrencia WHERE DATE_FORMAT(data_ocorrencia, "%Y-%m")=DATE_FORMAT(CURDATE(),"%Y-03")) AS Março, (SELECT COUNT(*) FROM ocorrencia WHERE DATE_FORMAT(data_ocorrencia, "%Y-%m")=DATE_FORMAT(CURDATE(),"%Y-04")) AS Abril, (SELECT COUNT(*) FROM ocorrencia WHERE DATE_FORMAT(data_ocorrencia, "%Y-%m")=DATE_FORMAT(CURDATE(),"%Y-05")) AS Maio, (SELECT COUNT(*) FROM ocorrencia WHERE DATE_FORMAT(data_ocorrencia, "%Y-%m")=DATE_FORMAT(CURDATE(),"%Y-06")) AS Junho, (SELECT COUNT(*) FROM ocorrencia WHERE DATE_FORMAT(data_ocorrencia, "%Y-%m")=DATE_FORMAT(CURDATE(),"%Y-07")) AS Julho, (SELECT COUNT(*) FROM ocorrencia WHERE DATE_FORMAT(data_ocorrencia, "%Y-%m")=DATE_FORMAT(CURDATE(),"%Y-08")) AS Agosto, (SELECT COUNT(*) FROM ocorrencia WHERE DATE_FORMAT(data_ocorrencia, "%Y-%m")=DATE_FORMAT(CURDATE(),"%Y-09")) AS Setembro, (SELECT COUNT(*) FROM ocorrencia WHERE DATE_FORMAT(data_ocorrencia, "%Y-%m")=DATE_FORMAT(CURDATE(),"%Y-010")) AS Outubro, (SELECT COUNT(*) FROM ocorrencia WHERE DATE_FORMAT(data_ocorrencia, "%Y-%m")=DATE_FORMAT(CURDATE(),"%Y-11")) AS Novembro, (SELECT COUNT(*) FROM ocorrencia WHERE DATE_FORMAT(data_ocorrencia, "%Y-%m")=DATE_FORMAT(CURDATE(),"%Y-12")) AS Dezembro FROM ocorrencia WHERE DATE_FORMAT(data_ocorrencia, "%Y-%m")=DATE_FORMAT(CURDATE(),"%Y-01")', 
       function(err, rows, fields) {
@@ -162,6 +171,7 @@ module.exports = {
   readAcabada: readAcabada,
   readOcorrenciaX: readOcorrenciaX,
   readCreditoOcorrenciaX: readCreditoOcorrenciaX,
+  readOcorrenciaDecorrer: readOcorrenciaDecorrer,
   readGrafico: readGrafico,
   updateCreditoOcorrencia: updateCreditoOcorrencia,
   updateConfirmarPartidaOcorrencia: updateConfirmarPartidaOcorrencia,

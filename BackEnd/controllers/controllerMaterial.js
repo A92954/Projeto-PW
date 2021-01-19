@@ -35,6 +35,15 @@ function read(req, res) {
   );
 }*/
 
+function readMaterialOcorrencia(req, res) {
+  const id_ocorrencia = req.params.id_ocorrencia;
+  const query = connect.con.query('SELECT m.nome_material, om.quantidade_usada FROM material m, ocorrencia_material om WHERE om.id_ocorrencia = ? and m.id_material = om.id_material', id_ocorrencia,
+    function(err, rows, fields) {
+      if (err) return res.status(500).end();
+      res.send(rows);
+    });
+}
+
 function readConfirmarMaterialUsado(req, res) {
   const id_material = req.params.id_material;
   const query = connect.con.query(
@@ -60,6 +69,7 @@ function updateConfirmarLevantamento(req, res) {
 
 module.exports = {
   read: read,
+  readMaterialOcorrencia: readMaterialOcorrencia,
   readConfirmarMaterialUsado: readConfirmarMaterialUsado,
   updateConfirmarLevantamento: updateConfirmarLevantamento
 };
