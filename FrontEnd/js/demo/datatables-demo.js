@@ -60,6 +60,13 @@ $(document).ready(function () {
     $("#historico-popup").modal("show");
     var id_ocorr = $("td", this).eq(0).text(); //eq(2) increase the value inside eq() will display the txt column wise.
     $("#id_ocorr_selec").text(id_ocorr);
+
+    var response = fetch(
+      `http://127.0.0.1:3000/materials/${id_ocorr}/material`
+    );
+    var mat_usado = JSON.stringify(response);
+    $("#material_usado").text(mat_usado);
+
     var credito_equipa = $("td", this).eq(5).text();
     $("#credito_ocorr").text(credito_equipa);
   });
