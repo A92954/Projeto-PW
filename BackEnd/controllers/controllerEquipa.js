@@ -59,9 +59,10 @@ function updateCreditoEquipa(req, res) {
   let id_nivel;
   let percentagem_sobrevivente;
   let creditos_equipa;
-  const query = connect.con.query("SELECT id_estado, id_equipa, duracao_ocorrencia, id_nivel, percentagem_sobrevivente FROM ocorrencia WHERE id_ocorrencia = ?", id_ocorrencia,
+  const query = connect.con.query("SELECT oc.id_estado, oc.id_equipa, oc.duracao_ocorrencia, oc.id_nivel, oc.percentagem_sobrevivente, eq.creditos_equipa FROM ocorrencia oc, equipa eq WHERE oc.id_ocorrencia = ?", id_ocorrencia,
     function (err, rows, fields) {
       id_estado = rows[0].id_estado;
+      creditos_equipa = rows[0].creditos_equipa;
       if (err) return res.status(500).end();
       if (id_estado == 2) {
         duracao_ocorrencia = rows[0].duracao_ocorrencia;
@@ -69,15 +70,15 @@ function updateCreditoEquipa(req, res) {
         percentagem_sobrevivente = rows[0].percentagem_sobrevivente;
         id_equipa = rows[0].id_equipa;
         switch(id_nivel) {
-          case 1: creditos_equipa = 6;
+          case 1: creditos_equipa = creditos_equipa + 6;
             break;
-          case 2: creditos_equipa = 12;
+          case 2: creditos_equipa = creditos_equipa + 12;
             break;
-          case 3: creditos_equipa = 18;
+          case 3: creditos_equipa = creditos_equipa + 18;
             break;
-          case 4: creditos_equipa = 24;
+          case 4: creditos_equipa = creditos_equipa + 24;
             break;
-          case 5: creditos_equipa = 30;
+          case 5: creditos_equipa = creditos_equipa + 30;
             break;
         }
         console.log(creditos_equipa);
