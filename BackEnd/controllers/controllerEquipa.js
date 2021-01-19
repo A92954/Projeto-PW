@@ -4,6 +4,7 @@ function read(req, res) {
   const query = connect.con.query(
     "SELECT * FROM equipa",
     function (err, rows, fields) {
+      if (err) return res.status(500).end();
       res.send(rows);
     }
   );
@@ -15,6 +16,7 @@ function readEquipaOcorrencia(req, res) {
     "SELECT eq.* FROM equipa eq, ocorrencia oc WHERE oc.id_ocorrencia = ? and eq.id_equipa = oc.id_equipa",
     id_ocorrencia,
     function (err, rows, fields) {
+      if (err) return res.status(500).end();
       res.send(rows);
     }
   );
@@ -24,6 +26,7 @@ function readRankingEquipa(req, res) {
   const query = connect.con.query(
     "SELECT id_equipa, creditos_equipa, DENSE_RANK() OVER  (ORDER BY creditos_equipa DESC) AS Ranking_equipa FROM equipa",
     function (err, rows, fields) {
+      if (err) return res.status(500).end();
       res.send(rows);
     }
   );
@@ -35,6 +38,7 @@ function updateConfirmarEquipa(req, res) {
   const query = connect.con.query("SELECT disponibilidade FROM equipa WHERE id_equipa = ?", id_equipa,
     function (err, rows, fields) {
       disponibilidade = rows[0].disponibilidade;
+      if (err) return res.status(500).end();
       if (disponibilidade == "Disponivel") {
         const update = id_equipa;
         const secondquery = connect.con.query('UPDATE equipa SET disponibilidade = "Indisponivel" WHERE id_equipa = ?', update, 
@@ -58,6 +62,7 @@ function updateCreditoEquipa(req, res) {
   const query = connect.con.query("SELECT id_estado, id_equipa, duracao_ocorrencia, id_nivel, percentagem_sobrevivente FROM ocorrencia WHERE id_ocorrencia = ?", id_ocorrencia,
     function (err, rows, fields) {
       id_estado = rows[0].id_estado;
+      if (err) return res.status(500).end();
       if (id_estado == 2) {
         duracao_ocorrencia = rows[0].duracao_ocorrencia;
         id_nivel = rows[0].id_nivel;

@@ -6,6 +6,7 @@ function read(req, res) {
   const query = connect.con.query(
     "SELECT * FROM operacional",
     function (err, rows, fields) {
+      if (err) return res.status(500).end();
       res.send(rows);
     }
   );
@@ -17,6 +18,8 @@ function readOperacional(req, res) {
     "SELECT * FROM operacional WHERE id_operacional = ?",
     id_operacional,
     function (err, rows, fields) {
+      if (err) return res.status(500).end();
+      if (rows.length == 0) return res.status(404).end();
       res.send(rows);
     }
   );
@@ -28,6 +31,7 @@ function readEspecialidade(req, res) {
     "SELECT c.descricao_cargo FROM operacional op, cargo c WHERE op.id_operacional = ? and op.id_cargo = c.id_cargo",
     id_operacional,
     function (err, rows, fields) {
+      if (err) return res.status(500).end();
       res.send(rows[0]);
     }
   );
@@ -39,6 +43,7 @@ function readOcorrenciaOperacional(req, res) {
     "SELECT oc.* FROM operacional op, equipa eq, ocorrencia oc WHERE op.id_operacional = ? and op.id_equipa = eq.id_equipa and oc.id_ocorrencia = eq.id_ocorrencia",
     id_operacional,
     function (err, rows, fields) {
+      if (err) return res.status(500).end();
       res.send(rows);
     }
   );
@@ -48,7 +53,7 @@ function readCreditoOperacional(req, res) {
   const id_operacional = req.params.id_operacional;
   const query = connect.con.query('SELECT op.id_operacional, eq.id_equipa, eq.creditos_equipa FROM equipa eq, operacional op WHERE op.id_operacional = ? and eq.id_equipa = op.id_equipa', id_operacional,
     function(err, rows, fields) {
-
+      if (err) return res.status(500).end();
     });
 }
 
@@ -56,9 +61,10 @@ function readRankingOperacional(req, res) {
   const query = connect.con.query(
     "SELECT username, pontos_gamificacao,id_cargo, DENSE_RANK() OVER  (ORDER BY pontos_gamificacao DESC) AS Ranking_operacionais FROM operacional",
     function (err, rows, fields) {
+      if (err) return res.status(500).end();
       res.send(rows);
     }
-  );
+  );  
 }
 
 function readOcorrenciaAtual(req, res) {
@@ -77,7 +83,7 @@ function updateCreditoOperacional(req, res) {
   let numero_operacional_equipa;
   const query = connect.con.query('SELECT op.id_equipa, eq.creditos_equipa FROM operacional op, equipa eq WHERE op.id_operacional = ? and eq.id_equipa = op.id_equipa', id_operacional,
     function(err, rows, fields) {
-
+      if (err) return res.status(500).end();
     });
 }
 

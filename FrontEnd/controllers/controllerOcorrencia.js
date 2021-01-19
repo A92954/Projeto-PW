@@ -1,7 +1,6 @@
 //quando inicia a página faz
 window.onload = function () {
   //chama a função para atualizar a lista de pedidos
-  verHistOcorrencias();
   //adicionar função de validação ao formulário
   /*  validator();
     document.getElementById("formNewPedidoAjuda").onsubmit = function (e) {
@@ -30,37 +29,29 @@ function validator() {
   );
 }
 //REFRESH DA TABELA
-function verHistOcorrencias() {
-  fetch("http://127.0.0.1:3000/occurrences/finished", {
-    headers: { "Content-Type": "application/json" },
-    method: "GET",
-  })
+function listUsers() {
+  let table = $("#tabela-historico-ocorrencias").DataTable();
+
+  fetch("http://127.0.0.1:3000/occurrences/finished")
     .then((res) => res.json())
     .then((out) => {
-      $("#tabela-historico-ocorrencias tbody").empty();
-      $.each(out, function (index, valor) {
-        $("#tabela-historico-ocorrencias tbody").append(
-          "<tr>" +
-            "<td>" +
-            valor.id_ocorrencia +
-            "</td>" +
-            "<td>" +
-            valor.freguesia +
-            "</td>" +
-            "<td>" +
-            valor.id_equipa +
-            "</td>" +
-            "<td>" +
-            valor.descricao_urgencia +
-            "</td>" +
-            "<td>" +
-            valor.data_ocorrencia +
-            "</td>" +
-            "</tr>"
-        );
+      $.each(out, function (index, value) {
+        table.row
+          .add([
+            value.id_ocorrencia,
+            value.freguesia,
+            value.id_equipa,
+            value.descricao_urgencia,
+            value.data_ocorrencia,
+            value.creditos_ocorrencia,
+          ])
+          .draw();
       });
     })
-    .catch((err) => {
-      alert("Erro ao carregar a tabela!" + err);
-    });
+    .catch((err) => console.error(err));
 }
+
+$(document).ready(function () {
+  $("#tabela-historico-ocorrencias").DataTable();
+  listUsers();
+});

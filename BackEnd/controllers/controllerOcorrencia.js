@@ -5,6 +5,7 @@ function read(req, res) {
   const query = connect.con.query(
     "SELECT oc.id_ocorrencia, loc.freguesia, oc.id_equipa, gu.descricao_urgencia oc.data_ocorrencia FROM ocorrencia oc, localizacao loc, grau_urgencia gu WHERE oc.id_local = loc.id_local and oc.id_nivel = gu.id_nivel",
     function (err, rows, fields) {
+      if (err) return res.status(500).end();
       res.send(rows);
     }
   );
@@ -12,7 +13,8 @@ function read(req, res) {
 
 function readAcabada(req, res) {
   const query = connect.con.query('SELECT oc.id_ocorrencia, loc.freguesia, oc.id_equipa, gu.descricao_urgencia, oc.data_ocorrencia FROM ocorrencia oc, localizacao loc, grau_urgencia gu WHERE oc.id_local = loc.id_local and oc.id_nivel = gu.id_nivel and oc.id_estado = 2',
-      function(err, rows, fields){
+      function(err, rows, fields) {
+        if (err) return res.status(500).end();
           res.send(rows)
       });
 }
@@ -23,6 +25,8 @@ function readOcorrenciaX(req, res) {
     "SELECT * FROM ocorrencia WHERE id_ocorrencia = ?",
     id_ocorrencia,
     function (err, results) {
+      if (err) return res.status(500).end();
+      if (results.length == 0) return res.status(404).end();
       res.send(results[0]);
     }
   );
@@ -34,6 +38,7 @@ function readCreditoOcorrenciaX(req, res) {
     "SELECT creditos_ocorrencia FROM ocorrencia WHERE id_ocorrencia = ?",
     id_ocorrencia,
     function (err, rows, fields) {
+      if (err) return res.status(500).end();
       res.send(rows[0]);
     }
   );
@@ -64,6 +69,7 @@ function updateCreditoOcorrencia(req, res) {
     id_ocorrencia,
     function (err, rows, fields) {
       id_estado = rows[0].id_estado;
+      if (err) return res.status(500).end();
       if (id_estado == 2) {
         const update = [creditos_ocorrencia, id_ocorrencia];
         const secondquery = connect.con.query(
@@ -88,6 +94,7 @@ function updateConfirmarPartidaOcorrencia(req, res) {
     id_ocorrencia,
     function (err, rows, fields) {
       id_estado = rows[0].id_estado;
+      if (err) return res.status(500).end();
       if (id_estado == 3) {
         const update = [id_estado, id_ocorrencia];
         const secondquery = connect.con.query(
@@ -120,10 +127,12 @@ function updateDuracaoOcorrencia(req, res) {
       duracao_ocorrencia = Math.abs(data_ocorrencia - data_fim_ocorrencia);
       duracao_ocorrencia = duracao_ocorrencia * 0.00001 * 1.66666667;
       const update = [duracao_ocorrencia, id_ocorrencia];
+      if (err) return res.status(500).end();
       const secondquery = connect.con.query(
         "UPDATE ocorrencia SET duracao_ocorrencia = ? WHERE id_ocorrencia = ?",
         update,
         function (err, rows, fields) {
+          if (err) return res.status(500).end();
           res.send(
             "A duracao da ocorrencia foi de " + duracao_ocorrencia + " minutos"
           );
@@ -136,6 +145,7 @@ function updateDuracaoOcorrencia(req, res) {
 function updatePercentagemSobrevivente(req, res) {
   const id_ocorrencia = req.params.id_ocorrencia;
   const percentagem_sobrevivente = req.body.percentagem_sobrevivente;
+  if (err) return res.status(500).end();
   if ((0 <= percentagem_sobrevivente) && (percentagem_sobrevivente <= 100)) {
     const query = connect.con.query('UPDATE ocorrencia SET percentagem_sobrevivente = ? WHERE id_ocorrencia = ?', [percentagem_sobrevivente, id_ocorrencia],
       function(err, rows, fields) {

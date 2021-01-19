@@ -4,6 +4,7 @@ function read(req, res) {
   const query = connect.con.query(
     "SELECT * FROM testemunha",
     function (err, rows, fields) {
+      if (err) return res.status(500).end();
       res.send(rows);
     }
   );
@@ -22,31 +23,20 @@ function save(req, res) {
     "INSERT INTO testemunha  SET nome_testemunha = ?, email_testemunha = ?, profissao_testemunha = ?, localidade_testemunha = ?, notas_testemunha = ?",
     post,
     function (err, rows, fields) {
-      if (err) {
-        console.log(err);
-      }
+      if (err) return res.status(500).end();
     }
   );
-  const query2 =
-    "SELECT id_testemunha FROM testemunha WHERE nome_testemunha = ? and email_testemunha = ?";
+  const query2 = "SELECT id_testemunha FROM testemunha WHERE nome_testemunha = ? and email_testemunha = ?";
   connect.con.query(query2, post, function (err, rows, fields) {
-    if (err) {
-      console.log(err);
-    } else {
       id_testemunha = rows[0].id_testemunha;
       const post2 = [id_ocorrencia, id_testemunha];
       const query3 = connect.con.query(
         "INSERT INTO depoimento SET id_ocorrencia = ?, id_testemunha = ?",
         post2,
         function (err, rows, fields) {
-          if (err) {
-            console.log(err);
-          } else {
-            res.send("Testemunha associada com sucesso");
-          }
-        }
-      );
-    }
+          if (err) return res.status(500).end();
+          res.send("Testemunha associada com sucesso");
+      });
   });
 }
 

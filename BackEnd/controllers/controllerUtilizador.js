@@ -4,14 +4,11 @@ function read(req, res) {
   const query = connect.con.query(
     "SELECT * FROM utilizador",
     function (err, rows, fields) {
+      if (err) return res.status(500).end();
       res.send(rows);
     }
   );
 }
-/*
-function readUtilizadorX(req, res){
-  let sql = "SELECT username, name, email FROM utilizador"
-}*/
 
 function updateUtilizador(req, res) {
   const username = req.params.username;
@@ -23,7 +20,7 @@ function updateUtilizador(req, res) {
     "UPDATE utilizador SET nome = ?, email_utilizador = ?, password = ? WHERE username = ?",
     update,
     function (err, results) {
-      if (err) throw err;
+      if (err) return res.status(500).end();
       res.send("Dados de utilizador alterados");
     }
   );

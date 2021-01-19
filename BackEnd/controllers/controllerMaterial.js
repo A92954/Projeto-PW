@@ -4,6 +4,7 @@ function read(req, res) {
   const query = connect.con.query(
     "SELECT * FROM material",
     function (err, rows, fields) {
+      if (err) return res.status(500).end();
       res.send(rows);
     }
   );
@@ -40,6 +41,7 @@ function readConfirmarMaterialUsado(req, res) {
     "SELECT m.nome_material, om.quantidade_usada FROM ocorrencia_material om, material m WHERE m.id_material = ? and om.id_material = m.id_material",
     id_material,
     function (err, rows, fields) {
+      if (err) return res.status(500).end();
       res.send(rows[0]);
     }
   );
@@ -51,6 +53,7 @@ function updateConfirmarLevantamento(req, res) {
   update = [id_ocorrencia, id_material];
   const query = connect.con.query('UPDATE ocorrencia_material SET confirmado_material = 1 WHERE id_ocorrencia = ? and id_material = ?', update, 
     function(err, rows, fields) {
+      if (err) return res.status(500).end();
       res.send("O material " + id_material + " foi levantado para a " + id_ocorrencia);
     });
 }
