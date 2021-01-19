@@ -58,9 +58,18 @@ function readCreditoOperacional(req, res) {
     });
 }
 
+/*function readRankingOperacional(req, res) {
+  const query = connect.con.query(
+    "SELECT username, pontos_gamificacao, id_cargo, DENSE_RANK() OVER  (ORDER BY pontos_gamificacao DESC) AS Ranking_operacionais FROM operacional",
+    function (err, rows, fields) {
+      if (err) return res.status(500).end();
+      res.send(rows);
+    });
+}*/
+
 function readRankingOperacional(req, res) {
   const query = connect.con.query(
-    "SELECT username, pontos_gamificacao,id_cargo, DENSE_RANK() OVER  (ORDER BY pontos_gamificacao DESC) AS Ranking_operacionais FROM operacional",
+    "SELECT op.username, op.pontos_gamificacao, ca.descricao_cargo, DENSE_RANK() OVER  (ORDER BY op.pontos_gamificacao DESC) AS Ranking_Operacionais FROM operacional op, cargo ca WHERE op.id_cargo = ca.id_cargo",
     function (err, rows, fields) {
       if (err) return res.status(500).end();
       res.send(rows);

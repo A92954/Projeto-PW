@@ -22,9 +22,32 @@ function readEquipaOcorrencia(req, res) {
   );
 }
 
+/*function readRankingEquipa(req, res) {
+  let id_equipa;
+  let numero_ocorrencias;
+  const query = connect.con.query(
+    'SELECT eq.id_equipa, eq.creditos_equipa, DENSE_RANK() OVER  (ORDER BY eq.creditos_equipa DESC) AS Ranking_equipa FROM equipa eq UNION SELECT COUNT(oc.id_ocorrencia) AS Numero_Ocorrencias FROM ocorrencia oc WHERE oc.id_equipa = eq.id_equipa UNION SELECT op.username FROM operacional op WHERE eq.id_equipa = op.id_equipa',
+    function (err, rows, fields) {
+      if (err) return res.status(500).end();
+      console.log(err);
+      res.send(rows);
+      const secondquery = connect.con.query('SELECT COUNT(id_ocorrencia) AS Numero_Ocorrencias FROM ocorrencia WHERE id_equipa = ?', id_equipa,
+        function(err, rows, fields) {
+          numero_ocorrencias = rows[0].Numero_Ocorrencias;
+          console.log(numero_ocorrencias);
+          res.send(rows);
+          const thirdquery = connect.con.query('SELECT username FROM operacional WHERE id_equipa = ?', id_equipa,
+            function(err, rows, fields) {
+              res.send(rows);
+            })
+        })
+    }
+  );
+}*/
+
 function readRankingEquipa(req, res) {
   const query = connect.con.query(
-    "SELECT id_equipa, creditos_equipa, DENSE_RANK() OVER  (ORDER BY creditos_equipa DESC) AS Ranking_equipa FROM equipa",
+    "SELECT id_equipa, creditos_equipa, DENSE_RANK() OVER  (ORDER BY creditos_equipa DESC) AS Ranking_Equipa FROM equipa",
     function (err, rows, fields) {
       if (err) return res.status(500).end();
       res.send(rows);
