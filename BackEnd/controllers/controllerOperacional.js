@@ -51,18 +51,11 @@ function readOcorrenciaOperacional(req, res) {
 
 function readCreditoOperacional(req, res) {
   const id_operacional = req.params.id_operacional;
-<<<<<<< HEAD
   const query = connect.con.query(
     "SELECT op.id_operacional, eq.id_equipa, eq.creditos_equipa FROM equipa eq, operacional op WHERE op.id_operacional = ? and eq.id_equipa = op.id_equipa",
     id_operacional,
     function (err, rows, fields) {}
   );
-=======
-  const query = connect.con.query('SELECT op.id_operacional, eq.id_equipa, eq.creditos_equipa FROM equipa eq, operacional op WHERE op.id_operacional = ? and eq.id_equipa = op.id_equipa', id_operacional,
-    function(err, rows, fields) {
-      if (err) return res.status(500).end();
-    });
->>>>>>> 47efb4a63af949ef50770b52c899a33af3c09d9a
 }
 
 function readRankingOperacional(req, res) {
@@ -89,10 +82,13 @@ function updateCreditoOperacional(req, res) {
   const id_operacional = req.params.id_operacional;
   let pontos_gamificacao;
   let numero_operacional_equipa;
-  const query = connect.con.query('SELECT op.id_equipa, eq.creditos_equipa FROM operacional op, equipa eq WHERE op.id_operacional = ? and eq.id_equipa = op.id_equipa', id_operacional,
-    function(err, rows, fields) {
+  const query = connect.con.query(
+    "SELECT op.id_equipa, eq.creditos_equipa FROM operacional op, equipa eq WHERE op.id_operacional = ? and eq.id_equipa = op.id_equipa",
+    id_operacional,
+    function (err, rows, fields) {
       if (err) return res.status(500).end();
-    });
+    }
+  );
 }
 
 module.exports = {
@@ -103,5 +99,5 @@ module.exports = {
   readCreditoOperacional: readCreditoOperacional,
   readRankingOperacional: readRankingOperacional,
   //readOcorrenciaAtual: readOcorrenciaAtual
-  updateCreditoOperacional: updateCreditoOperacional
+  updateCreditoOperacional: updateCreditoOperacional,
 };
