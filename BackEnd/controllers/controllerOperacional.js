@@ -45,10 +45,11 @@ function readOcorrenciasOperacional(req, res) {
 
 function readCreditosOperacional(req, res) {
   const id_operacional = req.params.id_operacional;
-  const query = connect.con.query('SELECT op.id_operacional, eq.id_equipa, eq.creditos_equipa FROM equipa eq, operacional op WHERE op.id_operacional = ? and eq.id_equipa = op.id_equipa', id_operacional,
-    function(err, rows, fields) {
-
-    });
+  const query = connect.con.query(
+    "SELECT op.id_operacional, eq.id_equipa, eq.creditos_equipa FROM equipa eq, operacional op WHERE op.id_operacional = ? and eq.id_equipa = op.id_equipa",
+    id_operacional,
+    function (err, rows, fields) {}
+  );
 }
 
 /*function readRankingOperacional(req, res) {
@@ -79,7 +80,7 @@ function readRankingOperacional(req, res) {
     function (err, rows, fields) {
       res.send(rows);
     }
-  );  
+  );
 }
 
 function readOcorrenciaAtual(req, res) {
