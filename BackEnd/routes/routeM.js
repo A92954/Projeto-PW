@@ -14,42 +14,46 @@ router.get("/", function (req, res) {
 //Utilizador
 
 router.get("/users", controllerUtilizador.read);
-router.put("/users/:username", controllerUtilizador.update);
+router.put("/users/:username", controllerUtilizador.updateUtilizador);
 
 //Equipa
 
 router.get("/teams", controllerEquipa.read);
-router.get("/teams/:creditos_equipa/ranking", controllerEquipa.readRankingEquipa);
-router.put("/teams/:id_equipa/check_team", controllerEquipa.confirmarEquipa);
+router.get("/teams/:id_ocorrencia/view_team", controllerEquipa.readEquipaOcorrencia);
+router.get("/teamsRanking", controllerEquipa.readRankingEquipa);
+router.put("/teams/:id_equipa/check_team", controllerEquipa.updateConfirmarEquipa);
+router.put("/teams/:id_ocorrencia/credit_team", controllerEquipa.updateCreditoEquipa);
 
 //Ocorrencia
 
 router.get("/occurrences", controllerOcorrencia.read);
-router.get('/occurrences/finished', controllerOcorrencia.readAcabadas);
+router.get('/occurrences/finished', controllerOcorrencia.readAcabada);
 router.get("/occurrences/:id_ocorrencia", controllerOcorrencia.readOcorrenciaX);
 router.get("/occurrences/:id_ocorrencia/read_credit", controllerOcorrencia.readCreditoOcorrenciaX);
 router.get("/occurrencesGraphic", controllerOcorrencia.readGrafico);
-router.put("/occurrences/:id_ocorrencia/credit", controllerOcorrencia.creditoOcorrencia);
-router.put("/occurrences/:id_ocorrencia/check_departure", controllerOcorrencia.confirmarPartidaOcorrencia);
-router.put("/occurrences/:id_ocorrencia/credit_team", controllerOcorrencia.creditoEquipa);
-router.put("/occurrences/:id_ocorrencia/duration", controllerOcorrencia.duracaoOcorrencia);
+router.put("/occurrences/:id_ocorrencia/credit", controllerOcorrencia.updateCreditoOcorrencia);
+router.put("/occurrences/:id_ocorrencia/check_departure", controllerOcorrencia.updateConfirmarPartidaOcorrencia);
+router.put("/occurrences/:id_ocorrencia/duration", controllerOcorrencia.updateDuracaoOcorrencia);
+router.put("/occurrences/:id_ocorrencia/survival", controllerOcorrencia.updatePercentagemSobrevivente);
 
 //Operacional
 
 router.get("/agents", controllerOperacional.read);
-router.get("/agents/:id_operacional", controllerOperacional.readEsp);
-router.get("/agents/:id_operacional/occurrence", controllerOperacional.readOcorrenciasOperacional);
-router.get("/agents/:pontos_gamificacao/ranking", controllerOperacional.readRankingOperacional);
+router.get("/agents/:id_operacional/agent", controllerOperacional.readOperacional);
+router.get("/agents/:id_operacional/role", controllerOperacional.readEspecialidade);
+router.get("/agents/:id_operacional/occurrence", controllerOperacional.readOcorrenciaOperacional);
+router.get("/agents/:id_operacional/credit", controllerOperacional.readCreditoOperacional);
+router.get("/agentsRanking", controllerOperacional.readRankingOperacional);
 
 //Material
 
 router.get("/materials", controllerMaterial.read);
-router.get("/materials/:id_material/confirm", controllerMaterial.confirmarMaterialUsado);
-router.put("/materials/:id_ocorrencia/:id_material/withdraw", controllerMaterial.confirmarLevantamento);
+router.get("/materials/:id_material/confirm", controllerMaterial.readConfirmarMaterialUsado);
+router.put("/materials/:id_ocorrencia/:id_material/withdraw", controllerMaterial.updateConfirmarLevantamento);
 
 //Testemunha
 
 router.get("/witnesses", controllerTestemunha.read);
-router.post("/witnesses/registration", controllerTestemunha.registo);
+router.post("/witnesses/registration", controllerTestemunha.save);
 
 module.exports = router;

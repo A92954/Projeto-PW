@@ -9,7 +9,7 @@ function read(req, res) {
   );
 }
 
-function registo(req, res) {
+function save(req, res) {
   const nome_testemunha = req.body.nome_testemunha;
   const email_testemunha = req.body.email_testemunha;
   const profissao_testemunha = req.body.profissao_testemunha;
@@ -52,5 +52,5 @@ function registo(req, res) {
 
 module.exports = {
   read: read,
-  registo: registo,
+  save: save
 };

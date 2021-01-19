@@ -1,5 +1,6 @@
 const { json } = require("body-parser");
 const connect = require("../database");
+const { updateUtilizador } = require("./controllerUtilizador");
 
 function read(req, res) {
   const query = connect.con.query(
@@ -32,7 +33,7 @@ function readEspecialidade(req, res) {
   );
 }
 
-function readOcorrenciasOperacional(req, res) {
+function readOcorrenciaOperacional(req, res) {
   const id_operacional = req.params.id_operacional;
   const query = connect.con.query(
     "SELECT oc.* FROM operacional op, equipa eq, ocorrencia oc WHERE op.id_operacional = ? and op.id_equipa = eq.id_equipa and oc.id_ocorrencia = eq.id_ocorrencia",
@@ -43,7 +44,7 @@ function readOcorrenciasOperacional(req, res) {
   );
 }
 
-function readCreditosOperacional(req, res) {
+function readCreditoOperacional(req, res) {
   const id_operacional = req.params.id_operacional;
   const query = connect.con.query('SELECT op.id_operacional, eq.id_equipa, eq.creditos_equipa FROM equipa eq, operacional op WHERE op.id_operacional = ? and eq.id_equipa = op.id_equipa', id_operacional,
     function(err, rows, fields) {
@@ -51,31 +52,9 @@ function readCreditosOperacional(req, res) {
     });
 }
 
-/*function readRankingOperacional(req, res) {
-    const query = connect.con.query('SELECT pontos_gamificacao DENSE_RANK() OVER (ORDER BY pontos_gamificacao) Rank FROM operacional',
-        function(err, rows, fields) {
-            res.send(rows);
-        });
-}*/
-
-/*function readRankingOperacional(req, res) {
-    const query = connect.con.query('SELECT id_operacional, pontos_gamificacao FROM operacional ORDER BY pontos_gamificacao', 
-        function(err, rows, fields) {
-            res.send(rows);
-        });
-}*/
-
 function readRankingOperacional(req, res) {
-  const pontos_gamificacao = req.body.pontos_gamificacao;
-  /*const query = connect.con.query(
-    "SELECT ca.descricao_cargo  FROM cargo ca, operacional op WHERE ca.id_cargo = op.id_cargo",
-    function(err, rows,fields) {
-      res.send(rows)
-    }
-  )*/
-  const query2 = connect.con.query(
+  const query = connect.con.query(
     "SELECT username, pontos_gamificacao,id_cargo, DENSE_RANK() OVER  (ORDER BY pontos_gamificacao DESC) AS Ranking_operacionais FROM operacional",
-    pontos_gamificacao,
     function (err, rows, fields) {
       res.send(rows);
     }
@@ -92,9 +71,23 @@ function readOcorrenciaAtual(req, res) {
   );
 }
 
+function updateCreditoOperacional(req, res) {
+  const id_operacional = req.params.id_operacional;
+  let pontos_gamificacao;
+  let numero_operacional_equipa;
+  const query = connect.con.query('SELECT op.id_equipa, eq.creditos_equipa FROM operacional op, equipa eq WHERE op.id_operacional = ? and eq.id_equipa = op.id_equipa', id_operacional,
+    function(err, rows, fields) {
+
+    });
+}
+
 module.exports = {
   read: read,
-  readEsp: readEspecialidade,
-  readOcorrenciasOperacional: readOcorrenciasOperacional,
+  readOperacional: readOperacional,
+  readEspecialidade: readEspecialidade,
+  readOcorrenciaOperacional: readOcorrenciaOperacional,
+  readCreditoOperacional: readCreditoOperacional,
   readRankingOperacional: readRankingOperacional,
+  //readOcorrenciaAtual: readOcorrenciaAtual
+  updateCreditoOperacional: updateCreditoOperacional
 };

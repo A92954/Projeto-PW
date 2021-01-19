@@ -31,5 +31,5 @@ function updateUtilizador(req, res) {
 
 module.exports = {
   read: read,
-  update: updateUtilizador,
+  updateUtilizador: updateUtilizador,
 };
