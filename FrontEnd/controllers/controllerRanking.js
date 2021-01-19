@@ -1,7 +1,7 @@
 function readRankOp() {
   let table = $("#tabela-ranking-operacionais").DataTable();
 
-  fetch("http://127.0.0.1:3000/agents/:pontos_gamificacao/ranking")
+  fetch("http://127.0.0.1:3000/agentsRanking")
     .then((res) => res.json())
     .then((out) => {
       $.each(out, function (index, value) {
@@ -10,7 +10,7 @@ function readRankOp() {
             value.Ranking_operacionais,
             value.pontos_gamificacao,
             value.username,
-            value.descricao_cargo,
+            "FIller",
           ])
           .draw();
       });
@@ -26,7 +26,7 @@ $(document).ready(function () {
 function readRankEq() {
   let table = $("#tabela-ranking-equipa").DataTable();
 
-  fetch("http://127.0.0.1:3000/teams/:creditos_equipa/ranking")
+  fetch("http://127.0.0.1:3000/teamsRanking")
     .then((res) => res.json())
     .then((out) => {
       $.each(out, function (index, value) {
