@@ -51,21 +51,29 @@ function readOcorrenciaOperacional(req, res) {
 
 function readCreditoOperacional(req, res) {
   const id_operacional = req.params.id_operacional;
-  const query = connect.con.query(
-    "SELECT op.id_operacional, eq.id_equipa, eq.creditos_equipa FROM equipa eq, operacional op WHERE op.id_operacional = ? and eq.id_equipa = op.id_equipa",
-    id_operacional,
-    function (err, rows, fields) {}
-  );
+  const query = connect.con.query('SELECT u.nome, eq.nome_equipa, op.pontos_gamificacao FROM operacional op, equipa eq, utilizador u WHERE op.id_operacional = ? and op.id_equipa = eq.id_equipa and op.username = u.username', id_operacional,
+    function(err, rows, fields) {
+      if (err) return res.status(500).end();
+      res.send(rows[0]);
+    });
 }
 
-function readRankingOperacional(req, res) {
+/*function readRankingOperacional(req, res) {
   const query = connect.con.query(
-    "SELECT username, pontos_gamificacao,id_cargo, DENSE_RANK() OVER  (ORDER BY pontos_gamificacao DESC) AS Ranking_operacionais FROM operacional",
+    "SELECT username, pontos_gamificacao, id_cargo, DENSE_RANK() OVER  (ORDER BY pontos_gamificacao DESC) AS Ranking_operacionais FROM operacional",
     function (err, rows, fields) {
       if (err) return res.status(500).end();
       res.send(rows);
-    }
-  );
+    });
+}*/
+
+function readRankingOperacional(req, res) {
+  const query = connect.con.query(
+    "SELECT op.username, op.pontos_gamificacao, ca.descricao_cargo, DENSE_RANK() OVER  (ORDER BY op.pontos_gamificacao DESC) AS Ranking_Operacionais FROM operacional op, cargo ca WHERE op.id_cargo = ca.id_cargo",
+    function (err, rows, fields) {
+      if (err) return res.status(500).end();
+      res.send(rows);
+    });
 }
 
 function readOcorrenciaAtual(req, res) {
@@ -80,15 +88,32 @@ function readOcorrenciaAtual(req, res) {
 
 function updateCreditoOperacional(req, res) {
   const id_operacional = req.params.id_operacional;
+  let id_equipa;
+  let creditos_equipa;
   let pontos_gamificacao;
   let numero_operacional_equipa;
   const query = connect.con.query(
-    "SELECT op.id_equipa, eq.creditos_equipa FROM operacional op, equipa eq WHERE op.id_operacional = ? and eq.id_equipa = op.id_equipa",
-    id_operacional,
-    function (err, rows, fields) {
+    'SELECT id_equipa, pontos_gamificacao FROM operacional WHERE id_operacional = ?', id_operacional,
+    function(err, rows, fields) {
       if (err) return res.status(500).end();
-    }
-  );
+      id_equipa = rows[0].id_equipa;
+      pontos_gamificacao = rows[0].pontos_gamificacao;
+      const secondquery = connect.con.query('SELECT creditos_equipa FROM equipa WHERE id_equipa = ?', id_equipa,
+        function(err, rows, fields) {
+          creditos_equipa = rows[0].creditos_equipa;
+          const thirdquery = connect.con.query('SELECT COUNT(id_operacional) AS Numero_Operacionais FROM operacional WHERE id_equipa = ?', id_equipa,
+            function(err, rows, fields) {
+              numero_operacional_equipa = rows[0].Numero_Operacionais;
+              pontos_gamificacao = pontos_gamificacao + (creditos_equipa/numero_operacional_equipa);
+              const update = [pontos_gamificacao, id_equipa];
+              const forthquery = connect.con.query('UPDATE operacional SET pontos_gamificacao = ? WHERE id_equipa = ?', update,
+                function(err, rows, fields) {
+                  if (err) return res.status(500).end();
+                  res.send("Foram atribuidos " +pontos_gamificacao+ " pontos para cada um dos operacionais da respetiva equipa");
+              });
+          });
+      });
+  });
 }
 
 module.exports = {

@@ -43,8 +43,9 @@ router.get("/agents", controllerOperacional.read);
 router.get("/agents/:id_operacional/agent", controllerOperacional.readOperacional);
 router.get("/agents/:id_operacional/role", controllerOperacional.readEspecialidade);
 router.get("/agents/:id_operacional/occurrence", controllerOperacional.readOcorrenciaOperacional);
-router.get("/agents/:id_operacional/credit", controllerOperacional.readCreditoOperacional);
+router.get("/agents/:id_operacional/read_credit", controllerOperacional.readCreditoOperacional);
 router.get("/agentsRanking", controllerOperacional.readRankingOperacional);
+router.put("/agents/:id_operacional/put_credit", controllerOperacional.updateCreditoOperacional);
 
 //Material
 
