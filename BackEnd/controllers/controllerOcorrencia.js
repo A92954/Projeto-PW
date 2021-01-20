@@ -47,7 +47,6 @@ function readCreditoOcorrenciaX(req, res) {
 }
 
 //Este metodo imprime apenas as ocorrencias que teem uma equipa atribuida e ainda esta a decorrer
-<<<<<<< HEAD
 function readOcorrenciaAtual(req, res) {
   const id_operacional = req.params.id_operacional;
   let id_equipa;
@@ -66,18 +65,8 @@ function readOcorrenciaAtual(req, res) {
                 res.send(rows);
               });
           }
-        });
-    });
-=======
-function readOcorrenciaDecorrer(req, res) {
-  const query = connect.con.query(
-    "SELECT oc.id_ocorrencia, loc.morada, eq.nome_equipa FROM localizacao loc, equipa eq, ocorrencia oc WHERE data_fim_ocorrencia IS NULL and oc.id_local = loc.id_local and oc.id_equipa = eq.id_equipa",
-    function (err, rows, fields) {
-      if (err) return res.status(500).end();
-      res.send(rows);
-    }
-  );
->>>>>>> 4f9bcda73699a921e0444bb180083ba77d590a62
+      });
+  });
 }
 
 function readGrafico(req, res) {
