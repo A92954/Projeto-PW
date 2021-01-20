@@ -2,7 +2,7 @@
 window.onload = function () {};
 
 //REFRESH DA TABELA
-function listUsers() {
+function tabelaHist() {
   let table = $("#tabela-historico-ocorrencias").DataTable();
 
   fetch("http://127.0.0.1:3000/occurrences/finished")
@@ -26,5 +26,5 @@ function listUsers() {
 
 $(document).ready(function () {
   $("#tabela-historico-ocorrencias").DataTable();
-  listUsers();
+  tabelaHist();
 });
