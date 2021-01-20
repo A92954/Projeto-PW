@@ -76,16 +76,6 @@ function readRankingOperacional(req, res) {
     });
 }
 
-function readOcorrenciaAtual(req, res) {
-  const id_operacional = req.params.id_operacional;
-  const id_equipa = req.params.id_equipa;
-  const id_estado = req.params.id_estado;
-  const query = connect.con.query(
-    "SELECT loc.localizacao, ur.descricao_urgencia, oc.id_equipa, mat.descricao_material FROM ocorrencia oc, localizacao loc, material mat, grau_urgencia ur, ocorrencia_material om WHERE id_ocorrencia = ? AND  ",
-    id_ocorrencia
-  );
-}
-
 function updateCreditoOperacional(req, res) {
   const id_operacional = req.params.id_operacional;
   let id_equipa;
