@@ -7,10 +7,10 @@ function readRankOp() {
       $.each(out, function (index, value) {
         table.row
           .add([
-            value.Ranking_operacionais,
+            value.Ranking_Operacionais,
             value.pontos_gamificacao,
             value.username,
-            "FIller",
+            value.descricao_cargo,
           ])
           .draw();
       });
@@ -32,7 +32,7 @@ function readRankEq() {
       $.each(out, function (index, value) {
         table.row
           .add([
-            value.Ranking_equipa,
+            value.Ranking_Equipa,
             value.creditos_equipa,
             value.id_equipa,
             "filler",

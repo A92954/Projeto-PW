@@ -1,35 +1,8 @@
 //quando inicia a página faz
-window.onload = function () {
-  //chama a função para atualizar a lista de pedidos
-  //adicionar função de validação ao formulário
-  /*  validator();
-    document.getElementById("formNewPedidoAjuda").onsubmit = function (e) {
-        //validação do formulário ao submeter
-        validator();*/
-};
+window.onload = function () {};
 
-//função de validação
-function validator() {
-  let validator = new Validator(
-    document.querySelector('form[name="formNewPedidoAjuda"]'),
-    function (err, res) {
-      if (res) {
-        registarPedido();
-      }
-    },
-    {
-      messages: {
-        en: {
-          /*password: {
-                    incorrect: "Password didn't match"
-                    }*/
-        },
-      },
-    }
-  );
-}
 //REFRESH DA TABELA
-function listUsers() {
+function tabelaHist() {
   let table = $("#tabela-historico-ocorrencias").DataTable();
 
   fetch("http://127.0.0.1:3000/occurrences/finished")
@@ -43,7 +16,7 @@ function listUsers() {
             value.id_equipa,
             value.descricao_urgencia,
             value.data_ocorrencia,
-            value.creditos_ocorrencia,
+            "FIller",
           ])
           .draw();
       });
@@ -53,5 +26,5 @@ function listUsers() {
 
 $(document).ready(function () {
   $("#tabela-historico-ocorrencias").DataTable();
-  listUsers();
+  tabelaHist();
 });

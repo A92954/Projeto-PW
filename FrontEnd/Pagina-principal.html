@@ -197,7 +197,8 @@
                       <h6>Urgência: Nível 5</h6>
                       <br />
                       <div class="form-group">
-                        <label for="exampleFormControlSelect2">Equipa: </label>
+                        <label for="exampleFormControlSelect2" id="nomeEquipaAtual" >Equipa: </label>
+                        
                         <div class="table-responsive">
                           <table
                             class="table table-bordered table-hover"
@@ -241,7 +242,7 @@
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">
-                  Histórico pessoal
+                  Histórico geral
                 </h6>
               </div>
               <div class="card-body">
@@ -537,6 +538,8 @@
                   class="form-check-input"
                   id="exampleCheck1"
                   onclick="myFunction()"
+                  oninvalid="this.setCustomValidity('Selecione esta opcção')"
+                  oninput="this.setCustomValidity('')"
                 />
                 <label class="form-check-label" for="exampleCheck1"
                   >Confirmar material</label
@@ -559,7 +562,7 @@
             </div>
 
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">
+              <button type="submit" class="btn btn-primary" onclick=tempoInicioOcorrencia()>
                 Iniciar
               </button>
             </div>
@@ -599,11 +602,11 @@
           <form action="/FrontEnd/Relatorio.html">
             <div class="modal-body">
               <div class="form-group">
-                <label for="exampleFormControlSelect2">Material:</label>
+                <label for="exampleFormControlSelect21">Material:</label>
                 <select
                   multiple
                   class="form-control"
-                  id="exampleFormControlSelect2"
+                  id="exampleFormControlSelect21"
                 >
                   <option>Coletes salva-vidas</option>
                   <option>Primeiros socorros</option>
@@ -901,5 +904,6 @@
 
     <!-- Controllers -->
     <script type="text/javascript" src="./controllers/controllerOcorrencia.js"></script>
+    <script type="text/javascript" src="./controllers/controllerOperacional.js"></script>
   </body>
 </html>
