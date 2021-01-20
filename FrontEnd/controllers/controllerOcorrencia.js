@@ -1,33 +1,6 @@
 //quando inicia a página faz
-window.onload = function () {
-  //chama a função para atualizar a lista de pedidos
-  //adicionar função de validação ao formulário
-  /*  validator();
-    document.getElementById("formNewPedidoAjuda").onsubmit = function (e) {
-        //validação do formulário ao submeter
-        validator();*/
-};
+window.onload = function () {};
 
-//função de validação
-function validator() {
-  let validator = new Validator(
-    document.querySelector('form[name="formNewPedidoAjuda"]'),
-    function (err, res) {
-      if (res) {
-        registarPedido();
-      }
-    },
-    {
-      messages: {
-        en: {
-          /*password: {
-                    incorrect: "Password didn't match"
-                    }*/
-        },
-      },
-    }
-  );
-}
 //REFRESH DA TABELA
 function listUsers() {
   let table = $("#tabela-historico-ocorrencias").DataTable();
