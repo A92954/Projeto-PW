@@ -262,10 +262,7 @@ function updatePercentagemSobrevivente(req, res) {
       [percentagem_sobrevivente, id_ocorrencia],
       function (err, rows, fields) {
         res.send(
-          "A percentagem " +
-            percentagem_sobrevivente +
-            "% foi inserida com sucesso"
-        );
+          "A percentagem " +percentagem_sobrevivente +"% foi inserida com sucesso");
       }
     );
   } else {
