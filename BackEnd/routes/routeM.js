@@ -33,10 +33,12 @@ router.get("/occurrences/:id_ocorrencia/read_credit",controllerOcorrencia.readCr
 router.get("/agents/:id_operacional/accurring",controllerOcorrencia.readOcorrenciaAtual);
 router.get("/occurrencesGraphic", controllerOcorrencia.readGrafico);
 router.get("/occurrences/:id_ocorrencia/sendmail",controllerOcorrencia.readDadosOcorrencia);
+router.get("/occurrences/:id_ocorrencia/timeDiff",controllerOcorrencia.readDiferencaTempo);
 router.put("/occurrences/:id_ocorrencia/credit",controllerOcorrencia.updateCreditoOcorrencia);
 router.put("/occurrences/:id_ocorrencia/check_departure",controllerOcorrencia.updateConfirmarPartidaOcorrencia);
 router.put("/occurrences/:id_ocorrencia/duration",controllerOcorrencia.updateDuracaoOcorrencia);
 router.put("/occurrences/:id_ocorrencia/survival",controllerOcorrencia.updatePercentagemSobrevivente);
+router.put("/occurrences/:id_ocorrencia/times",controllerOcorrencia.updateTempoDeslocacao);
 
 //Operacional
 
