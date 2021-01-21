@@ -83,9 +83,15 @@ function updateConfirmarLevantamento(req, res) {
   update = [id_ocorrencia, id_material];
   const query = connect.con.query('UPDATE ocorrencia_material SET confirmado_material = 1 WHERE id_ocorrencia = ? and id_material = ?', update, 
     function(err, rows, fields) {
-      if (err) return res.status(500).end();
-      res.send("O material " + id_material + " foi levantado para a " + id_ocorrencia);
-    });
+      if (!err) {
+        console.log("Number of records updated: " + rows.affectedRows);
+        res.status(200).send({"msg": "O material " + id_material + " foi levantado para a " + id_ocorrencia});
+      }
+      else {
+        res.status(400).send({"msg": err.code});
+        console.log('Error while performing Query.', err);
+      }
+  });
 }
 
 module.exports = {

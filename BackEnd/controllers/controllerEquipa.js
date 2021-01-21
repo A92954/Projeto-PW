@@ -103,9 +103,16 @@ function updateCreditoEquipa(req, res) {
       const update = [creditos_equipa, id_equipa];
       const secondquery = connect.con.query('UPDATE equipa SET creditos_equipa = ? WHERE id_equipa = ?', update,
         function(err, rows, fields) {
-          res.send('Foram atribuidos ' +creditos_equipa+ ' pontos à Equipa ' +id_equipa);
-        })
-    });
+          if (!err) {
+            console.log("Number of records updated: " + rows.affectedRows);
+            res.status(200).send({"msg": "Foram atribuidos " +creditos_equipa+ " pontos à Equipa " +id_equipa});
+          }
+          else {
+            res.status(400).send({"msg": err.code});
+            console.log('Error while performing Query.', err);
+          }
+      });
+  });
 }
 
 module.exports = {
