@@ -17,6 +17,14 @@ function read(req, res) {
 }
 function readAcabada(req, res) {
   const query = connect.con.query(
+<<<<<<< HEAD
+    "SELECT oc.id_ocorrencia, loc.freguesia, oc.id_equipa, gu.descricao_urgencia, oc.data_ocorrencia FROM ocorrencia oc, localizacao loc, grau_urgencia gu WHERE oc.id_local = loc.id_local and oc.id_nivel = gu.id_nivel and oc.id_estado = 2",
+    function (err, rows, fields) {
+      if (err) return res.status(500).end();
+      res.send(rows);
+    }
+  );
+=======
       "SELECT oc.id_ocorrencia, loc.freguesia, oc.id_equipa, gu.descricao_urgencia, oc.data_ocorrencia FROM ocorrencia oc, localizacao loc, grau_urgencia gu WHERE oc.id_local = loc.id_local and oc.id_nivel = gu.id_nivel and oc.id_estado = 2",
        function (err, rows, fields) {
            if (!err) {
@@ -27,6 +35,7 @@ function readAcabada(req, res) {
              }else
         console.log('Error while performing Query.', err);
         });
+>>>>>>> d5102990ec246911b37f739323343d4d60b63e50
 }
 
 function readOcorrenciaX(req, res) {
@@ -74,6 +83,16 @@ function readCreditoOcorrenciaX(req, res) {
         }
 
 //Este metodo imprime apenas as ocorrencias que teem uma equipa atribuida e ainda esta a decorrer
+<<<<<<< HEAD
+function readOcorrenciaDecorrer(req, res) {
+  const query = connect.con.query(
+    "SELECT oc.id_ocorrencia, loc.morada, eq.nome_equipa FROM localizacao loc, equipa eq, ocorrencia oc WHERE data_fim_ocorrencia IS NULL and oc.id_local = loc.id_local and oc.id_equipa = eq.id_equipa",
+    function (err, rows, fields) {
+      if (err) return res.status(500).end();
+      res.send(rows);
+    }
+  );
+=======
 function readOcorrenciaAtual(req, res) {
   const id_operacional = req.params.id_operacional;
   let id_equipa;
@@ -94,6 +113,7 @@ function readOcorrenciaAtual(req, res) {
           }
       });
   });
+>>>>>>> d5102990ec246911b37f739323343d4d60b63e50
 }
 
 function readGrafico(req, res) {

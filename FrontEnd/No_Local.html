@@ -516,58 +516,17 @@
                 </div>
                 <form id="form" action="/FrontEnd/Pagina-principal.html">
                   <div class="modal-body">
-                    <h6>Operação bem sucedida?</h6>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="exampleRadios"
-                        required
-                        id="exampleRadios1"
-                        value="option1"
-                      />
-                      <label class="form-check-label" for="exampleRadios1">
-                        Sim
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="exampleRadios"
-                        required
-                        id="exampleRadios2"
-                        value="option2"
-                      />
-                      <label class="form-check-label" for="exampleRadios2">
-                        Não
-                      </label>
-                    </div>
-                    <br />
-                    <h6>Quantas vitimas faleceram?</h6>
+                    <h6>Indique a percentagem de sobreviventes</h6>
                     <input
                       type="range"
                       min="0"
-                      id="vitimas-f"
+                      id="vitimas-s"
                       max="100"
                       oninput="this.nextElementSibling.value = this.value"
                     />
-                    <output id="N-vitimas">%</output>
+                    <output id="N-sobreviventes">%</output>
                     <p id="text" style="display: none">Preencha esta opção.</p>
-                    <br />
-                    <br />
-                    <h6>Autoavaliação geral</h6>
-                    <input
-                      type="range"
-                      min="1"
-                      id="autoavaliacao-g"
-                      max="20"
-                      oninput="this.nextElementSibling.value = this.value"
-                    />
-                    <output id="autoavaliacao">0-20</output>
-                    <p id="text2" style="display: none">Preencha esta opção.</p>
                   </div>
-
                   <div class="modal-footer">
                     <button
                       id="botao"
