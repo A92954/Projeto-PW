@@ -1,5 +1,36 @@
 //quando inicia a página faz
-window.onload = function () {};
+window.onload = function () {
+  verOcorrenciaAtual();
+};
+
+
+//REFRESH DA TABELA
+function verOcorrenciaAtual() {
+  fetch('http://127.0.0.1:3000/agents/7/accurring', {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'GET',
+  })
+      .then(res => res.json())
+      .then((out) => {
+         // $('#label_local tbody').empty();
+          $.each(out, function (index, valor) {
+         //
+          document.getElementById("label_local").innerHTML = "Local da ocorrência: " + valor.freguesia;
+          document.getElementById("label_urgencia").innerHTML = "Grau de urgência: " + valor.descricao_urgencia;
+          document.getElementById("label_nomeEquipa").innerHTML = "Equipa: " + valor.nome_equipa;
+       
+
+
+
+
+          });
+
+      }).catch(err => {
+
+          alert("Erro!" + err);
+      });
+}
+
 
 //REFRESH DA TABELA
 function tabelaHist() {
