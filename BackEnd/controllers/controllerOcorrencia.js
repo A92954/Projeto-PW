@@ -1,7 +1,7 @@
 const connect = require("../database");
 const { save } = require("./controllerTestemunha");
-const nodemailer = require('nodemailer');
-const smtpTransport = require('nodemailer-smtp-transport');
+const nodemailer = require("nodemailer");
+const smtpTransport = require("nodemailer-smtp-transport");
 
 function read(req, res) {
   const query = connect.con.query(
@@ -18,16 +18,18 @@ function read(req, res) {
   );
 }
 function readAcabada(req, res) {
-  const query = connect.con.query("SELECT oc.id_ocorrencia, loc.freguesia, oc.id_equipa, gu.descricao_urgencia, oc.data_ocorrencia FROM ocorrencia oc, localizacao loc, grau_urgencia gu WHERE oc.id_local = loc.id_local and oc.id_nivel = gu.id_nivel and oc.id_estado = 2",
-       function (err, rows, fields) {
-           if (!err) {
-             if (rows.length == 0) {
-             res.status(404).send("Data not found");
-             }else{
-             res.status(200).send(rows);}
-             }else
-        console.log('Error while performing Query.', err);
-        });
+  const query = connect.con.query(
+    "SELECT oc.id_ocorrencia, loc.freguesia, oc.id_equipa, gu.descricao_urgencia, oc.data_ocorrencia FROM ocorrencia oc, localizacao loc, grau_urgencia gu WHERE oc.id_local = loc.id_local and oc.id_nivel = gu.id_nivel and oc.id_estado = 2",
+    function (err, rows, fields) {
+      if (!err) {
+        if (rows.length == 0) {
+          res.status(404).send("Data not found");
+        } else {
+          res.status(200).send(rows);
+        }
+      } else console.log("Error while performing Query.", err);
+    }
+  );
 }
 
 function readOcorrenciaX(req, res) {
@@ -75,9 +77,7 @@ function readCreditoOcorrenciaX(req, res) {
     }
   );
 }
-    
-   
-    
+
 //Este metodo imprime apenas as ocorrencias que teem uma equipa atribuida e ainda esta a decorrer
 function readOcorrenciaAtual(req, res) {
   const id_operacional = req.params.id_operacional;
@@ -97,15 +97,17 @@ function readOcorrenciaAtual(req, res) {
           id_ocorrencia = rows[0].id_ocorrencia;
           if (id_estado == 2) {
             const thirdquery = connect.con.query(
-              "SELECT lo.freguesia, ur.descricao_urgencia, eq.nome_equipa, ma.nome_material, om.quantidade_usada, oc.data_ocorrencia, op.id_operacional, op.username FROM localizacao lo, grau_urgencia ur, equipa eq, material ma, ocorrencia_material om, ocorrencia oc, operacional op WHERE oc.id_local = lo.id_local and oc.id_equipa = eq.id_equipa and oc.id_nivel = ur.id_nivel and oc.id_ocorrencia = om.id_ocorrencia and om.id_material = ma.id_material and op.id_equipa = eq.id_equipa and oc.id_ocorrencia = ?",
+              "SELECT oc.id_ocorrencia, lo.freguesia, ur.descricao_urgencia, eq.nome_equipa, ma.nome_material, om.quantidade_usada, oc.data_ocorrencia, op.id_operacional, op.username FROM localizacao lo, grau_urgencia ur, equipa eq, material ma, ocorrencia_material om, ocorrencia oc, operacional op WHERE oc.id_local = lo.id_local and oc.id_equipa = eq.id_equipa and oc.id_nivel = ur.id_nivel and oc.id_ocorrencia = om.id_ocorrencia and om.id_material = ma.id_material and op.id_equipa = eq.id_equipa and oc.id_ocorrencia = ?",
               id_ocorrencia,
               function (err, rows, fields) {
                 res.send(rows);
               }
             );
           }
-      });
-  });
+        }
+      );
+    }
+  );
 }
 
 function readGrafico(req, res) {
@@ -125,64 +127,83 @@ function readGrafico(req, res) {
 }
 
 //Envia um email ao Centro de Operações com os dados de uma ocorrência terminada
-function readDadosOcorrencia(req, res){
+function readDadosOcorrencia(req, res) {
   const id_ocorrencia = req.params.id_ocorrencia;
-  let   id_estado;
-  let   nome_equipa;
-  let   freguesia;
-  let   data_ocorrencia;
-  let   data_fim_ocorrencia;
-  const query = connect.con.query('SELECT id_estado FROM ocorrencia WHERE id_ocorrencia = ? ',id_ocorrencia,
-  function(err,rows,fields){
-    id_estado = rows[0].id_estado;
-    if(id_estado == 2 ){
-      const secondquery = connect.con.query('SELECT oc.id_ocorrencia, loc.freguesia, eq.nome_equipa, oc.data_ocorrencia, oc.data_fim_ocorrencia FROM ocorrencia oc, equipa eq, localizacao loc WHERE oc.id_equipa = eq.id_equipa AND oc.local = loc.id_local AND oc.id_ocorrencia = ?',id_ocorrencia,
-      function(err,rows,fields){
-        freguesia = rows[0].freguesia;
-        nome_equipa = rows[0].nome_equipa;
-        data_ocorrencia = rows[0].data_ocorrencia;
-        data_fim_ocorrencia = rows[0].data_fim_ocorrencia;
-        console.log(secondquery.sql);
-        if(!err){
-            let transporter = nodemailer.createTransport(smtpTransport({
-                service: 'Gmail',
-                auth: {
-                    user: 'pmar.ot.2021@gmail.com',
-                    pass: "pmarot2021"
-                },
-                tls: {
-                    rejectUnauthorized: false
-                }
-            }));
-            transporter.verify(function (err, success) {
+  let id_estado;
+  let nome_equipa;
+  let freguesia;
+  let data_ocorrencia;
+  let data_fim_ocorrencia;
+  const query = connect.con.query(
+    "SELECT id_estado FROM ocorrencia WHERE id_ocorrencia = ? ",
+    id_ocorrencia,
+    function (err, rows, fields) {
+      id_estado = rows[0].id_estado;
+      if (id_estado == 2) {
+        const secondquery = connect.con.query(
+          "SELECT oc.id_ocorrencia, loc.freguesia, eq.nome_equipa, oc.data_ocorrencia, oc.data_fim_ocorrencia FROM ocorrencia oc, equipa eq, localizacao loc WHERE oc.id_equipa = eq.id_equipa AND oc.local = loc.id_local AND oc.id_ocorrencia = ?",
+          id_ocorrencia,
+          function (err, rows, fields) {
+            freguesia = rows[0].freguesia;
+            nome_equipa = rows[0].nome_equipa;
+            data_ocorrencia = rows[0].data_ocorrencia;
+            data_fim_ocorrencia = rows[0].data_fim_ocorrencia;
+            console.log(secondquery.sql);
+            if (!err) {
+              let transporter = nodemailer.createTransport(
+                smtpTransport({
+                  service: "Gmail",
+                  auth: {
+                    user: "pmar.ot.2021@gmail.com",
+                    pass: "pmarot2021",
+                  },
+                  tls: {
+                    rejectUnauthorized: false,
+                  },
+                })
+              );
+              transporter.verify(function (err, success) {
                 if (err) {
-                console.log(err);
+                  console.log(err);
+                } else {
+                  console.log("Email pronto a ser enviado");
                 }
-                else {
-                console.log('Email pronto a ser enviado');
-                }
-            });
-            var mailOptions = {
-                from: 'pmar.ot.2021@gmail.com',
-                to: 'pw.policiamaritima@gmail.com',
-                cc: 'pmar.ot.2021@gmail.com',
-                subject: 'Dados da Ocorrência',
-                text: 'Olá, \nVimos por este meio fornecer-vos as informações relativas à ocorrência: ' +id_ocorrencia+ '.\nFreguesia: '+freguesia+' \nNome Equipa: ' +nome_equipa+ ' \nData da ocorrência: '+data_ocorrencia+ ' - ' +data_fim_ocorrencia+ ' \nAtenciosamente Responsavel Operações no terreno!' 
-            };
+              });
+              var mailOptions = {
+                from: "pmar.ot.2021@gmail.com",
+                to: "pw.policiamaritima@gmail.com",
+                cc: "pmar.ot.2021@gmail.com",
+                subject: "Dados da Ocorrência",
+                text:
+                  "Olá, \nVimos por este meio fornecer-vos as informações relativas à ocorrência: " +
+                  id_ocorrencia +
+                  ".\nFreguesia: " +
+                  freguesia +
+                  " \nNome Equipa: " +
+                  nome_equipa +
+                  " \nData da ocorrência: " +
+                  data_ocorrencia +
+                  " - " +
+                  data_fim_ocorrencia +
+                  " \nAtenciosamente Responsavel Operações no terreno!",
+              };
 
-            transporter.sendMail(mailOptions, function(err, info){
-                if(err){
-                    console.log(err);
-                }else{
-                    console.log('Email enviado: ' + info.response);
+              transporter.sendMail(mailOptions, function (err, info) {
+                if (err) {
+                  console.log(err);
+                } else {
+                  console.log("Email enviado: " + info.response);
                 }
-            })
+              });
             }
-            });
-                } else{
-            res.status(400).send("Ocorrência ainda se encontra em progresso");}
-    })
-};
+          }
+        );
+      } else {
+        res.status(400).send("Ocorrência ainda se encontra em progresso");
+      }
+    }
+  );
+}
 
 function updateCreditoOcorrencia(req, res) {
   const id_ocorrencia = req.params.id_ocorrencia;
@@ -318,7 +339,10 @@ function updatePercentagemSobrevivente(req, res) {
       [percentagem_sobrevivente, id_ocorrencia],
       function (err, rows, fields) {
         res.send(
-          "A percentagem " +percentagem_sobrevivente +"% foi inserida com sucesso");
+          "A percentagem " +
+            percentagem_sobrevivente +
+            "% foi inserida com sucesso"
+        );
       }
     );
   } else {
@@ -326,48 +350,51 @@ function updatePercentagemSobrevivente(req, res) {
   }
 }
 
-
-
-function updateTempoDeslocacao(req, res){
+function updateTempoDeslocacao(req, res) {
   const id_ocorrencia = req.params.id_ocorrencia;
   const tempo_deslocacao = req.body.tempo_deslocacao;
   const tempo_estimado_deslocacao = req.body.tempo_estimado_deslocacao;
-  let   update = [tempo_deslocacao, tempo_estimado_deslocacao, id_ocorrencia];
-  const query = connect.con.query('UPDATE ocorrencia SET tempo_deslocacao = ?, tempo_estimado_deslocacao = ? WHERE id_ocorrencia = ?', update,
-    function(err,rows,fields){
+  let update = [tempo_deslocacao, tempo_estimado_deslocacao, id_ocorrencia];
+  const query = connect.con.query(
+    "UPDATE ocorrencia SET tempo_deslocacao = ?, tempo_estimado_deslocacao = ? WHERE id_ocorrencia = ?",
+    update,
+    function (err, rows, fields) {
       if (!err) {
         console.log("Number of records updated: " + rows.affectedRows);
-        res.status(200).send("O tempo de deslocação real e estimado foram inseridos!");
-        } else {
-        res.status(400).send({"msg": err.code});
-        console.log('Error while performing Query.', err);
-        }}
-    )
+        res
+          .status(200)
+          .send("O tempo de deslocação real e estimado foram inseridos!");
+      } else {
+        res.status(400).send({ msg: err.code });
+        console.log("Error while performing Query.", err);
+      }
+    }
+  );
 }
 
-function readDiferencaTempo(req, res){
+function readDiferencaTempo(req, res) {
   const id_ocorrencia = req.params.id_ocorrencia;
   let tempo_deslocacao;
   let tempo_estimado_deslocacao;
   let diferencaTempo;
-  const query = connect.con.query("SELECT tempo_deslocacao, tempo_estimado_deslocacao FROM ocorrencia WHERE id_ocorrencia = ?",id_ocorrencia,
-    function(err,rows,fields){
+  const query = connect.con.query(
+    "SELECT tempo_deslocacao, tempo_estimado_deslocacao FROM ocorrencia WHERE id_ocorrencia = ?",
+    id_ocorrencia,
+    function (err, rows, fields) {
       tempo_deslocacao = rows[0].tempo_deslocacao;
       tempo_estimado_deslocacao = rows[0].tempo_estimado_deslocacao;
       diferencaTempo = tempo_estimado_deslocacao - tempo_deslocacao;
       console.log(tempo_deslocacao);
-      console.log(tempo_estimado_deslocacao),
-      console.log(diferencaTempo);
+      console.log(tempo_estimado_deslocacao), console.log(diferencaTempo);
       if (!err) {
-          if (rows.length == 0) {
+        if (rows.length == 0) {
           res.status(404).send("Data not found");
         } else {
-          
-        res.status(200).send(+diferencaTempo+ "");
-        } 
-      } else
-        res.status(400).send({"Msg": err.code});
-      })
+          res.status(200).send(+diferencaTempo + "");
+        }
+      } else res.status(400).send({ Msg: err.code });
+    }
+  );
 }
 
 module.exports = {
