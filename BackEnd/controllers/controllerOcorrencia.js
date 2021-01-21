@@ -77,10 +77,6 @@ function readCreditoOcorrenciaX(req, res) {
 }
 
 //Este metodo imprime apenas as ocorrencias que teem uma equipa atribuida e ainda esta a decorrer
-<<<<<<< HEAD
-
-=======
->>>>>>> 3eeb95a2c61abf61824c3f58f05c4b08fc359e16
 function readOcorrenciaAtual(req, res) {
   const id_operacional = req.params.id_operacional;
   let id_equipa;
