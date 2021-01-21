@@ -87,7 +87,7 @@ function readOcorrenciaAtual(req, res) {
           id_estado = rows[0].id_estado;
           id_ocorrencia = rows[0].id_ocorrencia;
           if (id_estado == 2) {
-            const thirdquery = connect.con.query('SELECT lo.freguesia, ur.descricao_urgencia, eq.nome_equipa, ma.nome_material, om.quantidade_usada, oc.data_ocorrencia FROM localizacao lo, grau_urgencia ur, equipa eq, material ma, ocorrencia_material om, ocorrencia oc WHERE oc.id_local = lo.id_local and oc.id_equipa = eq.id_equipa and oc.id_nivel = ur.id_nivel and oc.id_ocorrencia = om.id_ocorrencia and om.id_material = ma.id_material and oc.id_ocorrencia = ?', id_ocorrencia,
+            const thirdquery = connect.con.query('SELECT lo.freguesia, ur.descricao_urgencia, eq.nome_equipa, ma.nome_material, om.quantidade_usada, oc.data_ocorrencia, op.id_operacional, op.username FROM localizacao lo, grau_urgencia ur, equipa eq, material ma, ocorrencia_material om, ocorrencia oc, operacional op WHERE oc.id_local = lo.id_local and oc.id_equipa = eq.id_equipa and oc.id_nivel = ur.id_nivel and oc.id_ocorrencia = om.id_ocorrencia and om.id_material = ma.id_material and op.id_equipa = eq.id_equipa and oc.id_ocorrencia = ?', id_ocorrencia,
               function(err, rows, fields) {
                 res.send(rows);
               });
