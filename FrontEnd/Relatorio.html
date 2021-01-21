@@ -89,22 +89,13 @@
                     </div>
                     <div class="card-body">
                       
-                      <h5>Material:</h5>
+                      <label for="exampleFormControlSelect3" id="teste">Material alocado à ocorrência:</label>
                       <div class="col-lg-12">
                         <select
                           multiple
-                          class="form-control"
-                          id="exampleFormControlSelect2"
+                          class="form-control listas"
+                          id="exampleFormControlSelect3"
                         >
-                          <option>Coletes salva-vidas</option>
-                          <option>Primeiros socorros</option>
-                          <option>Boias</option>
-                          <option>Prancha</option>
-                          <option>Barcos</option>
-                          <option>Botijas de oxigênio</option>
-                          <option>Carros de salvamento</option>
-                          <option>Cordas</option>
-                          <option>Outros</option>
                         </select>
                       </div>
                       
@@ -112,16 +103,16 @@
 
                       <h5>Dados da ocorrência:</h5>
                       <div class="col-lg-12">
-                        <h6>Local: Praia de Viana Do Castelo</h6>
-                        <h6>Urgência: Nível 5</h6>
+                        <h6 id="label_local"></h6>
+                        <h6 id="label_urgencia"></h6>
                         <div class="form-group">
                           <!-- o id nomeEquipaAtual devia ser uma classe -->
-                          <label for="exampleFormControlSelect2" id="nomeEquipaAtual" >Equipa: </label>
+                          <label for="exampleFormControlSelect2" id="label_nomeEquipa" >Equipa: </label>
                           
                           <div class="table-responsive">
                             <table
                               class="table table-bordered table-hover"
-                              id="tabela-equipa-relatorio"
+                              id="tabela-equipa-oco-atual"
                               width="100%"
                               cellspacing="0"
                             >
@@ -206,5 +197,6 @@
 
     <!-- Page level custom scripts -->
     <script src="/FrontEnd/js/demo/datatables-demo.js"></script>
+    <script src="/FrontEnd/controllers/controllerOcorrencia.js"></script>
   </body>
 </html>
