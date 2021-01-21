@@ -5,20 +5,37 @@ function read(req, res) {
   const query = connect.con.query(
     "SELECT oc.id_ocorrencia, loc.freguesia, oc.id_equipa, gu.descricao_urgencia oc.data_ocorrencia FROM ocorrencia oc, localizacao loc, grau_urgencia gu WHERE oc.id_local = loc.id_local and oc.id_nivel = gu.id_nivel",
     function (err, rows, fields) {
-      if (err) return res.status(500).end();
-      res.send(rows);
-    }
-  );
+      if (!err) {
+        if (rows.length == 0) {
+        res.status(404).send("Data not found");
+        } else {
+        res.status(200).send(rows);
+        }
+        } else
+        console.log('Error while performing Query.', err);
+        });
 }
-
 function readAcabada(req, res) {
   const query = connect.con.query(
+<<<<<<< HEAD
     "SELECT oc.id_ocorrencia, loc.freguesia, oc.id_equipa, gu.descricao_urgencia, oc.data_ocorrencia FROM ocorrencia oc, localizacao loc, grau_urgencia gu WHERE oc.id_local = loc.id_local and oc.id_nivel = gu.id_nivel and oc.id_estado = 2",
     function (err, rows, fields) {
       if (err) return res.status(500).end();
       res.send(rows);
     }
   );
+=======
+      "SELECT oc.id_ocorrencia, loc.freguesia, oc.id_equipa, gu.descricao_urgencia, oc.data_ocorrencia FROM ocorrencia oc, localizacao loc, grau_urgencia gu WHERE oc.id_local = loc.id_local and oc.id_nivel = gu.id_nivel and oc.id_estado = 2",
+       function (err, rows, fields) {
+           if (!err) {
+             if (rows.length == 0) {
+             res.status(404).send("Data not found");
+             }else{
+             res.status(200).send(rows);}
+             }else
+        console.log('Error while performing Query.', err);
+        });
+>>>>>>> d5102990ec246911b37f739323343d4d60b63e50
 }
 
 function readOcorrenciaX(req, res) {
@@ -27,12 +44,21 @@ function readOcorrenciaX(req, res) {
     "SELECT * FROM ocorrencia WHERE id_ocorrencia = ?",
     id_ocorrencia,
     function (err, results) {
-      if (err) return res.status(500).end();
-      if (results.length == 0) return res.status(404).end();
-      res.send(results[0]);
-    }
-  );
-}
+      if (!err) {
+        if (rows.length == 0) {
+        res.status(404).send({
+        "msg": "data not found"
+        });
+        } else {
+        res.status(200).send(rows);
+        }
+        } else
+        res.status(400).send({
+        "msg": err.code
+        });
+        console.log('Error while performing Query.', err);
+        });
+        }
 
 function readCreditoOcorrenciaX(req, res) {
   const id_ocorrencia = req.params.id_ocorrencia;
@@ -40,13 +66,24 @@ function readCreditoOcorrenciaX(req, res) {
     "SELECT creditos_ocorrencia FROM ocorrencia WHERE id_ocorrencia = ?",
     id_ocorrencia,
     function (err, rows, fields) {
-      if (err) return res.status(500).end();
-      res.send(rows[0]);
-    }
-  );
-}
+      if (!err) {
+        if (rows.length == 0) {
+        res.status(404).send({
+        "msg": "data not found"
+        });
+        } else {
+        res.status(200).send(rows);
+        }
+        } else
+        res.status(400).send({
+        "msg": err.code
+        });
+        console.log('Error while performing Query.', err);
+        });
+        }
 
 //Este metodo imprime apenas as ocorrencias que teem uma equipa atribuida e ainda esta a decorrer
+<<<<<<< HEAD
 function readOcorrenciaDecorrer(req, res) {
   const query = connect.con.query(
     "SELECT oc.id_ocorrencia, loc.morada, eq.nome_equipa FROM localizacao loc, equipa eq, ocorrencia oc WHERE data_fim_ocorrencia IS NULL and oc.id_local = loc.id_local and oc.id_equipa = eq.id_equipa",
@@ -55,6 +92,28 @@ function readOcorrenciaDecorrer(req, res) {
       res.send(rows);
     }
   );
+=======
+function readOcorrenciaAtual(req, res) {
+  const id_operacional = req.params.id_operacional;
+  let id_equipa;
+  let id_estado;
+  let id_ocorrencia;
+  const query = connect.con.query('SELECT id_equipa FROM operacional WHERE id_operacional = ?', id_operacional,
+    function(err, rows, fields) {
+      id_equipa = rows[0].id_equipa;
+      const secondquery = connect.con.query('SELECT id_estado, id_ocorrencia FROM ocorrencia WHERE id_equipa = ? and data_fim_ocorrencia IS NULL', id_equipa,
+        function(err, rows, fields) {
+          id_estado = rows[0].id_estado;
+          id_ocorrencia = rows[0].id_ocorrencia;
+          if (id_estado == 2) {
+            const thirdquery = connect.con.query('SELECT lo.freguesia, ur.descricao_urgencia, eq.nome_equipa, ma.nome_material, om.quantidade_usada, oc.data_ocorrencia, op.id_operacional, op.username FROM localizacao lo, grau_urgencia ur, equipa eq, material ma, ocorrencia_material om, ocorrencia oc, operacional op WHERE oc.id_local = lo.id_local and oc.id_equipa = eq.id_equipa and oc.id_nivel = ur.id_nivel and oc.id_ocorrencia = om.id_ocorrencia and om.id_material = ma.id_material and op.id_equipa = eq.id_equipa and oc.id_ocorrencia = ?', id_ocorrencia,
+              function(err, rows, fields) {
+                res.send(rows);
+              });
+          }
+      });
+  });
+>>>>>>> d5102990ec246911b37f739323343d4d60b63e50
 }
 
 function readGrafico(req, res) {
@@ -75,29 +134,60 @@ function readGrafico(req, res) {
 
 function updateCreditoOcorrencia(req, res) {
   const id_ocorrencia = req.params.id_ocorrencia;
-  let creditos_ocorrencia = req.body.creditos_ocorrencia;
-  creditos_ocorrencia = parseInt(creditos_ocorrencia, 10);
   let id_estado;
-  const query = connect.con.query(
-    "SELECT id_estado FROM ocorrencia WHERE id_ocorrencia = ?",
-    id_ocorrencia,
+  let duracao_ocorrencia;
+  let id_nivel;
+  let percentagem_sobrevivente;
+  let creditos_ocorrencia;
+  const query = connect.con.query("SELECT id_estado, duracao_ocorrencia, id_nivel, percentagem_sobrevivente, creditos_ocorrencia FROM ocorrencia WHERE id_ocorrencia = ? and data_fim_ocorrencia IS NOT NULL", id_ocorrencia,
     function (err, rows, fields) {
       id_estado = rows[0].id_estado;
+      creditos_ocorrencia = rows[0].creditos_ocorrencia;
       if (err) return res.status(500).end();
       if (id_estado == 2) {
+        duracao_ocorrencia = rows[0].duracao_ocorrencia;
+        id_nivel = rows[0].id_nivel;
+        percentagem_sobrevivente = rows[0].percentagem_sobrevivente;
+        switch(id_nivel) {
+          case 1: creditos_ocorrencia = creditos_ocorrencia + 6;
+            break;
+          case 2: creditos_ocorrencia = creditos_ocorrencia + 12;
+            break;
+          case 3: creditos_ocorrencia = creditos_ocorrencia + 18;
+            break;
+          case 4: creditos_ocorrencia = creditos_ocorrencia + 24;
+            break;
+          case 5: creditos_ocorrencia = creditos_ocorrencia + 30;
+            break;
+        }
+        if(duracao_ocorrencia < 60) {
+          creditos_ocorrencia = creditos_ocorrencia + 20;
+        }
+        if(duracao_ocorrencia > 60) {
+          creditos_ocorrencia = creditos_ocorrencia + 10;
+        }
+        if(percentagem_sobrevivente == 100) {
+          creditos_ocorrencia = creditos_ocorrencia + 50;
+        }
+        if(percentagem_sobrevivente >= 50 && percentagem_sobrevivente < 100) {
+          creditos_ocorrencia = creditos_ocorrencia + 30;
+        }
+        if(percentagem_sobrevivente > 0 && percentagem_sobrevivente < 50) {
+          creditos_ocorrencia = creditos_ocorrencia + 10;
+        }
+        if(percentagem_sobrevivente == 0) {
+          creditos_ocorrencia = creditos_ocorrencia + 0;
+        }
         const update = [creditos_ocorrencia, id_ocorrencia];
-        const secondquery = connect.con.query(
-          "UPDATE ocorrencia SET creditos_ocorrencia = ? WHERE id_ocorrencia = ?",
-          update,
-          function (err, rows, fields) {
+        const query = connect.con.query('UPDATE ocorrencia SET creditos_ocorrencia = ? WHERE id_ocorrencia = ?', update,
+          function(err, rows, fields) {
             res.send("Os creditos foram atribuidos com sucesso");
-          }
-        );
-      } else {
+          });
+      }
+      else {
         res.send("A ocorrencia ainda nao esta concluida");
       }
-    }
-  );
+  });
 }
 
 function updateConfirmarPartidaOcorrencia(req, res) {
@@ -182,7 +272,7 @@ module.exports = {
   readAcabada: readAcabada,
   readOcorrenciaX: readOcorrenciaX,
   readCreditoOcorrenciaX: readCreditoOcorrenciaX,
-  readOcorrenciaDecorrer: readOcorrenciaDecorrer,
+  readOcorrenciaAtual: readOcorrenciaAtual,
   readGrafico: readGrafico,
   updateCreditoOcorrencia: updateCreditoOcorrencia,
   updateConfirmarPartidaOcorrencia: updateConfirmarPartidaOcorrencia,
