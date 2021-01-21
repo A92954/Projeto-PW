@@ -111,10 +111,31 @@
                       <br>
 
                       <h5>Dados da ocorrência:</h5>
-                      <div class="col-lg-6">
+                      <div class="col-lg-12">
                         <h6>Local: Praia de Viana Do Castelo</h6>
                         <h6>Urgência: Nível 5</h6>
-                        <h6>Equipa: ex1 <br />ex2<br />ex3<br />ex4<br />ex5</h6>
+                        <div class="form-group">
+                          <!-- o id nomeEquipaAtual devia ser uma classe -->
+                          <label for="exampleFormControlSelect2" id="nomeEquipaAtual" >Equipa: </label>
+                          
+                          <div class="table-responsive">
+                            <table
+                              class="table table-bordered table-hover"
+                              id="tabela-equipa-relatorio"
+                              width="100%"
+                              cellspacing="0"
+                            >
+                              <thead>
+                                <tr>
+                                  <th>Id</th>
+                                  <th>Nome</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
                       </div>
                       
                       <br>
@@ -178,9 +199,6 @@
 
     <!-- Page level plugins -->
     <script src="/FrontEnd/vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="/FrontEnd/js/demo/chart-area-demo.js"></script>
 
     <!-- Page level plugins -->
     <script src="/FrontEnd/vendor/datatables/jquery.dataTables.min.js"></script>
