@@ -5,20 +5,28 @@ function read(req, res) {
   const query = connect.con.query(
     "SELECT oc.id_ocorrencia, loc.freguesia, oc.id_equipa, gu.descricao_urgencia oc.data_ocorrencia FROM ocorrencia oc, localizacao loc, grau_urgencia gu WHERE oc.id_local = loc.id_local and oc.id_nivel = gu.id_nivel",
     function (err, rows, fields) {
-      if (err) return res.status(500).end();
-      res.send(rows);
-    }
-  );
+      if (!err) {
+        if (rows.length == 0) {
+        res.status(404).send("Data not found");
+        } else {
+        res.status(200).send(rows);
+        }
+        } else
+        console.log('Error while performing Query.', err);
+        });
 }
-
 function readAcabada(req, res) {
   const query = connect.con.query(
-    "SELECT oc.id_ocorrencia, loc.freguesia, oc.id_equipa, gu.descricao_urgencia, oc.data_ocorrencia FROM ocorrencia oc, localizacao loc, grau_urgencia gu WHERE oc.id_local = loc.id_local and oc.id_nivel = gu.id_nivel and oc.id_estado = 2",
-    function (err, rows, fields) {
-      if (err) return res.status(500).end();
-      res.send(rows);
-    }
-  );
+      "SELECT oc.id_ocorrencia, loc.freguesia, oc.id_equipa, gu.descricao_urgencia, oc.data_ocorrencia FROM ocorrencia oc, localizacao loc, grau_urgencia gu WHERE oc.id_local = loc.id_local and oc.id_nivel = gu.id_nivel and oc.id_estado = 2",
+       function (err, rows, fields) {
+           if (!err) {
+             if (rows.length == 0) {
+             res.status(404).send("Data not found");
+             }else{
+             res.status(200).send(rows);}
+             }else
+        console.log('Error while performing Query.', err);
+        });
 }
 
 function readOcorrenciaX(req, res) {
@@ -27,12 +35,21 @@ function readOcorrenciaX(req, res) {
     "SELECT * FROM ocorrencia WHERE id_ocorrencia = ?",
     id_ocorrencia,
     function (err, results) {
-      if (err) return res.status(500).end();
-      if (results.length == 0) return res.status(404).end();
-      res.send(results[0]);
-    }
-  );
-}
+      if (!err) {
+        if (rows.length == 0) {
+        res.status(404).send({
+        "msg": "data not found"
+        });
+        } else {
+        res.status(200).send(rows);
+        }
+        } else
+        res.status(400).send({
+        "msg": err.code
+        });
+        console.log('Error while performing Query.', err);
+        });
+        }
 
 function readCreditoOcorrenciaX(req, res) {
   const id_ocorrencia = req.params.id_ocorrencia;
@@ -40,14 +57,24 @@ function readCreditoOcorrenciaX(req, res) {
     "SELECT creditos_ocorrencia FROM ocorrencia WHERE id_ocorrencia = ?",
     id_ocorrencia,
     function (err, rows, fields) {
-      if (err) return res.status(500).end();
-      res.send(rows[0]);
-    }
-  );
-}
+      if (!err) {
+        if (rows.length == 0) {
+        res.status(404).send({
+        "msg": "data not found"
+        });
+        } else {
+        res.status(200).send(rows);
+        }
+        } else
+        res.status(400).send({
+        "msg": err.code
+        });
+        console.log('Error while performing Query.', err);
+        });
+        }
 
 //Este metodo imprime apenas as ocorrencias que teem uma equipa atribuida e ainda esta a decorrer
-<<<<<<< HEAD
+
 function readOcorrenciaAtual(req, res) {
   const id_operacional = req.params.id_operacional;
   let id_equipa;
@@ -68,17 +95,7 @@ function readOcorrenciaAtual(req, res) {
           }
         });
     });
-=======
-function readOcorrenciaDecorrer(req, res) {
-  const query = connect.con.query(
-    "SELECT oc.id_ocorrencia, loc.morada, eq.nome_equipa FROM localizacao loc, equipa eq, ocorrencia oc WHERE data_fim_ocorrencia IS NULL and oc.id_local = loc.id_local and oc.id_equipa = eq.id_equipa",
-    function (err, rows, fields) {
-      if (err) return res.status(500).end();
-      res.send(rows);
-    }
-  );
->>>>>>> 4f9bcda73699a921e0444bb180083ba77d590a62
-}
+  }
 
 function readGrafico(req, res) {
   const query = connect.con.query(
