@@ -8,5 +8,4 @@ function ocorrAtual() {
   var nomeEq = response.nome_equipa;
   document.getElementById("nomeEquipaAtual").innerHTML
  
-}
-*/
+}*/
