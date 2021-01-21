@@ -6,6 +6,7 @@ window.onload = function () {
 
 //REFRESH DA TABELA
 function verOcorrenciaAtual() {
+  let table = $("#tabela-equipa-oco-atual").DataTable();
   fetch('http://127.0.0.1:3000/agents/7/accurring', {
       headers: { 'Content-Type': 'application/json' },
       method: 'GET',
@@ -19,7 +20,14 @@ function verOcorrenciaAtual() {
           document.getElementById("label_urgencia").innerHTML = "Grau de urgência: " + valor.descricao_urgencia;
           document.getElementById("label_nomeEquipa").innerHTML = "Equipa: " + valor.nome_equipa;
        
+          table.row
+          .add([
+            valor.id_operacional,
+            valor.username,
+          ])
+          .draw();
 
+          
 
 
 
@@ -30,6 +38,7 @@ function verOcorrenciaAtual() {
           alert("Erro!" + err);
       });
 }
+  
 
 
 //REFRESH DA TABELA
