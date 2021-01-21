@@ -1,4 +1,4 @@
-window.onload() = function () {
+/*window.onload() = function () {
   ocorrAtual();
 };
 
@@ -9,3 +9,4 @@ function ocorrAtual() {
   document.getElementById("nomeEquipaAtual").innerHTML
  
 }
+*/
