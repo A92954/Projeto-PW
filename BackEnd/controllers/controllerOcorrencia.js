@@ -343,5 +343,4 @@ module.exports = {
   updateConfirmarPartidaOcorrencia: updateConfirmarPartidaOcorrencia,
   updateDuracaoOcorrencia: updateDuracaoOcorrencia,
   updatePercentagemSobrevivente: updatePercentagemSobrevivente,
-
 };
