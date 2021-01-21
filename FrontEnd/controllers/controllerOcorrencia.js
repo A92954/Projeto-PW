@@ -16,9 +16,17 @@ function confirmarOcorrencia(){
       .then(res => res.json())
       .then((out) => {
           $.each(out, function (index, valor) {
-          document.getElementById("teste").innerHTML = "Local da ocorrência: ";
+    //      document.getElementById("teste").innerHTML = "Local da ocorrência: ";
+         
+        
+            var x = document.getElementById("exampleFormControlSelect2");
+            var c = document.createElement("option");
+            c.text = valor.quantidade_usada + " --> " + valor.nome_material;
+            x.options.add(c, 1);
+          
           });
-
+   
+      
       }).catch(err => {
 
           alert("Erro!" + err);
@@ -47,11 +55,6 @@ function verOcorrenciaAtual() {
             valor.username,
           ])
           .draw();
-
-          
-
-
-
           });
 
       }).catch(err => {
