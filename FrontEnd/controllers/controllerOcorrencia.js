@@ -4,6 +4,7 @@ window.onload = function () {
 };
 
 
+
 document.getElementById("btnTestemunhas").onclick = function (){
   confirmarOcorrencia();
 };
@@ -19,11 +20,10 @@ function confirmarOcorrencia(){
     //      document.getElementById("teste").innerHTML = "Local da ocorrência: ";
          
         
-            var x = document.getElementById("exampleFormControlSelect2");
+           var x = document.getElementById("exampleFormControlSelect2");
             var c = document.createElement("option");
             c.text = valor.quantidade_usada + " --> " + valor.nome_material;
             x.options.add(c, 1);
-          
           });
    
       
