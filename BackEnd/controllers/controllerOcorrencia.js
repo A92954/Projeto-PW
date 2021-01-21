@@ -1,5 +1,7 @@
 const connect = require("../database");
 const { save } = require("./controllerTestemunha");
+const nodemailer = require('nodemailer');
+const smtpTransport = require('nodemailer-smtp-transport');
 
 function read(req, res) {
   const query = connect.con.query(
@@ -271,6 +273,67 @@ function updatePercentagemSobrevivente(req, res) {
   }
 }
 
+//Envia um email ao Centro de Operações com os dados de uma ocorrência terminada
+function readDadosOcorrencia(req, res){
+  const id_ocorrencia = req.params.id_ocorrencia;
+  let   id_estado;
+  let   nome_equipa;
+  let   freguesia;
+  let   data_ocorrencia;
+  let   data_fim_ocorrencia;
+  const query = connect.con.query('SELECT id_estado FROM ocorrencia WHERE id_ocorrencia = ? ',id_ocorrencia,
+  function(err,rows,fields){
+    id_estado = rows[0].id_estado;
+    if(id_estado == 2 ){
+      const secondquery = connect.con.query('SELECT oc.id_ocorrencia, loc.freguesia, eq.nome_equipa, oc.data_ocorrencia, oc.data_fim_ocorrencia FROM ocorrencia oc, equipa eq, localizacao loc WHERE oc.id_equipa = eq.id_equipa AND oc.local = loc.id_local AND oc.id_ocorrencia = ?',id_ocorrencia,
+      function(err,rows,fields){
+        freguesia = rows[0].freguesia;
+        nome_equipa = rows[0].nome_equipa;
+        data_ocorrencia = rows[0].data_ocorrencia;
+        data_fim_ocorrencia = rows[0].data_fim_ocorrencia;
+        console.log(secondquery.sql);
+        if(!err){
+            let transporter = nodemailer.createTransport(smtpTransport({
+                service: 'Gmail',
+                auth: {
+                    user: 'pmar.ot.2021@gmail.com',
+                    pass: "pmarot2021"
+                },
+                tls: {
+                    rejectUnauthorized: false
+                }
+            }));
+            transporter.verify(function (err, success) {
+                if (err) {
+                console.log(err);
+                }
+                else {
+                console.log('Email pronto a ser enviado');
+                }
+            });
+            var mailOptions = {
+                from: 'pmar.ot.2021@gmail.com',
+                to: 'pw.policiamaritima@gmail.com',
+                cc: 'pmar.ot.2021@gmail.com',
+                subject: 'Dados da Ocorrência',
+                text: 'Olá, \nVimos por este meio fornecer-vos as informações relativas à ocorrência: ' +id_ocorrencia+ '.\nFreguesia: '+freguesia+' \nNome Equipa: ' +nome_equipa+ ' \nData da ocorrência: '+data_ocorrencia+ ' - ' +data_fim_ocorrencia+ ' \nAtenciosamente Responsavel Operações no terreno!' 
+            };
+
+            transporter.sendMail(mailOptions, function(err, info){
+                if(err){
+                    console.log(err);
+                }else{
+                    console.log('Email enviado: ' + info.response);
+                }
+            })
+            }
+            });
+                } else{
+            res.status(400).send("Ocorrência ainda se encontra em progresso");}
+    })
+};
+
+
 module.exports = {
   read: read,
   readAcabada: readAcabada,
@@ -278,8 +341,10 @@ module.exports = {
   readCreditoOcorrenciaX: readCreditoOcorrenciaX,
   readOcorrenciaAtual: readOcorrenciaAtual,
   readGrafico: readGrafico,
+  readDadosOcorrencia: readDadosOcorrencia,
   updateCreditoOcorrencia: updateCreditoOcorrencia,
   updateConfirmarPartidaOcorrencia: updateConfirmarPartidaOcorrencia,
   updateDuracaoOcorrencia: updateDuracaoOcorrencia,
   updatePercentagemSobrevivente: updatePercentagemSobrevivente,
+
 };
