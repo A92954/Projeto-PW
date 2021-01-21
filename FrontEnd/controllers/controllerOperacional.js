@@ -9,3 +9,23 @@ function ocorrAtual() {
   document.getElementById("nomeEquipaAtual").innerHTML
  
 }*/
+function mostraNome() {
+  fetch("http://127.0.0.1:3000/agents/7/agent", {
+    headers: { "Content-Type": "application/json" },
+    method: "GET",
+  })
+    .then((res) => res.json())
+    .then((out) => {
+      $.each(out, function (index, valor) {
+        //
+        document.getElementById("span_nome").innerHTML = valor.username;
+      });
+    })
+    .catch((err) => {
+      alert("Erro!" + err);
+    });
+}
+
+$(document).ready(function () {
+  mostraNome();
+});

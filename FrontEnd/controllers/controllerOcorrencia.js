@@ -63,7 +63,6 @@ function verOcorrenciaAtual() {
     .then((out) => {
       // $('#label_local tbody').empty();
       $.each(out, function (index, valor) {
-        //
         document.getElementById("label_local").innerHTML =
           "Local da ocorrência: " + valor.freguesia;
         document.getElementById("label_urgencia").innerHTML =
