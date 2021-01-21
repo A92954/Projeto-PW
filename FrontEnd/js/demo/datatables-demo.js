@@ -74,3 +74,26 @@ $(document).ready(function () {
 $("#tabela-historico-ocorrencias").on("keyup", function () {
   tableInstance.search(this.value).draw(); // try this easy code and check if works at first
 });
+
+// TENTAR SUBLINHAR A LINHA DO RANKING DO GAJO (acho q está só da para fazer qd der o login, para sabermos quem está ligado)
+/*
+$(document).ready(function () {
+  $("#tabela-ranking-operacionais").DataTable();
+  $("#taabela-ranking-operacionais tbody").on("click", "tr", function () {
+    var id_ocorr = $("td", this).eq(0).text();
+    $("#id_ocorr_selec").text(id_ocorr);
+
+    var response = fetch(
+      `http://127.0.0.1:3000/materials/${id_ocorr}/material`
+    );
+    var mat_usado = JSON.stringify(response);
+    $("#material_usado").text(mat_usado);
+
+    var credito_equipa = $("td", this).eq(5).text();
+    $("#credito_ocorr").text(credito_equipa);
+  });
+});
+$("#tabela-ranking-operacionais").on("keyup", function () {
+  tableInstance.search(this.value).draw(); 
+});
+*/
