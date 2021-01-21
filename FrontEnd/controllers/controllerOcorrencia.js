@@ -4,6 +4,27 @@ window.onload = function () {
 };
 
 
+document.getElementById("btnTestemunhas").onclick = function (){
+  confirmarOcorrencia();
+};
+
+function confirmarOcorrencia(){
+  fetch('http://127.0.0.1:3000/agents/7/accurring', {  //mudar a rota do fetch
+      headers: { 'Content-Type': 'application/json' },
+      method: 'GET',
+  })
+      .then(res => res.json())
+      .then((out) => {
+          $.each(out, function (index, valor) {
+          document.getElementById("teste").innerHTML = "Local da ocorrência: ";
+          });
+
+      }).catch(err => {
+
+          alert("Erro!" + err);
+      });
+}
+
 //REFRESH DA TABELA
 function verOcorrenciaAtual() {
   let table = $("#tabela-equipa-oco-atual").DataTable();
