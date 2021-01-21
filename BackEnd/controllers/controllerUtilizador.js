@@ -24,7 +24,7 @@ function updateUtilizador(req, res) {
   const query = connect.con.query(
     "UPDATE utilizador SET nome = ?, email_utilizador = ?, password = ? WHERE username = ?",
     update,
-    function (err, results) {
+    function (err, rows, fields) {
       console.log(query.sql);
       if (!err) {
         console.log("Number of records updated: " + rows.affectedRows);

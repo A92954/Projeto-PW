@@ -13,7 +13,7 @@ router.get("/", function (req, res) {
 
 //Utilizador
 
-router.get("/users", controllerUtilizador.read);
+router.get("/utilizador", controllerUtilizador.read);
 router.put("/utilizador/:username", controllerUtilizador.updateUtilizador);
 
 //Equipa
