@@ -18,9 +18,7 @@ function read(req, res) {
   );
 }
 function readAcabada(req, res) {
-  const query = connect.con.query(
-
-      "SELECT oc.id_ocorrencia, loc.freguesia, oc.id_equipa, gu.descricao_urgencia, oc.data_ocorrencia FROM ocorrencia oc, localizacao loc, grau_urgencia gu WHERE oc.id_local = loc.id_local and oc.id_nivel = gu.id_nivel and oc.id_estado = 2",
+  const query = connect.con.query("SELECT oc.id_ocorrencia, loc.freguesia, oc.id_equipa, gu.descricao_urgencia, oc.data_ocorrencia FROM ocorrencia oc, localizacao loc, grau_urgencia gu WHERE oc.id_local = loc.id_local and oc.id_nivel = gu.id_nivel and oc.id_estado = 2",
        function (err, rows, fields) {
            if (!err) {
              if (rows.length == 0) {
@@ -30,7 +28,6 @@ function readAcabada(req, res) {
              }else
         console.log('Error while performing Query.', err);
         });
-
 }
 
 function readOcorrenciaX(req, res) {
