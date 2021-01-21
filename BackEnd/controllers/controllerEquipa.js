@@ -4,10 +4,16 @@ function read(req, res) {
   const query = connect.con.query(
     "SELECT * FROM equipa",
     function (err, rows, fields) {
-      if (err) return res.status(500).end();
-      res.send(rows);
-    }
-  );
+      if (!err) {
+        if (rows.length == 0) {
+          res.status(404).send("Data not found");
+        }
+        else {
+          res.status(200).send(rows);
+        }
+      }
+      else console.log('Error while performing Query.', err);
+    });
 }
 
 function readEquipaOcorrencia(req, res) {
@@ -16,10 +22,17 @@ function readEquipaOcorrencia(req, res) {
     "SELECT eq.* FROM equipa eq, ocorrencia oc WHERE oc.id_ocorrencia = ? and eq.id_equipa = oc.id_equipa",
     id_ocorrencia,
     function (err, rows, fields) {
-      if (err) return res.status(500).end();
-      res.send(rows);
-    }
-  );
+      if (!err) {
+        if (rows.length == 0) {
+          res.status(404).send({"msg": "data not found"});
+        }
+        else {
+          res.status(200).send(rows);
+        }
+      } else
+          res.status(400).send({"msg": err.code});
+          console.log('Error while performing Query.', err);
+  });
 }
 
 /*function readRankingEquipa(req, res) {
@@ -49,10 +62,17 @@ function readRankingEquipa(req, res) {
   const query = connect.con.query(
     "SELECT id_equipa, creditos_equipa, DENSE_RANK() OVER  (ORDER BY creditos_equipa DESC) AS Ranking_Equipa FROM equipa",
     function (err, rows, fields) {
-      if (err) return res.status(500).end();
-      res.send(rows);
-    }
-  );
+      if (!err) {
+        if (rows.length == 0) {
+          res.status(404).send({"msg": "data not found"});
+        }
+        else {
+          res.status(200).send(rows);
+        }
+      } else
+        res.status(400).send({"msg": err.code});
+        console.log('Error while performing Query.', err);
+  });
 }
 
 function updateConfirmarEquipa(req, res) {
@@ -83,9 +103,16 @@ function updateCreditoEquipa(req, res) {
       const update = [creditos_equipa, id_equipa];
       const secondquery = connect.con.query('UPDATE equipa SET creditos_equipa = ? WHERE id_equipa = ?', update,
         function(err, rows, fields) {
-          res.send('Foram atribuidos ' +creditos_equipa+ ' pontos à Equipa ' +id_equipa);
-        })
-    });
+          if (!err) {
+            console.log("Number of records updated: " + rows.affectedRows);
+            res.status(200).send({"msg": "Foram atribuidos " +creditos_equipa+ " pontos à Equipa " +id_equipa});
+          }
+          else {
+            res.status(400).send({"msg": err.code});
+            console.log('Error while performing Query.', err);
+          }
+      });
+  });
 }
 
 module.exports = {

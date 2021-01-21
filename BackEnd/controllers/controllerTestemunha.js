@@ -1,11 +1,17 @@
 const connect = require("../database");
 
 function read(req, res) {
-  const query = connect.con.query(
-    "SELECT * FROM testemunha",
+  const query = connect.con.query("SELECT * FROM testemunha",
     function (err, rows, fields) {
-      if (err) return res.status(500).end();
-      res.send(rows);
+      if (!err) {
+        if (rows.length == 0) {
+          res.status(404).send("Data not found");
+        }
+        else {
+          res.status(200).send(rows);
+        }
+      } else
+        console.log('Error while performing Query.', err);
     }
   );
 }
@@ -34,8 +40,17 @@ function save(req, res) {
         "INSERT INTO depoimento SET id_ocorrencia = ?, id_testemunha = ?",
         post2,
         function (err, rows, fields) {
-          if (err) return res.status(500).end();
-          res.send("Testemunha associada com sucesso");
+          if (!err) {
+            res.status(200).location(rows.insertId).send({"msg": "Testemunha associada com sucesso"});
+            console.log("Number of records inserted: " + rows.affectedRows);
+          }
+          else {
+            if (err.code == "ER_DUP_ENTRY") {
+              res.status(409).send({"msg": err.code});
+              console.log('Error while performing Query.', err);
+            }
+            else res.status(400).send({"msg": err.code});
+          }
       });
   });
 }
