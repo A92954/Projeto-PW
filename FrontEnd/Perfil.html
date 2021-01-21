@@ -229,11 +229,11 @@
                               id="password-perfil"
                               class="form-control"
                               placeholder="**********"
-                              readonly
                               aria-label="Recipient's username"
                               aria-describedby="basic-addon2"
                             />
-                            <div class="input-group-append">
+
+                            <!--<div class="input-group-append">
                               <button
                                 type="button"
                                 id="btnTestemunhas"
@@ -244,7 +244,7 @@
                               >
                                 Alterar
                               </button>
-                            </div>
+                            </div>-->
                           </div>
                         </div>
 
@@ -561,7 +561,11 @@
 
             <div class="modal-footer">
               <a href="/FrontEnd/Pagina-principal.html">
-                <button type="button" class="btn btn-primary">
+                <button
+                  type="button"
+                  onclick="atualizarUser()"
+                  class="btn btn-primary"
+                >
                   Guardar e Sair
                 </button>
               </a>

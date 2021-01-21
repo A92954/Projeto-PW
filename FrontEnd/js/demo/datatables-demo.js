@@ -8,6 +8,10 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
+  $("#tabela-equipa-relatorio").DataTable();
+});
+
+$(document).ready(function () {
   $("#tabela-historico-ocorrencias").DataTable();
 });
 
@@ -28,7 +32,7 @@ $(document).ready(function () {
 });
 
 $(
-  "#tabela-historico-ocorrencias , #tabela-ranking-equipa , #tabela-ranking-operacionais , #tabela-testemunhas , #tabela-equipa-oco-atual , #tabela-equipa-oco-decorrer"
+  "#tabela-historico-ocorrencias , #tabela-ranking-equipa , #tabela-ranking-operacionais , #tabela-testemunhas , #tabela-equipa-oco-atual , #tabela-equipa-oco-decorrer , #tabela-equipa-relatorio"
 ).DataTable({
   language: {
     sprocessing: "Tratamento em curso...",
