@@ -28,7 +28,7 @@ function updateUtilizador(req, res) {
       console.log(query.sql);
       if (!err) {
         console.log("Number of records updated: " + rows.affectedRows);
-      res.status(200).send({"msg": "update with success"});
+      res.status(200).send({"msg": "Dados utilizador alterados"});
         } else {
       res.status(400).send({"msg": err.code});
         console.log('Error while performing Query.', err);
