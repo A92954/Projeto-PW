@@ -9,6 +9,10 @@ document.getElementById("btnTestemunhas").onclick = function (){
   confirmarOcorrencia();
 };
 
+/*document.getElementById("exampleCheck1").onclick ||*/ document.getElementById("check-presenca").onclick = function (){
+console.log("ohhh yeah");
+}
+
 function confirmarOcorrencia(){
   fetch('http://127.0.0.1:3000/agents/7/accurring', {  //mudar a rota do fetch
       headers: { 'Content-Type': 'application/json' },
