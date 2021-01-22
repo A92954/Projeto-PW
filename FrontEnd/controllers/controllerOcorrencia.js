@@ -8,6 +8,10 @@ document.getElementById("btnTestemunhas").onclick = function () {
   confirmarOcorrencia();
 };
 
+document.getElementById("check-presenca").onclick = function() {
+  materialUsado();
+}
+
 function confirmarOcorrencia(){
   fetch('http://127.0.0.1:3000/agents/7/accurring', {  //mudar a rota do fetch
       headers: { 'Content-Type': 'application/json' },
@@ -40,7 +44,7 @@ function materialUsado() {
       $.each(out, function (index, valor) {
         //      document.getElementById("teste").innerHTML = "Local da ocorrência: ";
 
-        var x = document.getElementById("exampleFormControlSelect3");
+        var x = document.getElementById("exampleFormControlSelect2");
         var c = document.createElement("option");
         c.text = valor.quantidade_usada + " --> " + valor.nome_material;
         x.options.add(c, 1);
@@ -76,6 +80,28 @@ function verOcorrenciaAtual() {
       alert("Erro!" + err);
     });
 }
+
+function confirmarChegadaLocal(){
+  fetch('http://127.0.0.1:3000/agents/7/accurring', {  //mudar a rota do fetch
+      headers: { 'Content-Type': 'application/json' },
+      method: 'GET',
+  })
+    .then((res) => res.json())
+    .then((out) => {
+      $.each(out, function (index, valor) {
+       // document.getElementById("label_tempoEstimado").innerHTML =
+       // "Local da ocorrência: " + valor.freguesia;
+      document.getElementById("tempoReal").innerHTML =
+        "Grau de urgência: " + valor.descricao_urgencia;
+     // document.getElementById("label_difTempo").innerHTML =
+      //  "Equipa: " + valor.nome_equipa;
+      });
+    })
+    .catch((err) => {
+      alert("Erro!" + err);
+    });
+}
+
 
 //REFRESH DA TABELA
 function tabelaHist() {
