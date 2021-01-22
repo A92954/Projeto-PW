@@ -134,13 +134,15 @@ function readDadosOcorrencia(req, res) {
   let freguesia;
   let data_ocorrencia;
   let data_fim_ocorrencia;
-  const query = connect.con.query("SELECT id_estado FROM ocorrencia WHERE id_ocorrencia = ? ",id_ocorrencia,
+  const query = connect.con.query(
+    "SELECT id_estado FROM ocorrencia WHERE id_ocorrencia = ? ",
+    id_ocorrencia,
     function (err, rows, fields) {
       id_estado = rows[0].id_estado;
       if (id_estado == 2) {
-        id_estado = rows[0].id_estado;
         const secondquery = connect.con.query(
-          "SELECT oc.id_ocorrencia, loc.freguesia, eq.nome_equipa, oc.data_ocorrencia, oc.data_fim_ocorrencia FROM ocorrencia oc, equipa eq, localizacao loc WHERE oc.id_equipa = eq.id_equipa AND oc.id_local = loc.id_local AND oc.id_ocorrencia = ?",id_ocorrencia,
+          "SELECT oc.id_ocorrencia, loc.freguesia, eq.nome_equipa, oc.data_ocorrencia, oc.data_fim_ocorrencia FROM ocorrencia oc, equipa eq, localizacao loc WHERE oc.id_equipa = eq.id_equipa AND oc.local = loc.id_local AND oc.id_ocorrencia = ?",
+          id_ocorrencia,
           function (err, rows, fields) {
             freguesia = rows[0].freguesia;
             nome_equipa = rows[0].nome_equipa;
@@ -152,7 +154,7 @@ function readDadosOcorrencia(req, res) {
                 smtpTransport({
                   service: "Gmail",
                   auth: {
-                    user: "Pmar.ot.2021@gmail.com",
+                    user: "pmar.ot.2021@gmail.com",
                     pass: "pmarot2021",
                   },
                   tls: {
@@ -168,12 +170,13 @@ function readDadosOcorrencia(req, res) {
                 }
               });
               var mailOptions = {
-                from: "Pmar.ot.2021@gmail.com",
+                from: "pmar.ot.2021@gmail.com",
                 to: "pw.policiamaritima@gmail.com",
-                cc: "Pmar.ot.2021@gmail.com",
+                cc: "pmar.ot.2021@gmail.com",
                 subject: "Dados da Ocorrência",
                 text:
-                  "Olá, \nVimos por este meio fornecer-vos as informações relativas à ocorrência: " +id_ocorrencia+
+                  "Olá, \nVimos por este meio fornecer-vos as informações relativas à ocorrência: " +
+                  id_ocorrencia +
                   ".\nFreguesia: " +
                   freguesia +
                   " \nNome Equipa: " +
@@ -336,7 +339,9 @@ function updatePercentagemSobrevivente(req, res) {
       [percentagem_sobrevivente, id_ocorrencia],
       function (err, rows, fields) {
         res.send(
-          "A percentagem " +percentagem_sobrevivente + "% foi inserida com sucesso"
+          "A percentagem " +
+            percentagem_sobrevivente +
+            "% foi inserida com sucesso"
         );
       }
     );
