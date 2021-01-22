@@ -4,6 +4,10 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
+  $("#tabela-testemunha-acabado").DataTable();
+});
+
+$(document).ready(function () {
   $("#tabela-testemunhas").DataTable();
 });
 
@@ -32,7 +36,7 @@ $(document).ready(function () {
 });
 
 $(
-  "#tabela-historico-ocorrencias , #tabela-ranking-equipa , #tabela-ranking-operacionais , #tabela-testemunhas , #tabela-equipa-oco-atual , #tabela-equipa-oco-decorrer , #tabela-equipa-relatorio"
+  "#tabela-testemunha-acabado , #tabela-historico-ocorrencias , #tabela-ranking-equipa , #tabela-ranking-operacionais , #tabela-testemunhas , #tabela-equipa-oco-atual , #tabela-equipa-oco-decorrer , #tabela-equipa-relatorio"
 ).DataTable({
   language: {
     sprocessing: "Tratamento em curso...",
@@ -71,6 +75,11 @@ $(document).ready(function () {
     var mat_usado = JSON.stringify(response);
     $("#material_usado").text(mat_usado);
 
+    $(document).ready(function () {
+      $("#tabela-testemunha-acabado").DataTable();
+      getTestemunha(id_ocorr);
+    });
+
     var credito_equipa = $("td", this).eq(5).text();
     $("#credito_ocorr").text(credito_equipa);
   });
@@ -78,6 +87,27 @@ $(document).ready(function () {
 $("#tabela-historico-ocorrencias").on("keyup", function () {
   tableInstance.search(this.value).draw(); // try this easy code and check if works at first
 });
+
+function getTestemunha(par) {
+  let table = $("#tabela-testemunha-acabado").DataTable();
+
+  fetch(`http://127.0.0.1:3000/occurrences/${par}/witnesses`)
+    .then((res) => res.json())
+    .then((out) => {
+      console.log(out);
+      $.each(out, function (index, value) {
+        console.log(value),
+          table.row
+            .add([
+              value.nome_testemunha,
+              value.profissao_testemunha,
+              value.localidade_testemunha,
+            ])
+            .draw();
+      });
+    })
+    .catch((err) => console.error(err));
+}
 
 // TENTAR SUBLINHAR A LINHA DO RANKING DO GAJO (acho q está só da para fazer qd der o login, para sabermos quem está ligado)
 /*
