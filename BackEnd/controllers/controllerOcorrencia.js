@@ -184,6 +184,20 @@ function readDadosOcorrencia(req, res){
     })
 };
 
+function readTestemunha(req,res) {
+  const id_ocorrencia = req.params.id_ocorrencia;
+  const query = connect.con.query('SELECT de.id_ocorrencia, te.id_testemunha, te.nome_testemunha, te.localidade_testemunha, te.profissao_testemunha FROM testemunha te, depoimento de WHERE te.id_testemunha = de.id_testemunha AND de.id_ocorrencia = ?',id_ocorrencia,
+  function(err,rows,fields){
+    if (!err) {
+      if (rows.length == 0) {
+        res.status(404).send("Data not found");
+      } else {
+        res.status(200).send(rows[0]);
+      }
+    } else console.log("Error while performing Query.", err);
+  })
+}
+
 function updateCreditoOcorrencia(req, res) {
   const id_ocorrencia = req.params.id_ocorrencia;
   let id_estado;
@@ -382,6 +396,7 @@ module.exports = {
   readGrafico: readGrafico,
   readDadosOcorrencia: readDadosOcorrencia,
   readDiferencaTempo: readDiferencaTempo,
+  readTestemunha: readTestemunha,
   updateCreditoOcorrencia: updateCreditoOcorrencia,
   updateConfirmarPartidaOcorrencia: updateConfirmarPartidaOcorrencia,
   updateDuracaoOcorrencia: updateDuracaoOcorrencia,
