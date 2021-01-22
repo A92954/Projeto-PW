@@ -80,29 +80,7 @@ function verOcorrenciaAtual() {
       alert("Erro!" + err);
     });
 }
-
-function confirmarChegadaLocal(){
-  fetch('http://127.0.0.1:3000/agents/7/accurring', {  //mudar a rota do fetch
-      headers: { 'Content-Type': 'application/json' },
-      method: 'GET',
-  })
-    .then((res) => res.json())
-    .then((out) => {
-      $.each(out, function (index, valor) {
-       // document.getElementById("label_tempoEstimado").innerHTML =
-       // "Local da ocorrência: " + valor.freguesia;
-      document.getElementById("tempoReal").innerHTML =
-        "Grau de urgência: " + valor.descricao_urgencia;
-     // document.getElementById("label_difTempo").innerHTML =
-      //  "Equipa: " + valor.nome_equipa;
-      });
-    })
-    .catch((err) => {
-      alert("Erro!" + err);
-    });
-}
-
-
+  
 //REFRESH DA TABELA
 function tabelaHist() {
   let table = $("#tabela-historico-ocorrencias").DataTable();
