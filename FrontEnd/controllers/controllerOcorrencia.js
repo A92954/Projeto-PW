@@ -3,13 +3,14 @@ window.onload = function () {
   verOcorrenciaAtual();
   materialUsado();
   verEqOcorrAtual();
+  getOcorr();
 };
 
 document.getElementById("btnTestemunhas").onclick = function () {
   confirmarOcorrencia();
 };
 
-async function getOcorr() {
+/*async function getOcorr() {
   fetch("http://127.0.0.1:3000/agents/7/accurring")
     .then((res) => res.json())
     .then((out) => {
@@ -19,7 +20,13 @@ async function getOcorr() {
       });
     })
     .catch((err) => console.error(err));
-}
+}*/
+
+/*async function getOcorr() {
+  const response = await fetch("http://127.0.0.1:3000/agents/7/accurring");
+  const data = await response.json();
+  console.log(data.id_ocorrencia);
+}*/
 
 //let id_ocorr = getOcorr();
 let id_ocorr = "7";
