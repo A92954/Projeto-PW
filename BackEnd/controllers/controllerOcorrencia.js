@@ -267,13 +267,16 @@ function updateConfirmarPartidaOcorrencia(req, res) {
           "UPDATE ocorrencia SET id_estado = 1 WHERE id_ocorrencia = ?",
           update,
           function (err, rows, fields) {
-            res.send("Confirmada a partida para a ocorrencia");
+           res.send("Confirmada a partida para a ocorrencia");
+           
           }
         );
       } else if (id_estado == 2) {
         res.send("A ocorrencia ja foi concluida");
+       
       } else {
         res.send("A ocorrencia ja se encontra em progresso");
+       
       }
     }
   );

@@ -39,7 +39,7 @@
     });
 }*/
 document.getElementById("btn_criarTestemunha").onclick = function () {
-console.log("olá testemunha");
+createTestemunha();
 };
 
 
@@ -49,9 +49,9 @@ function createTestemunha(opts) {
   var profissaotestemunha = document.getElementById("nomeTestemunha");
   var localidadetestemunha = document.getElementById("emailTestemunha");
   var notastestemunha = document.getElementById("notasTestemunha");
-  var idocorrencia="2";
-  fetch('http://127.0.0.1:3000/witnesses/registration', {  
-    method: 'post',
+  var idocorrencia="4";
+  fetch(`http://127.0.0.1:3000/witnesses/${idocorrencia}/registration`, {  
+    method: 'POST',
     body: JSON.stringify({
         nome_testemunha: nometestemunha,
         email_testemunha: emailtestemunha,
@@ -65,6 +65,6 @@ function createTestemunha(opts) {
   .then(function(response) {
     return response.json();
   }).then(function(data) {
-   console.log(data);s
+   console.log(data);
   });
 }

@@ -6,7 +6,7 @@ window.onload = function () {
 
 document.getElementById("btnTestemunhas").onclick = function () {
   confirmarOcorrencia();
-  //mudarEstadoOcorrencia();
+  mudarEstadoOcorrencia();
 };
 
 document.getElementById("check-presenca").onclick = function() {
@@ -15,10 +15,10 @@ document.getElementById("check-presenca").onclick = function() {
 
 //let id_ocorr = getOcorr();
 let id_ocorr = "7";
-console.log(id_ocorr);
+//console.log(id_ocorr);
 
 function confirmarOcorrencia() {
-  fetch("http://127.0.0.1:3000/materials/4/material", {
+  fetch("http://127.0.0.1:3000/materials/65/material", {
     //mudar a rota do fetch
     headers: { "Content-Type": "application/json" },
     method: "GET",
@@ -40,10 +40,10 @@ function confirmarOcorrencia() {
 }
 
 function mudarEstadoOcorrencia() {
-  fetch('http://127.0.0.1:3000/occurrences/4/check_departure', {
+  fetch('http://127.0.0.1:3000/occurrences/65/check_departure', {
     //mudar a rota do fetch
     headers: { "Content-Type": "application/json" },
-    method: "PUT",
+    method: "PUT"
   })
     .then((res) => res.json())
     .then((out) => {
