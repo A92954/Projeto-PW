@@ -7,6 +7,7 @@ window.onload = function () {
 
 document.getElementById("btnTestemunhas").onclick = function () {
   confirmarOcorrencia();
+  //mudarEstadoOcorrencia();
 };
 
 document.getElementById("check-presenca").onclick = function() {
@@ -37,6 +38,19 @@ function confirmarOcorrencia() {
     .catch((err) => {
       alert("Erro!" + err);
     });
+}
+
+function mudarEstadoOcorrencia() {
+  fetch('http://127.0.0.1:3000/occurrences/4/check_departure', {
+    //mudar a rota do fetch
+    headers: { "Content-Type": "application/json" },
+    method: "PUT",
+  })
+    .then((res) => res.json())
+    .then((out) => {
+      console.log("Estado alterado");
+      });
+    
 }
 
 function materialUsado() {
