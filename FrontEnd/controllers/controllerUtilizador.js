@@ -12,9 +12,9 @@ function atualizarUser() {
   console.log(data); //debugging para ver os dados que foram enviados
   //chamada fetch para envio dos dados para o servior via POST
   fetch("http://127.0.0.1:3000/utilizador/Portela_20", {
-    method: "POST",
+    method: "PUT",
     headers: {},
-    body: JSON.stringify(data),
+    //body: JSON.stringify(data),
   })
     .then((response) => response.text())
     //Then with the data from the response in JSON...
