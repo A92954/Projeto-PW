@@ -8,16 +8,20 @@ document.getElementById("btnTestemunhas").onclick = function () {
   confirmarOcorrencia();
 };
 
-let id_ocorr;
-fetch("http://127.0.0.1:3000/agents/7/accurring")
-  .then((res) => res.json())
-  .then((out) => {
-    $.each(out, function (index, valor) {
-      id_ocorr = valor.id_ocorrencia;
-      console.log(id_ocorr);
-    });
-  })
-  .catch((err) => console.error(err));
+async function getOcorr() {
+  fetch("http://127.0.0.1:3000/agents/7/accurring")
+    .then((res) => res.json())
+    .then((out) => {
+      $.each(out, function (index, valor) {
+        console.log(valor.id_ocorrencia);
+        return valor.id_ocorrencia;
+      });
+    })
+    .catch((err) => console.error(err));
+}
+
+let id_ocorr = getOcorr();
+console.log(id_ocorr);
 
 function confirmarOcorrencia() {
   fetch("http://127.0.0.1:3000/agents/7/accurring", {
@@ -66,7 +70,7 @@ function materialUsado() {
 //REFRESH DA TABELA
 function verOcorrenciaAtual() {
   let table = $("#tabela-equipa-oco-atual").DataTable();
-  fetch(`http://127.0.0.1:3000/occurrences/4`, {
+  fetch(`http://127.0.0.1:3000/agents/7/accurring`, {
     headers: { "Content-Type": "application/json" },
     method: "GET",
   })
