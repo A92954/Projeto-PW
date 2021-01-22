@@ -37,7 +37,7 @@ function readOcorrenciaX(req, res) {
   const query = connect.con.query(
     "SELECT * FROM ocorrencia WHERE id_ocorrencia = ?",
     id_ocorrencia,
-    function (err, results) {
+    function (err, rows, fields) {
       if (!err) {
         if (rows.length == 0) {
           res.status(404).send({
