@@ -21,6 +21,7 @@ router.put("/utilizador/:username", controllerUtilizador.updateUtilizador);
 router.get("/teams", controllerEquipa.read);
 router.get("/teams/:id_ocorrencia/view_team",controllerEquipa.readEquipaOcorrencia);
 router.get("/teamsRanking", controllerEquipa.readRankingEquipa);
+router.get("/teams/:id_equipa/members",controllerEquipa.readMembrosEquipa);
 router.put("/teams/:id_equipa/check_team",controllerEquipa.updateConfirmarEquipa);
 router.put("/teams/:id_equipa/credit_team",controllerEquipa.updateCreditoEquipa);
 
@@ -60,6 +61,6 @@ router.put("/materials/:id_ocorrencia/:id_material/withdraw",controllerMaterial.
 //Testemunha
 
 router.get("/witnesses", controllerTestemunha.read);
-router.post("/witnesses/registration", controllerTestemunha.save);
+router.post("/witnesses/:id_ocorrencia/registration", controllerTestemunha.save);
 
 module.exports = router;
