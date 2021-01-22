@@ -58,7 +58,7 @@ function materialUsado() {
 //REFRESH DA TABELA
 function verOcorrenciaAtual() {
   let table = $("#tabela-equipa-oco-atual").DataTable();
-  fetch("http://127.0.0.1:3000/agents/7/accurring", {
+  fetch(`http://127.0.0.1:3000/agents/${id_ocorr}/accurring`, {
     headers: { "Content-Type": "application/json" },
     method: "GET",
   })
