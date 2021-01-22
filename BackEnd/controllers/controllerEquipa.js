@@ -58,7 +58,7 @@ function readEquipaOcorrencia(req, res) {
 
 function readRankingEquipa(req, res) {
   const query = connect.con.query(
-    "SELECT COUNT(oc.id_ocorrencia) AS Numero_Ocorrencias, eq.id_equipa , eq.creditos_equipa,  DENSE_RANK() OVER  (ORDER BY eq.creditos_equipa DESC) AS Ranking_equipa, op.username FROM equipa eq LEFT OUTER JOIN ocorrencia oc ON oc.id_equipa = eq.id_equipa LEFT OUTER JOIN operacional op ON op.id_equipa = oc.id_equipa GROUP BY id_equipa,username;",
+    "SELECT COUNT(oc.id_ocorrencia) AS Numero_Ocorrencias, eq.id_equipa , eq.creditos_equipa,  DENSE_RANK() OVER  (ORDER BY eq.creditos_equipa DESC) AS Ranking_equipa, GROUP_CONCAT( DISTINCT op.username SEPARATOR ', ') AS users FROM equipa eq  LEFT OUTER JOIN ocorrencia oc ON oc.id_equipa = eq.id_equipa LEFT OUTER JOIN operacional op ON op.id_equipa = oc.id_equipa WHERE op.id_equipa = oc.id_equipa GROUP BY id_equipa;",
     function (err, rows, fields) {
       if (!err) {
         if (rows.length == 0) {
