@@ -2,7 +2,6 @@
 window.onload = function () {
   verOcorrenciaAtual();
   materialUsado();
-  getOcorr();
 };
 
 document.getElementById("btnTestemunhas").onclick = function () {
