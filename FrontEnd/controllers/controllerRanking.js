@@ -32,11 +32,11 @@ function readRankEq() {
       $.each(out, function (index, value) {
         table.row
           .add([
-            value.Ranking_Equipa,
+            value.Ranking_equipa,
             value.creditos_equipa,
             value.id_equipa,
             "filler",
-            "filler",
+            value.Numero_Ocorrencias,
           ])
           .draw();
       });

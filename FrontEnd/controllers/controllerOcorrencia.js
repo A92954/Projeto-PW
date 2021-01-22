@@ -2,14 +2,13 @@
 window.onload = function () {
   verOcorrenciaAtual();
   materialUsado();
-  verEqOcorrAtual();
 };
 
 document.getElementById("btnTestemunhas").onclick = function () {
   confirmarOcorrencia();
 };
 
-async function getOcorr() {
+/*async function getOcorr() {
   fetch("http://127.0.0.1:3000/agents/7/accurring")
     .then((res) => res.json())
     .then((out) => {
@@ -19,7 +18,13 @@ async function getOcorr() {
       });
     })
     .catch((err) => console.error(err));
-}
+}*/
+
+/*async function getOcorr() {
+  const response = await fetch("http://127.0.0.1:3000/agents/7/accurring");
+  const data = await response.json();
+  console.log(data.id_ocorrencia);
+}*/
 
 //let id_ocorr = getOcorr();
 let id_ocorr = "7";
@@ -71,8 +76,8 @@ function materialUsado() {
 
 //REFRESH DA TABELA
 function verOcorrenciaAtual() {
-  let id_ocorr = "4";
-  fetch(`http://127.0.0.1:3000/occurrences/${id_ocorr}`, {
+  let id_ocorr = "7";
+  fetch(`http://127.0.0.1:3000/agents/${id_ocorr}/accurring`, {
     headers: { "Content-Type": "application/json" },
     method: "GET",
   })
@@ -101,18 +106,37 @@ function verEqOcorrAtual() {
     method: "GET",
   })
     .then((res) => res.json())
+
     .then((out) => {
-      $("#tabela-equipa-oco-atual tbody").empty();
       $.each(out, function (index, valor) {
         document.getElementById("label_nomeEquipa").innerHTML =
           "Equipa: " + valor.nome_equipa;
-        table.row.add([valor.id_operacional, valor.username]).draw();
+        var id_eq = valor.id_equipa;
+
+        fetch(`http://127.0.0.1:3000/teams/${id_eq}/members`, {
+          headers: { "Content-Type": "application/json" },
+          method: "GET",
+        })
+          .then((res) => res.json())
+
+          .then((out) => {
+            $("#tabela-equipa-oco-atual tbody").empty();
+            $.each(out, function (index, value) {
+              table.row.add([value.id_equipa, value.username]).draw();
+            });
+          });
       });
     })
+
     .catch((err) => {
       alert("Erro!" + err);
     });
 }
+
+$(document).ready(function () {
+  $("tabela-equipa-oco-atual").DataTable();
+  verEqOcorrAtual();
+});
 
 //REFRESH DA TABELA
 function tabelaHist() {
