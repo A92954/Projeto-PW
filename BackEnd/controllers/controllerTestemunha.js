@@ -16,6 +16,8 @@ function read(req, res) {
   );
 }
 
+
+
 function save(req, res) {
   const id_ocorrencia = req.params.id_ocorrencia;
   const nome_testemunha = req.body.nome_testemunha;
