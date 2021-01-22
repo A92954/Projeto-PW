@@ -2,6 +2,7 @@
 window.onload = function () {
   verOcorrenciaAtual();
   materialUsado();
+  verEqOcorrAtual();
 };
 
 document.getElementById("btnTestemunhas").onclick = function () {
@@ -12,10 +13,15 @@ document.getElementById("check-presenca").onclick = function() {
   materialUsado();
 }
 
-function confirmarOcorrencia(){
-  fetch('http://127.0.0.1:3000/agents/7/accurring', {  //mudar a rota do fetch
-      headers: { 'Content-Type': 'application/json' },
-      method: 'GET',
+//let id_ocorr = getOcorr();
+let id_ocorr = "7";
+console.log(id_ocorr);
+
+function confirmarOcorrencia() {
+  fetch("http://127.0.0.1:3000/materials/4/material", {
+    //mudar a rota do fetch
+    headers: { "Content-Type": "application/json" },
+    method: "GET",
   })
     .then((res) => res.json())
     .then((out) => {
@@ -34,7 +40,7 @@ function confirmarOcorrencia(){
 }
 
 function materialUsado() {
-  fetch("http://127.0.0.1:3000/agents/7/accurring", {
+  fetch("http://127.0.0.1:3000/materials/4/material", {
     //mudar a rota do fetch
     headers: { "Content-Type": "application/json" },
     method: "GET",
@@ -57,8 +63,8 @@ function materialUsado() {
 
 //REFRESH DA TABELA
 function verOcorrenciaAtual() {
-  let table = $("#tabela-equipa-oco-atual").DataTable();
-  fetch(`http://127.0.0.1:3000/agents/${id_ocorr}/accurring`, {
+  let id_ocorr = "4";
+  fetch(`http://127.0.0.1:3000/occurrences/${id_ocorr}`, {
     headers: { "Content-Type": "application/json" },
     method: "GET",
   })
@@ -70,9 +76,28 @@ function verOcorrenciaAtual() {
           "Local da ocorrência: " + valor.freguesia;
         document.getElementById("label_urgencia").innerHTML =
           "Grau de urgência: " + valor.descricao_urgencia;
+        //document.getElementById("label_nomeEquipa").innerHTML =
+        //"Equipa: " + valor.nome_equipa;
+      });
+    })
+    .catch((err) => {
+      alert("Erro!" + err);
+    });
+}
+
+function verEqOcorrAtual() {
+  let table = $("#tabela-equipa-oco-atual").DataTable();
+  let id_ocorr = "4";
+  fetch(`http://127.0.0.1:3000/teams/${id_ocorr}/view_team`, {
+    headers: { "Content-Type": "application/json" },
+    method: "GET",
+  })
+    .then((res) => res.json())
+    .then((out) => {
+      $("#tabela-equipa-oco-atual tbody").empty();
+      $.each(out, function (index, valor) {
         document.getElementById("label_nomeEquipa").innerHTML =
           "Equipa: " + valor.nome_equipa;
-
         table.row.add([valor.id_operacional, valor.username]).draw();
       });
     })
