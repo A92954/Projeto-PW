@@ -80,7 +80,7 @@ function readConfirmarMaterialUsado(req, res) {
 function updateConfirmarLevantamento(req, res) {
   const id_ocorrencia = req.params.id_ocorrencia;
   const id_material = req.params.id_material;
-  update = [id_ocorrencia, id_material];
+  const update = [id_ocorrencia, id_material];
   const query = connect.con.query('UPDATE ocorrencia_material SET confirmado_material = 1 WHERE id_ocorrencia = ? and id_material = ?', update, 
     function(err, rows, fields) {
       if (!err) {

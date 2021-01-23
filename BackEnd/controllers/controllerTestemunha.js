@@ -12,28 +12,25 @@ function read(req, res) {
         }
       } else
         console.log('Error while performing Query.', err);
-    }
-  );
+    });
 }
 
-
-
 function save(req, res) {
-  var id_ocorrencia = req.params.id_ocorrencia;
-  var nome_testemunha = req.body.nome_testemunha;
-  var email_testemunha = req.body.email_testemunha;
-  var profissao_testemunha = req.body.profissao_testemunha;
-  var localidade_testemunha = req.body.localidade_testemunha;
-  var notas_testemunha = req.body.notas_testemunha;
+  const id_ocorrencia = req.params.id_ocorrencia;
+  let nome_testemunha = req.body.nome_testemunha;
+  let email_testemunha = req.body.email_testemunha;
+  let profissao_testemunha = req.body.profissao_testemunha;
+  let localidade_testemunha = req.body.localidade_testemunha;
+  let notas_testemunha = req.body.notas_testemunha;
   let id_testemunha;
   const post = [nome_testemunha, email_testemunha, profissao_testemunha, localidade_testemunha, notas_testemunha];
   const query = connect.con.query("INSERT INTO testemunha  SET nome_testemunha = ?, email_testemunha = ?, profissao_testemunha = ?, localidade_testemunha = ?, notas_testemunha = ?",post,
     function (err, rows, fields) {
       if (err) return res.status(500).end();
-    }
-  );
+    });
   const query2 = "SELECT id_testemunha FROM testemunha WHERE nome_testemunha = ? and email_testemunha = ?";
-  connect.con.query(query2, post, function (err, rows, fields) {
+  connect.con.query(query2, post,
+    function (err, rows, fields) {
       id_testemunha = rows[0].id_testemunha;
       const post2 = [id_ocorrencia, id_testemunha];
       const query3 = connect.con.query("INSERT INTO depoimento SET id_ocorrencia = ?, id_testemunha = ?",post2,
