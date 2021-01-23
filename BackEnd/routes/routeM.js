@@ -12,6 +12,7 @@ router.get("/", function (req, res) {res.send("Pagina principal");});
 //Utilizador
 
 router.get("/utilizador", controllerUtilizador.read);
+router.get("/utilizador/:username/role", controllerUtilizador.readEspecialidadeUtilizador);
 router.put("/utilizador/:username", controllerUtilizador.updateUtilizador);
 
 //Equipa

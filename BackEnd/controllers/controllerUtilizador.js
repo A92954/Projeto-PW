@@ -15,6 +15,24 @@ function read(req, res) {
         });
 }
 
+function readEspecialidadeUtilizador(req, res) {
+  const username = req.params.username;
+  const query = connect.con.query("SELECT ca.descricao_cargo FROM cargo ca, utilizador us WHERE ca.id_cargo = us.id_cargo and us.username = ?", username,
+    function(err, rows, fields) {
+      if (!err) {
+        if (rows.length == 0) {
+          res.status(404).send({"msg": "data not found"});
+        }
+        else {
+          res.status(200).send(rows[0]);
+        }
+      }
+      else
+        res.status(400).send({"msg": err.code});
+        console.log('Error while performing Query.', err);
+    });
+}
+
 function updateUtilizador(req, res) {
   const username = req.params.username;
   const nome = req.body.nome;
@@ -38,5 +56,6 @@ function updateUtilizador(req, res) {
 
 module.exports = {
   read: read,
+  readEspecialidadeUtilizador: readEspecialidadeUtilizador,
   updateUtilizador: updateUtilizador
 };
