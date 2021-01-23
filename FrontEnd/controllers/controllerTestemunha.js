@@ -1,23 +1,28 @@
+window.onload = function () {
+  getTestemunhas();
+};
 
-
+var id_ocorrencia = "4";
 
 function getTestemunhas() {
-  fetch("http://127.0.0.1:3000/agents/7/accurring")
-    .then((res) => res.json())
-    .then((out) => {
-      /*$.each(out, function (index, valor) {
-        console.log(valor.id_ocorrencia);
-        return valor.id_ocorrencia;
-      });*/
-      let id_ocorr;
-      id_ocorr = out[0].id_ocorrencia;
-      document.getElementById("btnTestemunhas").onclick = function () {
-        confirmarOcorrencia(id_ocorr);
-      };
-      materialUsado(id_ocorr);
-    })
-    .catch((err) => console.error(err));
+  fetch('http://127.0.0.1:3000/occurrences/4/witnesses', {
+          headers: { "Content-Type": "application/json" },
+          method: "GET",
+        })
+          .then((res) => res.json())
+
+          .then((out) => {
+            $("#tabela-testemunhas tbody").empty();
+            $.each(out, function (index, value) {
+              table.row.add([value.nome_testemunha, 
+                            value.localidade_testemunha,
+                            value.profissao_testemunha,
+                            value.id_ocorrencia,
+                            value.id_testemunha]).draw();
+            });
+          });
 }
+
 
 /*function criaTestemunha() {
   var data = {};
@@ -66,24 +71,7 @@ console.log("clicado");
 
 
 function createTestemunha() {
-  /*var nometestemunha = document.getElementById("nomeTestemunha");
-  var emailtestemunha = document.getElementById("emailTestemunha");
-  var profissaotestemunha = document.getElementById("nomeTestemunha");
-  var localidadetestemunha = document.getElementById("emailTestemunha");
-  var notastestemunha = document.getElementById("notasTestemunha");
- // var idocorrencia="4";   ${idocorrencia}
 
-  fetch('http://127.0.0.1:3000/witnesses/4/registration', {  
-    headers: { 'Content-Type': 'application/json' },
-    method: 'POST',
-    body: JSON.stringify({
-        nome_testemunha: nometestemunha,
-        email_testemunha: emailtestemunha,
-        profissao_testemunha: profissaotestemunha,
-        localidade_testemunha: localidadetestemunha,
-        notas_testemunha: notastestemunha,
-       // id_ocorrencia: idocorrencia,
-    })*/
     var data = {};
    data.nome_testemunha = document.getElementById("nomeTestemunha").value;
     data.email_testemunha = document.getElementById("emailTestemunha").value;
