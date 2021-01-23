@@ -170,7 +170,7 @@ function readDadosOcorrencia(req, res) {
               });
               var mailOptions = {
                 from: "pmar.ot.2021@gmail.com",
-                to: "carlosverasofia2@gmail.com",
+                to: "pw.policiamaritima@gmail.com",
                 cc: "pmar.ot.2021@gmail.com",
                 subject: "Dados da Ocorrência",
                 text:
