@@ -34,6 +34,16 @@
       rel="stylesheet"
     />
     <link href="/FrontEnd/css/sb-admin-2.min.css" rel="stylesheet" />
+
+    <!-- PWA -->
+    <link rel="manifest" href="/FrontEnd/manifest.json" />
+    <!-- ios support -->
+    <link
+      rel="apple-touch-icon"
+      href="assets/icons/apple-icon-192x192-dunplab-manifest-16715.png"
+    />
+    <meta name="apple-mobile-web=app-status-bar" content="#00aae7" />
+    <meta name="theme-color" content="#00aae7" />
   </head>
 
   <body id="page-top">
@@ -76,7 +86,10 @@
               </div>
               <div class="card-body">
                 <div class="form-group row">
-                  <label for="tempoEstimado" class="col-sm-2 col-form-label" id="label_tempoEstimado"
+                  <label
+                    for="tempoEstimado"
+                    class="col-sm-2 col-form-label"
+                    id="label_tempoEstimado"
                     >Tempo Estimado</label
                   >
                   <div class="col-sm-4">
@@ -91,7 +104,10 @@
                 </div>
 
                 <div class="form-group row">
-                  <label for="tempoReal" class="col-sm-2 col-form-label" id="label_tempoReal"
+                  <label
+                    for="tempoReal"
+                    class="col-sm-2 col-form-label"
+                    id="label_tempoReal"
                     >Tempo Real</label
                   >
                   <div class="col-sm-4">
@@ -106,7 +122,10 @@
                 </div>
 
                 <div class="form-group row">
-                  <label for="tempoDiferenca" class="col-sm-2 col-form-label" id="label_difTempo"
+                  <label
+                    for="tempoDiferenca"
+                    class="col-sm-2 col-form-label"
+                    id="label_difTempo"
                     >Diferença</label
                   >
                   <div class="col-sm-4">
@@ -166,7 +185,7 @@
                 <div class="card position-relative">
                   <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">
-                      Confirmar material utilizado
+                      Material utilizado
                     </h6>
                   </div>
                   <div class="card-body">
@@ -174,194 +193,58 @@
                       <ul class="list-group list-group-flush listas">
                         <li class="list-group-item">
                           <div class="custom-control custom-checkbox">
-                            <input
-                              type="checkbox"
-                              data-trigger="hidden_fields_1"
-                              class="custom-control-input trigger"
-                              id="check1"
-                            />
-                            <label class="custom-control-label" for="check1"
-                              >Bóias</label
-                            >
+                            <label class="custom-control-label">10 Bóias</label>
                             <br />
-                            <div id="hidden_fields_1" class="hidden">
-                              <input
-                                type="range"
-                                min="1"
-                                id="qt1"
-                                max="3"
-                                oninput="this.nextElementSibling.value = this.value"
-                              />
-                              <output></output>
-                            </div>
                           </div>
                         </li>
                         <li class="list-group-item">
                           <div class="custom-control custom-checkbox">
-                            <input
-                              type="checkbox"
-                              data-trigger="hidden_fields_2"
-                              class="custom-control-input trigger"
-                              id="check2"
-                            />
-                            <label class="custom-control-label" for="check2"
-                              >Coletes salva-vidas</label
+                            <label class="custom-control-label"
+                              >2 Coletes salva-vidas</label
                             >
                             <br />
-                            <div id="hidden_fields_2" class="hidden">
-                              <input
-                                type="range"
-                                min="1"
-                                id="qt2"
-                                max="3"
-                                oninput="this.nextElementSibling.value = this.value"
-                              />
-                              <output></output>
-                            </div>
                           </div>
                         </li>
                         <li class="list-group-item">
                           <div class="custom-control custom-checkbox">
-                            <input
-                              type="checkbox"
-                              data-trigger="hidden_fields_3"
-                              class="custom-control-input trigger"
-                              id="check3"
-                            />
-                            <label class="custom-control-label" for="check3"
-                              >Botijas de oxigénio</label
+                            <label class="custom-control-label"
+                              >7 Botijas de oxigénio</label
                             >
                             <br />
-                            <div id="hidden_fields_3" class="hidden">
-                              <input
-                                type="range"
-                                min="1"
-                                id="qt3"
-                                max="100"
-                                oninput="this.nextElementSibling.value = this.value"
-                              />
-                              <output></output>
-                            </div>
                           </div>
                         </li>
                         <li class="list-group-item">
                           <div class="custom-control custom-checkbox">
-                            <input
-                              type="checkbox"
-                              data-trigger="hidden_fields_4"
-                              class="custom-control-input trigger"
-                              id="check4"
-                            />
-                            <label class="custom-control-label" for="check4"
-                              >Cordas</label
-                            >
+                            <label class="custom-control-label">5 Cordas</label>
                             <br />
-                            <div id="hidden_fields_4" class="hidden">
-                              <input
-                                type="range"
-                                min="1"
-                                id="qt4"
-                                max="3"
-                                oninput="this.nextElementSibling.value = this.value"
-                              />
-                              <output></output>
-                            </div>
                           </div>
                         </li>
                         <li class="list-group-item">
                           <div class="custom-control custom-checkbox">
-                            <input
-                              type="checkbox"
-                              data-trigger="hidden_fields_5"
-                              class="custom-control-input trigger"
-                              id="check5"
-                            />
-                            <label class="custom-control-label" for="check5"
-                              >Prancha</label
+                            <label class="custom-control-label"
+                              >20 Prancha</label
                             >
                             <br />
-                            <div id="hidden_fields_5" class="hidden">
-                              <input
-                                type="range"
-                                min="1"
-                                id="qt5"
-                                max="3"
-                                oninput="this.nextElementSibling.value = this.value"
-                              />
-                              <output></output>
-                            </div>
                           </div>
                         </li>
                         <li class="list-group-item">
                           <div class="custom-control custom-checkbox">
-                            <input
-                              type="checkbox"
-                              data-trigger="hidden_fields_6"
-                              class="custom-control-input trigger"
-                              id="check6"
-                            />
-                            <label class="custom-control-label" for="check6"
-                              >Balde</label
-                            >
+                            <label class="custom-control-label">1 Balde</label>
                             <br />
-                            <div id="hidden_fields_6" class="hidden">
-                              <input
-                                type="range"
-                                min="1"
-                                id="qt6"
-                                max="3"
-                                oninput="this.nextElementSibling.value = this.value"
-                              />
-                              <output></output>
-                            </div>
                           </div>
                         </li>
                         <li class="list-group-item">
                           <div class="custom-control custom-checkbox">
-                            <input
-                              type="checkbox"
-                              data-trigger="hidden_fields_7"
-                              class="custom-control-input trigger"
-                              id="check7"
-                            />
-                            <label class="custom-control-label" for="check7"
-                              >Pa</label
-                            >
+                            <label class="custom-control-label">2 Pa</label>
                             <br />
-                            <div id="hidden_fields_7" class="hidden">
-                              <input
-                                type="range"
-                                min="1"
-                                id="qt7"
-                                max="3"
-                                oninput="this.nextElementSibling.value = this.value"
-                              />
-                              <output></output>
-                            </div>
                           </div>
                         </li>
                         <li class="list-group-item">
                           <div class="custom-control custom-checkbox">
-                            <input
-                              type="checkbox"
-                              data-trigger="hidden_fields_8"
-                              class="custom-control-input trigger"
-                              id="check8"
-                            />
-                            <label class="custom-control-label" for="check8"
-                              >Oculos</label
+                            <label class="custom-control-label"
+                              >87 Oculos</label
                             >
                             <br />
-                            <div id="hidden_fields_8" class="hidden">
-                              <input
-                                type="range"
-                                min="1"
-                                id="qt8"
-                                max="3"
-                                oninput="this.nextElementSibling.value = this.value"
-                              />
-                              <output></output>
-                            </div>
                           </div>
                         </li>
                       </ul>
@@ -570,8 +453,10 @@
 
     <!-- Page level custom scripts -->
     <script src="/FrontEnd/js/demo/datatables-demo.js"></script>
-
-   
-    <script type="text/javascript" src="./controllers/controllerTestemunha.js"></script>
+    <script src="/FrontEnd/app.js"></script>
+    <script
+      type="text/javascript"
+      src="./controllers/controllerTestemunha.js"
+    ></script>
   </body>
 </html>
