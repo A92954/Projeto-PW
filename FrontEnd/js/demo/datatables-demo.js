@@ -69,6 +69,7 @@ $(document).ready(function () {
     var id_ocorr = $("td", this).eq(0).text(); //eq(2) increase the value inside eq() will display the txt column wise.
     $("#id_ocorr_selec").text(id_ocorr);
 
+    verEqOcorr(id_ocorr);
     materialUsadoPassado(id_ocorr);
 
     $(document).ready(function () {
@@ -103,6 +104,24 @@ function getTestemunha(par) {
       });
     })
     .catch((err) => console.error(err));
+}
+
+function verEqOcorr(ler) {
+  //let table = $("#tabela-equipa-oco-atual").DataTable();
+  fetch(`http://127.0.0.1:3000/teams/${ler}/view_team`, {
+    headers: { "Content-Type": "application/json" },
+    method: "GET",
+  })
+    .then((res) => res.json())
+
+    .then((out) => {
+      let id_eq = out[0].id_equipa;
+      getEquipa(id_eq);
+    })
+
+    .catch((err) => {
+      alert("Erro!" + err);
+    });
 }
 
 function getEquipa(par) {
