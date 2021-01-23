@@ -80,7 +80,6 @@ function materialUsado(ler) {
 
 //mostrar informacoes da ocorrencia atual
 function verOcorrenciaAtual(ler) {
-  let id_eq = "7";
   fetch(`http://127.0.0.1:3000/agents/${ler}/accurring`, {
     headers: { "Content-Type": "application/json" },
     method: "GET",
