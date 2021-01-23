@@ -91,16 +91,14 @@ function getTestemunha(par) {
   fetch(`http://127.0.0.1:3000/occurrences/${par}/witnesses`)
     .then((res) => res.json())
     .then((out) => {
-      console.log(out);
       $.each(out, function (index, value) {
-        console.log(value),
-          table.row
-            .add([
-              value.nome_testemunha,
-              value.profissao_testemunha,
-              value.localidade_testemunha,
-            ])
-            .draw();
+        table.row
+          .add([
+            value.nome_testemunha,
+            value.localidade_testemunha,
+            value.profissao_testemunha,
+          ])
+          .draw();
       });
     })
     .catch((err) => console.error(err));
@@ -126,14 +124,11 @@ function verEqOcorr(ler) {
 
 function getEquipa(par) {
   let table = $("#tabela-equipa-oco-decorrer").DataTable();
-
   fetch(`http://127.0.0.1:3000/teams/${par}/members`)
     .then((res) => res.json())
     .then((out) => {
-      console.log(out);
       $.each(out, function (index, value) {
-        console.log(value),
-          table.row.add([value.id_operacional, value.username]).draw();
+        table.row.add([value.id_operacional, value.username]).draw();
       });
     })
     .catch((err) => console.error(err));
