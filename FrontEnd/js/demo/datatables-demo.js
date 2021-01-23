@@ -66,6 +66,13 @@ $(document).ready(function () {
   $("#tabela-historico-ocorrencias").DataTable();
   $("#tabela-historico-ocorrencias tbody").on("click", "tr", function () {
     $("#historico-popup").modal("show");
+
+    var select = document.getElementById("exampleFormControlSelect4");
+    var length = select.options.length;
+    for (i = length - 1; i >= 0; i--) {
+      select.options[i] = null;
+    }
+
     $("#tabela-equipa-oco-decorrer").DataTable().clear();
     $("#tabela-testemunha-acabado").DataTable().clear();
     var id_ocorr = $("td", this).eq(0).text(); //eq(2) increase the value inside eq() will display the txt column wise.
