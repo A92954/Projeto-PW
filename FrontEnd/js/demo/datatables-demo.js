@@ -66,6 +66,8 @@ $(document).ready(function () {
   $("#tabela-historico-ocorrencias").DataTable();
   $("#tabela-historico-ocorrencias tbody").on("click", "tr", function () {
     $("#historico-popup").modal("show");
+    $("#tabela-equipa-oco-decorrer").DataTable().destroy();
+    $("#tabela-testemunha-acabado").DataTable().destroy();
     var id_ocorr = $("td", this).eq(0).text(); //eq(2) increase the value inside eq() will display the txt column wise.
     $("#id_ocorr_selec").text(id_ocorr);
 
@@ -89,11 +91,6 @@ $("#historico-popup").on("hidden.bs.modal", function (e) {
   $("#tabela-equipa-oco-decorrer").DataTable().destroy();
   $("#tabela-testemunha-acabado").DataTable().destroy();
 });
-
-$("#sairModal").onclick = function () {
-  $("#tabela-equipa-oco-decorrer").DataTable().destroy();
-  $("#tabela-testemunha-acabado").DataTable().destroy();
-};
 
 function getTestemunha(par) {
   let table = $("#tabela-testemunha-acabado").DataTable();
