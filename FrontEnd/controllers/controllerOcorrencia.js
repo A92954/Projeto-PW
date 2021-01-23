@@ -3,7 +3,7 @@ window.onload = function () {
   getOcorr();
 };
 
-async function getOcorr() {
+function getOcorr() {
   fetch("http://127.0.0.1:3000/agents/7/accurring")
     .then((res) => res.json())
     .then((out) => {
@@ -20,6 +20,29 @@ async function getOcorr() {
     .catch((err) => console.error(err));
 }
 
+//Chamada do id_equipa e das funçoes Ocorrencia Atual e Mostra Equipa
+function verEqOcorrAtual(ler) {
+  //let table = $("#tabela-equipa-oco-atual").DataTable();
+  fetch(`http://127.0.0.1:3000/teams/${ler}/view_team`, {
+    headers: { "Content-Type": "application/json" },
+    method: "GET",
+  })
+    .then((res) => res.json())
+
+    .then((out) => {
+      document.getElementById("label_nomeEquipa").innerHTML =
+        "Equipa: " + out[0].nome_equipa;
+      let id_eq = out[0].id_equipa;
+      verOcorrenciaAtual(id_eq);
+      mostraEq(id_eq);
+    })
+
+    .catch((err) => {
+      alert("Erro!" + err);
+    });
+}
+
+//confirmar material e presença
 function confirmarOcorrencia(ler) {
   fetch(`http://127.0.0.1:3000/materials/${ler}/material`, {
     //mudar a rota do fetch
@@ -37,6 +60,7 @@ function confirmarOcorrencia(ler) {
     });
 }
 
+//mostrar materiais no relatorio
 function materialUsado(ler) {
   fetch(`http://127.0.0.1:3000/materials/${ler}/material`, {
     //mudar a rota do fetch
@@ -54,7 +78,7 @@ function materialUsado(ler) {
     });
 }
 
-//REFRESH DA TABELA
+//mostrar informacoes da ocorrencia atual
 function verOcorrenciaAtual(ler) {
   let id_eq = "7";
   fetch(`http://127.0.0.1:3000/agents/${ler}/accurring`, {
@@ -75,21 +99,7 @@ function verOcorrenciaAtual(ler) {
     });
 }
 
-function mostraEq(ler) {
-  fetch(`http://127.0.0.1:3000/teams/${ler}/members`, {
-    headers: { "Content-Type": "application/json" },
-    method: "GET",
-  })
-    .then((res) => res.json())
-
-    .then((out) => {
-      $("#tabela-equipa-oco-atual tbody").empty();
-      $.each(out, function (index, value) {
-        table.row.add([value.id_equipa, value.username]).draw();
-      });
-    });
-}
-
+//mostrar membros da equipa
 function mostraEq(ler) {
   let table = $("#tabela-equipa-oco-atual").DataTable();
   fetch(`http://127.0.0.1:3000/teams/${ler}/members`, {
@@ -103,40 +113,6 @@ function mostraEq(ler) {
       $.each(out, function (index, value) {
         table.row.add([value.id_equipa, value.username]).draw();
       });
-    });
-}
-
-function verEqOcorrAtual(ler) {
-  //let table = $("#tabela-equipa-oco-atual").DataTable();
-  fetch(`http://127.0.0.1:3000/teams/${ler}/view_team`, {
-    headers: { "Content-Type": "application/json" },
-    method: "GET",
-  })
-    .then((res) => res.json())
-
-    .then((out) => {
-      document.getElementById("label_nomeEquipa").innerHTML =
-        "Equipa: " + out[0].nome_equipa;
-      let id_eq = out[0].id_equipa;
-      verOcorrenciaAtual(id_eq);
-      mostraEq(id_eq);
-
-      /*fetch(`http://127.0.0.1:3000/teams/${id_eq}/members`, {
-        headers: { "Content-Type": "application/json" },
-        method: "GET",
-      })
-        .then((res) => res.json())
-
-        .then((out) => {
-          $("#tabela-equipa-oco-atual tbody").empty();
-          $.each(out, function (index, value) {
-            table.row.add([value.id_equipa, value.username]).draw();
-          });
-        });*/
-    })
-
-    .catch((err) => {
-      alert("Erro!" + err);
     });
 }
 
