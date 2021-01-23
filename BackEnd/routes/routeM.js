@@ -12,6 +12,7 @@ router.get("/", function (req, res) {res.send("Pagina principal");});
 //Utilizador
 
 router.get("/utilizador", controllerUtilizador.read);
+router.get("/utilizador/:username/role", controllerUtilizador.readEspecialidadeUtilizador);
 router.put("/utilizador/:username", controllerUtilizador.updateUtilizador);
 
 //Equipa
@@ -26,6 +27,7 @@ router.put("/teams/:id_equipa/credit_team", controllerEquipa.updateCreditoEquipa
 //Ocorrencia
 
 router.get("/occurrences", controllerOcorrencia.read);
+router.get("/occurrences/:id_ocorrencia/description", controllerOcorrencia.readDescricao);
 router.get("/occurrences/finished", controllerOcorrencia.readAcabada);
 router.get("/occurrences/:id_ocorrencia", controllerOcorrencia.readOcorrenciaX);
 router.get("/occurrences/:id_ocorrencia/read_credit", controllerOcorrencia.readCreditoOcorrenciaX);
@@ -38,7 +40,7 @@ router.put("/occurrences/:id_ocorrencia/credit", controllerOcorrencia.updateCred
 router.put("/occurrences/:id_ocorrencia/check_departure", controllerOcorrencia.updateConfirmarPartidaOcorrencia);
 router.put("/occurrences/:id_ocorrencia/duration", controllerOcorrencia.updateDuracaoOcorrencia);
 router.put("/occurrences/:id_ocorrencia/survival", controllerOcorrencia.updatePercentagemSobrevivente);
-router.put( "/occurrences/:id_ocorrencia/times", controllerOcorrencia.updateTempoDeslocacao);
+router.put("/occurrences/:id_ocorrencia/times", controllerOcorrencia.updateTempoDeslocacao);
 
 //Operacional
 

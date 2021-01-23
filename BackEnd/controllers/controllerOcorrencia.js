@@ -18,6 +18,25 @@ function read(req, res) {
   );
 }
 
+function readDescricao(req, res) {
+  const id_ocorrencia = req.params.id_ocorrencia;
+  let id_pedido;
+  const query = connect.con.query('SELECT id_pedido FROM ocorrencia WHERE id_ocorrencia = ?', id_ocorrencia,
+    function(err, rows, fields) {
+      id_pedido = rows[0].id_pedido;
+      const secondquery = connect.con.query('SELECT descricao_pedido FROM pedido WHERE id_pedido = ?', id_pedido,
+        function(err, rows, fields) {
+          if (!err) {
+            if (rows.length == 0) {
+              res.status(404).send("Data not found");
+            } else {
+              res.status(200).send(rows[0]);
+            }
+          } else console.log("Error while performing Query.", err);
+        });
+    });
+}
+
 function readAcabada(req, res) {
   const query = connect.con.query(
     "SELECT oc.id_ocorrencia, loc.freguesia, oc.id_equipa, gu.descricao_urgencia, oc.data_ocorrencia, oc.creditos_ocorrencia FROM ocorrencia oc, localizacao loc, grau_urgencia gu WHERE oc.id_local = loc.id_local and oc.id_nivel = gu.id_nivel and oc.id_estado = 2",
@@ -367,6 +386,7 @@ function updateTempoDeslocacao(req, res){
 
 module.exports = {
   read: read,
+  readDescricao: readDescricao,
   readAcabada: readAcabada,
   readOcorrenciaX: readOcorrenciaX,
   readCreditoOcorrenciaX: readCreditoOcorrenciaX,
