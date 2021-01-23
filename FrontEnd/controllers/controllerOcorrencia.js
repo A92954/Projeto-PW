@@ -1,10 +1,6 @@
 //quando inicia a página faz
 window.onload = function () {
-  try {
-    getOcorr();
-  } catch (err) {
-    alert("Erro!" + err);
-  }
+  getOcorr();
 };
 
 async function getOcorr() {
@@ -15,11 +11,11 @@ async function getOcorr() {
       id_ocorr = out[0].id_ocorrencia;
       verEqOcorrAtual(id_ocorr);
 
-      document.getElementById("btnTestemunhas").onclick = function () {
-        confirmarOcorrencia(id_ocorr);
-      };
+      //document.getElementById("btnTestemunhas").onclick = function () {
+      confirmarOcorrencia(id_ocorr);
+      //};
 
-      materialUsado(id_ocorr);
+      //materialUsado(id_ocorr);
     })
     .catch((err) => console.error(err));
 }
@@ -39,9 +35,6 @@ function confirmarOcorrencia(ler) {
         x.options.add(c, 1);
       });
     });
-  /*.catch((err) => {
-      alert("Erro!" + err);
-    });*/
 }
 
 function materialUsado(ler) {
@@ -53,36 +46,28 @@ function materialUsado(ler) {
     .then((res) => res.json())
     .then((out) => {
       $.each(out, function (index, valor) {
-        //      document.getElementById("teste").innerHTML = "Local da ocorrência: ";
-
-        var x = document.getElementById("exampleFormControlSelect2");
+        var x = document.getElementById("exampleFormControlSelect3");
         var c = document.createElement("option");
         c.text = valor.quantidade_usada + " --> " + valor.nome_material;
         x.options.add(c, 1);
       });
     });
-  /*.catch((err) => {
-      alert("Erro!" + err);
-    });*/
 }
 
 //REFRESH DA TABELA
 function verOcorrenciaAtual(ler) {
   let id_eq = "7";
-  fetch(`http://127.0.0.1:3000/agents/${id_eq}/accurring`, {
+  fetch(`http://127.0.0.1:3000/agents/${ler}/accurring`, {
     headers: { "Content-Type": "application/json" },
     method: "GET",
   })
     .then((res) => res.json())
     .then((out) => {
-      // $('#label_local tbody').empty();
       $.each(out, function (index, valor) {
         document.getElementById("label_local").innerHTML =
           "Local da ocorrência: " + valor.freguesia;
         document.getElementById("label_urgencia").innerHTML =
           "Grau de urgência: " + valor.descricao_urgencia;
-        //document.getElementById("label_nomeEquipa").innerHTML =
-        //"Equipa: " + valor.nome_equipa;
       });
     })
     .catch((err) => {
@@ -90,8 +75,39 @@ function verOcorrenciaAtual(ler) {
     });
 }
 
-function verEqOcorrAtual(ler) {
+function mostraEq(ler) {
+  fetch(`http://127.0.0.1:3000/teams/${ler}/members`, {
+    headers: { "Content-Type": "application/json" },
+    method: "GET",
+  })
+    .then((res) => res.json())
+
+    .then((out) => {
+      $("#tabela-equipa-oco-atual tbody").empty();
+      $.each(out, function (index, value) {
+        table.row.add([value.id_equipa, value.username]).draw();
+      });
+    });
+}
+
+function mostraEq(ler) {
   let table = $("#tabela-equipa-oco-atual").DataTable();
+  fetch(`http://127.0.0.1:3000/teams/${ler}/members`, {
+    headers: { "Content-Type": "application/json" },
+    method: "GET",
+  })
+    .then((res) => res.json())
+
+    .then((out) => {
+      $("#tabela-equipa-oco-atual tbody").empty();
+      $.each(out, function (index, value) {
+        table.row.add([value.id_equipa, value.username]).draw();
+      });
+    });
+}
+
+function verEqOcorrAtual(ler) {
+  //let table = $("#tabela-equipa-oco-atual").DataTable();
   fetch(`http://127.0.0.1:3000/teams/${ler}/view_team`, {
     headers: { "Content-Type": "application/json" },
     method: "GET",
@@ -99,25 +115,24 @@ function verEqOcorrAtual(ler) {
     .then((res) => res.json())
 
     .then((out) => {
-      $.each(out, function (index, valor) {
-        document.getElementById("label_nomeEquipa").innerHTML =
-          "Equipa: " + valor.nome_equipa;
-        let id_eq = valor.id_equipa;
-        verOcorrenciaAtual(id_eq);
+      document.getElementById("label_nomeEquipa").innerHTML =
+        "Equipa: " + out[0].nome_equipa;
+      let id_eq = out[0].id_equipa;
+      verOcorrenciaAtual(id_eq);
+      mostraEq(id_eq);
 
-        fetch(`http://127.0.0.1:3000/teams/${id_eq}/members`, {
-          headers: { "Content-Type": "application/json" },
-          method: "GET",
-        })
-          .then((res) => res.json())
+      /*fetch(`http://127.0.0.1:3000/teams/${id_eq}/members`, {
+        headers: { "Content-Type": "application/json" },
+        method: "GET",
+      })
+        .then((res) => res.json())
 
-          .then((out) => {
-            $("#tabela-equipa-oco-atual tbody").empty();
-            $.each(out, function (index, value) {
-              table.row.add([value.id_equipa, value.username]).draw();
-            });
+        .then((out) => {
+          $("#tabela-equipa-oco-atual tbody").empty();
+          $.each(out, function (index, value) {
+            table.row.add([value.id_equipa, value.username]).draw();
           });
-      });
+        });*/
     })
 
     .catch((err) => {
@@ -140,7 +155,7 @@ function tabelaHist() {
             value.id_equipa,
             value.descricao_urgencia,
             value.data_ocorrencia,
-            "FIller",
+            value.creditos_ocorrencia,
           ])
           .draw();
       });
