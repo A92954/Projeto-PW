@@ -73,7 +73,7 @@ $(document).ready(function () {
 
     $(document).ready(function () {
       $("#tabela-testemunha-acabado").DataTable();
-      getTestemunha();
+      getTestemunha(id_ocorr);
     });
 
     var credito_equipa = $("td", this).eq(5).text();
@@ -120,7 +120,7 @@ function getEquipa(par) {
     .catch((err) => console.error(err));
 }
 
-function materialUsadoPassadio(ler) {
+function materialUsadoPassado(ler) {
   fetch(`http://127.0.0.1:3000/materials/${ler}/material`, {
     //mudar a rota do fetch
     headers: { "Content-Type": "application/json" },
