@@ -38,7 +38,7 @@ router.put("/occurrences/:id_ocorrencia/credit", controllerOcorrencia.updateCred
 router.put("/occurrences/:id_ocorrencia/check_departure", controllerOcorrencia.updateConfirmarPartidaOcorrencia);
 router.put("/occurrences/:id_ocorrencia/duration", controllerOcorrencia.updateDuracaoOcorrencia);
 router.put("/occurrences/:id_ocorrencia/survival", controllerOcorrencia.updatePercentagemSobrevivente);
-router.put( "/occurrences/:id_ocorrencia/times", controllerOcorrencia.updateTempoDeslocacao);
+router.put("/occurrences/:id_ocorrencia/times", controllerOcorrencia.updateTempoDeslocacao);
 
 //Operacional
 
