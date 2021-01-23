@@ -4,7 +4,8 @@ window.onload = function () {
 
 var id_ocorrencia = "4";
 
-function getTestemunhas() {
+/*function getTestemunhas() {
+  let table = $("#tabela-testemunhas").DataTable();
   fetch('http://127.0.0.1:3000/occurrences/4/witnesses', {
           headers: { "Content-Type": "application/json" },
           method: "GET",
@@ -17,8 +18,27 @@ function getTestemunhas() {
               table.row.add([value.nome_testemunha, 
                             value.localidade_testemunha,
                             value.profissao_testemunha,
-                            value.id_ocorrencia,
-                            value.id_testemunha]).draw();
+                            value.email_testemunha,
+                            value.notas_testemunha]).draw();
+            });
+          });
+}*/
+
+function getTestemunhas() {
+  let table = $("#tabela-testemunhas").DataTable();
+  fetch('http://127.0.0.1:3000/occurrences/4/witnesses')
+          .then((res) => res.json())
+
+          .then((out) => {
+            console.log(out);
+            $("#tabela-testemunhas tbody").empty();
+            $.each(out, function (index, value) {
+              console.log(value);
+              table.row.add([value.nome_testemunha, 
+                            value.localidade_testemunha,
+                            value.profissao_testemunha,
+                            value.email_testemunha,
+                            value.notas_testemunha]).draw();
             });
           });
 }
@@ -76,7 +96,7 @@ function createTestemunha() {
    data.nome_testemunha = document.getElementById("nomeTestemunha").value;
     data.email_testemunha = document.getElementById("emailTestemunha").value;
      data.profissao_testemunha = document.getElementById("nomeTestemunha").value;
-    data.localidade_testemunha = document.getElementById("emailTestemunha").value;//alterar
+    data.localidade_testemunha = document.getElementById("localTestemunha").value;
      data.notas_testemunha = document.getElementById("notasTestemunha").value;
    // var idocorrencia="4";   ${idocorrencia}
   console.log(data);
