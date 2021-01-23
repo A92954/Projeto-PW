@@ -1,4 +1,4 @@
-const express = require('express');
+/*const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/controllerUtilizador');
 const { body, validationResult } = require('express-validator');
@@ -34,4 +34,4 @@ router.delete('/:username', function(req, res) {
     controller.delete(req, res);
 });
 
-module.exports = router;
+module.exports = router;*/
