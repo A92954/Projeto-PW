@@ -16,7 +16,7 @@ function atualizarUser() {
   fetch(`http://127.0.0.1:3000/utilizador/${username}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    //body: JSON.stringify(data),
+    body: JSON.stringify(data),
   })
     .then((response) => response.text())
     //Then with the data from the response in JSON...

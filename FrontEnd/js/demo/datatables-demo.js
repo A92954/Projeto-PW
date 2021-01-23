@@ -77,7 +77,7 @@ $(document).ready(function () {
 
     $(document).ready(function () {
       $("#tabela-testemunha-acabado").DataTable();
-      getTestemunha(id_ocorr);
+      getTestemunha();
     });
 
     var credito_equipa = $("td", this).eq(5).text();
@@ -88,8 +88,9 @@ $("#tabela-historico-ocorrencias").on("keyup", function () {
   tableInstance.search(this.value).draw(); // try this easy code and check if works at first
 });
 
-function getTestemunha(par) {
+function getTestemunha() {
   let table = $("#tabela-testemunha-acabado").DataTable();
+  var par = id_ocorr;
 
   fetch(`http://127.0.0.1:3000/occurrences/${par}/witnesses`)
     .then((res) => res.json())
@@ -102,6 +103,27 @@ function getTestemunha(par) {
               value.nome_testemunha,
               value.profissao_testemunha,
               value.localidade_testemunha,
+            ])
+            .draw();
+      });
+    })
+    .catch((err) => console.error(err));
+}
+
+function getEquipa() {
+  let table = $("#tabela-equipa-oco-decorrer").DataTable();
+  var par = id_ocorr;
+
+  fetch(`http://127.0.0.1:3000/teams/${par}/members`)  
+    .then((res) => res.json())
+    .then((out) => {
+      console.log(out);
+      $.each(out, function (index, value) {
+        console.log(value),
+          table.row
+            .add([
+              value.id_operacional,
+              value.username,
             ])
             .draw();
       });
