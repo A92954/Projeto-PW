@@ -153,13 +153,20 @@ function tabelaHist() {
     .then((res) => res.json())
     .then((out) => {
       $.each(out, function (index, value) {
+        var m = new Date(value.data_ocorrencia);
+        var dataString = m.getUTCFullYear() + "/" +
+        ("0" + (m.getUTCMonth()+1)).slice(-2) + "/" +
+        ("0" + m.getUTCDate()).slice(-2) + " " +
+        ("0" + m.getUTCHours()).slice(-2) + ":" +
+        ("0" + m.getUTCMinutes()).slice(-2) + ":" +
+        ("0" + m.getUTCSeconds()).slice(-2);
         table.row
           .add([
             value.id_ocorrencia,
             value.freguesia,
             value.id_equipa,
             value.descricao_urgencia,
-            value.data_ocorrencia,
+            dataString,
             "FIller",
           ])
           .draw();
