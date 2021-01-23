@@ -27,8 +27,7 @@ function save(req, res) {
   const notas_testemunha = req.body.notas_testemunha;
   let id_testemunha;
   const post = [nome_testemunha, email_testemunha, profissao_testemunha, localidade_testemunha, notas_testemunha];
-  const query = connect.con.query(
-    "INSERT INTO testemunha  SET nome_testemunha = ?, email_testemunha = ?, profissao_testemunha = ?, localidade_testemunha = ?, notas_testemunha = ?",post,
+  const query = connect.con.query("INSERT INTO testemunha  SET nome_testemunha = ?, email_testemunha = ?, profissao_testemunha = ?, localidade_testemunha = ?, notas_testemunha = ?",post,
     function (err, rows, fields) {
       if (err) return res.status(500).end();
     }
@@ -37,9 +36,7 @@ function save(req, res) {
   connect.con.query(query2, post, function (err, rows, fields) {
       id_testemunha = rows[0].id_testemunha;
       const post2 = [id_ocorrencia, id_testemunha];
-      const query3 = connect.con.query(
-        "INSERT INTO depoimento SET id_ocorrencia = ?, id_testemunha = ?",
-        post2,
+      const query3 = connect.con.query("INSERT INTO depoimento SET id_ocorrencia = ?, id_testemunha = ?",post2,
         function (err, rows, fields) {
           if (!err) {
             res.status(200).location(rows.insertId).send({"msg": "Testemunha associada com sucesso"});

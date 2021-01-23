@@ -141,8 +141,7 @@ function readDadosOcorrencia(req, res) {
       id_estado = rows[0].id_estado;
       if (id_estado == 2) {
         const secondquery = connect.con.query(
-          "SELECT oc.id_ocorrencia, loc.freguesia, eq.nome_equipa, oc.data_ocorrencia, oc.data_fim_ocorrencia FROM ocorrencia oc, equipa eq, localizacao loc WHERE oc.id_equipa = eq.id_equipa AND oc.local = loc.id_local AND oc.id_ocorrencia = ?",
-          id_ocorrencia,
+          "SELECT oc.id_ocorrencia, loc.freguesia, eq.nome_equipa, oc.data_ocorrencia, oc.data_fim_ocorrencia FROM ocorrencia oc, equipa eq, localizacao loc WHERE oc.id_equipa = eq.id_equipa AND oc.id_local = loc.id_local AND oc.id_ocorrencia = ?",id_ocorrencia,
           function (err, rows, fields) {
             freguesia = rows[0].freguesia;
             nome_equipa = rows[0].nome_equipa;
@@ -171,21 +170,11 @@ function readDadosOcorrencia(req, res) {
               });
               var mailOptions = {
                 from: "pmar.ot.2021@gmail.com",
-                to: "pw.policiamaritima@gmail.com",
+                to: "carlosverasofia2@gmail.com",
                 cc: "pmar.ot.2021@gmail.com",
                 subject: "Dados da Ocorrência",
                 text:
-                  "Olá, \nVimos por este meio fornecer-vos as informações relativas à ocorrência: " +
-                  id_ocorrencia +
-                  ".\nFreguesia: " +
-                  freguesia +
-                  " \nNome Equipa: " +
-                  nome_equipa +
-                  " \nData da ocorrência: " +
-                  data_ocorrencia +
-                  " - " +
-                  data_fim_ocorrencia +
-                  " \nAtenciosamente Responsavel Operações no terreno!",
+                  "Olá, \nVimos por este meio fornecer-vos as informações relativas à ocorrência: " +id_ocorrencia +".\nFreguesia: " +freguesia +" \nNome Equipa: " +nome_equipa +" \nData da ocorrência: " +data_ocorrencia +" - " +data_fim_ocorrencia +" \nAtenciosamente Responsavel Operações no terreno!",
               };
 
               transporter.sendMail(mailOptions, function (err, info) {
