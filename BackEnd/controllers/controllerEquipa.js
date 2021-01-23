@@ -35,7 +35,7 @@ function readEquipaOcorrencia(req, res) {
 
 function readMembrosEquipa(req,res) {
   const id_equipa = req.params.id_equipa;
-  const query = connect.con.query('SELECT eq.id_equipa,op.username,op.id_operacional FROM equipa eq,operacional op WHERE eq.id_equipa = op.id_equipa AND eq.id_equipa = ?',id_equipa,
+  const query = connect.con.query('SELECT eq.id_equipa, op.username, op.id_operacional FROM equipa eq, operacional op WHERE eq.id_equipa = op.id_equipa AND eq.id_equipa = ?', id_equipa,
     function(err,rows,fields){
       if (!err) {
         if (rows.length == 0) {
@@ -131,5 +131,5 @@ module.exports = {
   readRankingEquipa: readRankingEquipa,
   readMembrosEquipa: readMembrosEquipa,
   updateConfirmarEquipa: updateConfirmarEquipa,
-  updateCreditoEquipa: updateCreditoEquipa,
+  updateCreditoEquipa: updateCreditoEquipa
 };

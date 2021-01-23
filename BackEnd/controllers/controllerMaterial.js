@@ -60,7 +60,7 @@ function readMaterialOcorrencia(req, res) {
 function readConfirmarMaterialUsado(req, res) {
   const id_material = req.params.id_material;
   const query = connect.con.query(
-    "SELECT m.nome_material, om.quantidade_usada FROM ocorrencia_material om, material m WHERE m.id_material = ? and om.id_material = m.id_material",
+    "SELECT m.nome_material, om.quantidade_usada FROM ocorrencia_material om, material m WHERE m.id_material = ? and om.id_material = m.id_material and om.confirmado_material = 1",
     id_material,
     function (err, rows, fields) {
       if (!err) {
@@ -80,7 +80,7 @@ function readConfirmarMaterialUsado(req, res) {
 function updateConfirmarLevantamento(req, res) {
   const id_ocorrencia = req.params.id_ocorrencia;
   const id_material = req.params.id_material;
-  update = [id_ocorrencia, id_material];
+  const update = [id_ocorrencia, id_material];
   const query = connect.con.query('UPDATE ocorrencia_material SET confirmado_material = 1 WHERE id_ocorrencia = ? and id_material = ?', update, 
     function(err, rows, fields) {
       if (!err) {

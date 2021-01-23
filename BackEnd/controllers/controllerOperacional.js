@@ -157,6 +157,5 @@ module.exports = {
   readOcorrenciaOperacional: readOcorrenciaOperacional,
   readCreditoOperacional: readCreditoOperacional,
   readRankingOperacional: readRankingOperacional,
-  //readOcorrenciaAtual: readOcorrenciaAtual
-  updateCreditoOperacional: updateCreditoOperacional,
+  updateCreditoOperacional: updateCreditoOperacional
 };

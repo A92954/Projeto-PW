@@ -17,6 +17,7 @@ function read(req, res) {
     }
   );
 }
+
 function readAcabada(req, res) {
   const query = connect.con.query(
     "SELECT oc.id_ocorrencia, loc.freguesia, oc.id_equipa, gu.descricao_urgencia, oc.data_ocorrencia, oc.creditos_ocorrencia FROM ocorrencia oc, localizacao loc, grau_urgencia gu WHERE oc.id_local = loc.id_local and oc.id_nivel = gu.id_nivel and oc.id_estado = 2",
@@ -78,8 +79,6 @@ function readCreditoOcorrenciaX(req, res) {
   );
 }
     
-   
-    
 //Este metodo imprime apenas as ocorrencias que teem uma equipa atribuida e ainda esta a decorrer
 function readOcorrenciaAtual(req, res) {
   const id_operacional = req.params.id_operacional;
@@ -99,7 +98,7 @@ function readOcorrenciaAtual(req, res) {
           id_ocorrencia = rows[0].id_ocorrencia;
           if (id_estado == 2) {
             const thirdquery = connect.con.query(
-              "SELECT oc.id_ocorrencia,lo.freguesia, ur.descricao_urgencia, eq.nome_equipa, ma.nome_material, om.quantidade_usada, oc.data_ocorrencia, op.id_operacional, op.username FROM localizacao lo, grau_urgencia ur, equipa eq, material ma, ocorrencia_material om, ocorrencia oc, operacional op WHERE oc.id_local = lo.id_local and oc.id_equipa = eq.id_equipa and oc.id_nivel = ur.id_nivel and oc.id_ocorrencia = om.id_ocorrencia and om.id_material = ma.id_material and op.id_equipa = eq.id_equipa and oc.id_ocorrencia = ?",
+              "SELECT oc.id_ocorrencia, lo.freguesia, ur.descricao_urgencia, eq.nome_equipa, ma.nome_material, om.quantidade_usada, oc.data_ocorrencia, op.id_operacional, op.username FROM localizacao lo, grau_urgencia ur, equipa eq, material ma, ocorrencia_material om, ocorrencia oc, operacional op WHERE oc.id_local = lo.id_local and oc.id_equipa = eq.id_equipa and oc.id_nivel = ur.id_nivel and oc.id_ocorrencia = om.id_ocorrencia and om.id_material = ma.id_material and op.id_equipa = eq.id_equipa and oc.id_ocorrencia = ?",
               id_ocorrencia,
               function (err, rows, fields) {
                 res.send(rows);
@@ -191,16 +190,40 @@ function readDadosOcorrencia(req, res){
 
 function readTestemunha(req,res) {
   const id_ocorrencia = req.params.id_ocorrencia;
-  const query = connect.con.query('SELECT de.id_ocorrencia, te.id_testemunha, te.nome_testemunha, te.localidade_testemunha, te.profissao_testemunha FROM testemunha te, depoimento de WHERE te.id_testemunha = de.id_testemunha AND de.id_ocorrencia = ?',id_ocorrencia,
-  function(err,rows,fields){
-    if (!err) {
-      if (rows.length == 0) {
-        res.status(404).send("Data not found");
-      } else {
-        res.status(200).send(rows[0]);
-      }
-    } else console.log("Error while performing Query.", err);
-  })
+  const query = connect.con.query('SELECT de.id_ocorrencia, te.id_testemunha, te.nome_testemunha, te.localidade_testemunha, te.profissao_testemunha, te.email_testemunha, te.notas_testemunha FROM testemunha te, depoimento de WHERE te.id_testemunha = de.id_testemunha AND de.id_ocorrencia = ?', id_ocorrencia,
+    function(err,rows,fields){
+      if (!err) {
+        if (rows.length == 0) {
+          res.status(404).send("Data not found");
+        } else {
+          res.status(200).send(rows);
+        }
+      } else console.log("Error while performing Query.", err);
+  });
+}
+
+function readDiferencaTempo(req, res){
+  const id_ocorrencia = req.params.id_ocorrencia;
+  let tempo_deslocacao;
+  let tempo_estimado_deslocacao;
+  let diferencaTempo;
+  const query = connect.con.query("SELECT tempo_deslocacao, tempo_estimado_deslocacao FROM ocorrencia WHERE id_ocorrencia = ?",id_ocorrencia,
+    function(err,rows,fields){
+      tempo_deslocacao = rows[0].tempo_deslocacao;
+      tempo_estimado_deslocacao = rows[0].tempo_estimado_deslocacao;
+      diferencaTempo = tempo_estimado_deslocacao - tempo_deslocacao;
+      console.log(tempo_deslocacao);
+      console.log(tempo_estimado_deslocacao),
+      console.log(diferencaTempo);
+      if (!err) {
+          if (rows.length == 0) {
+          res.status(404).send("Data not found");
+        } else {
+          res.status(200).send(diferencaTempo.toString());
+        }
+      } else res.status(400).send({ Msg: err.code });
+    }
+  );
 }
 
 function updateCreditoOcorrencia(req, res) {
@@ -210,9 +233,7 @@ function updateCreditoOcorrencia(req, res) {
   let id_nivel;
   let percentagem_sobrevivente;
   let creditos_ocorrencia;
-  const query = connect.con.query(
-    "SELECT id_estado, duracao_ocorrencia, id_nivel, percentagem_sobrevivente, creditos_ocorrencia FROM ocorrencia WHERE id_ocorrencia = ? and data_fim_ocorrencia IS NOT NULL",
-    id_ocorrencia,
+  const query = connect.con.query("SELECT id_estado, duracao_ocorrencia, id_nivel, percentagem_sobrevivente, creditos_ocorrencia FROM ocorrencia WHERE id_ocorrencia = ? and data_fim_ocorrencia IS NOT NULL", id_ocorrencia,
     function (err, rows, fields) {
       id_estado = rows[0].id_estado;
       creditos_ocorrencia = rows[0].creditos_ocorrencia;
@@ -267,38 +288,29 @@ function updateCreditoOcorrencia(req, res) {
       } else {
         res.send("A ocorrencia ainda nao esta concluida");
       }
-    }
-  );
+    });
 }
 
 function updateConfirmarPartidaOcorrencia(req, res) {
   const id_ocorrencia = req.params.id_ocorrencia;
   let id_estado;
-  const query = connect.con.query(
-    "SELECT id_estado FROM ocorrencia WHERE id_ocorrencia = ?",
-    id_ocorrencia,
+  const query = connect.con.query("SELECT id_estado FROM ocorrencia WHERE id_ocorrencia = ?", id_ocorrencia,
     function (err, rows, fields) {
       id_estado = rows[0].id_estado;
       if (err) return res.status(500).end();
       if (id_estado == 3) {
         const update = [id_estado, id_ocorrencia];
-        const secondquery = connect.con.query(
-          "UPDATE ocorrencia SET id_estado = 1 WHERE id_ocorrencia = ?",
-          update,
+        const secondquery = connect.con.query("UPDATE ocorrencia SET id_estado = 1 WHERE id_ocorrencia = ?", update,
           function (err, rows, fields) {
-           res.send("Confirmada a partida para a ocorrencia");
-           
-          }
-        );
+           res.send("Confirmada a partida para a ocorrencia");          
+          });
       } else if (id_estado == 2) {
         res.send("A ocorrencia ja foi concluida");
-       
       } else {
         res.send("A ocorrencia ja se encontra em progresso");
        
       }
-    }
-  );
+    });
 }
 
 function updateDuracaoOcorrencia(req, res) {
@@ -306,9 +318,7 @@ function updateDuracaoOcorrencia(req, res) {
   let data_ocorrencia;
   let data_fim_ocorrencia;
   let duracao_ocorrencia;
-  const query = connect.con.query(
-    "SELECT * FROM ocorrencia WHERE id_ocorrencia = ?",
-    id_ocorrencia,
+  const query = connect.con.query("SELECT * FROM ocorrencia WHERE id_ocorrencia = ?", id_ocorrencia,
     function (err, rows, fields) {
       data_ocorrencia = rows[0].data_ocorrencia;
       data_fim_ocorrencia = rows[0].data_fim_ocorrencia;
@@ -316,18 +326,12 @@ function updateDuracaoOcorrencia(req, res) {
       duracao_ocorrencia = duracao_ocorrencia * 0.00001 * 1.66666667;
       const update = [duracao_ocorrencia, id_ocorrencia];
       if (err) return res.status(500).end();
-      const secondquery = connect.con.query(
-        "UPDATE ocorrencia SET duracao_ocorrencia = ? WHERE id_ocorrencia = ?",
-        update,
+      const secondquery = connect.con.query("UPDATE ocorrencia SET duracao_ocorrencia = ? WHERE id_ocorrencia = ?", update,
         function (err, rows, fields) {
           if (err) return res.status(500).end();
-          res.send(
-            "A duracao da ocorrencia foi de " + duracao_ocorrencia + " minutos"
-          );
-        }
-      );
-    }
-  );
+          res.send("A duracao da ocorrencia foi de " + duracao_ocorrencia + " minutos");
+        });
+    });
 }
 
 function updatePercentagemSobrevivente(req, res) {
@@ -335,60 +339,30 @@ function updatePercentagemSobrevivente(req, res) {
   const percentagem_sobrevivente = req.body.percentagem_sobrevivente;
   if (err) return res.status(500).end();
   if (0 <= percentagem_sobrevivente && percentagem_sobrevivente <= 100) {
-    const query = connect.con.query(
-      "UPDATE ocorrencia SET percentagem_sobrevivente = ? WHERE id_ocorrencia = ?",
-      [percentagem_sobrevivente, id_ocorrencia],
+    const query = connect.con.query("UPDATE ocorrencia SET percentagem_sobrevivente = ? WHERE id_ocorrencia = ?", [percentagem_sobrevivente, id_ocorrencia],
       function (err, rows, fields) {
-        res.send(
-          "A percentagem " +percentagem_sobrevivente +"% foi inserida com sucesso");
-      }
-    );
+        res.send("A percentagem " +percentagem_sobrevivente +"% foi inserida com sucesso");
+      });
   } else {
     res.send("Por favor, insira um valor entre 0 e 100...");
   }
 }
 
-
-
 function updateTempoDeslocacao(req, res){
   const id_ocorrencia = req.params.id_ocorrencia;
   const tempo_deslocacao = req.body.tempo_deslocacao;
   const tempo_estimado_deslocacao = req.body.tempo_estimado_deslocacao;
-  let   update = [tempo_deslocacao, tempo_estimado_deslocacao, id_ocorrencia];
+  let update = [tempo_deslocacao, tempo_estimado_deslocacao, id_ocorrencia];
   const query = connect.con.query('UPDATE ocorrencia SET tempo_deslocacao = ?, tempo_estimado_deslocacao = ? WHERE id_ocorrencia = ?', update,
     function(err,rows,fields){
       if (!err) {
         console.log("Number of records updated: " + rows.affectedRows);
         res.status(200).send("O tempo de deslocação real e estimado foram inseridos!");
-        } else {
+      } else {
         res.status(400).send({"msg": err.code});
         console.log('Error while performing Query.', err);
-        }}
-    )
-}
-
-function readDiferencaTempo(req, res){
-  const id_ocorrencia = req.params.id_ocorrencia;
-  let tempo_deslocacao;
-  let tempo_estimado_deslocacao;
-  let diferencaTempo;
-  const query = connect.con.query("SELECT tempo_deslocacao, tempo_estimado_deslocacao FROM ocorrencia WHERE id_ocorrencia = ?",id_ocorrencia,
-    function(err,rows,fields){
-      tempo_deslocacao = rows[0].tempo_deslocacao;
-      tempo_estimado_deslocacao = rows[0].tempo_estimado_deslocacao;
-      diferencaTempo = tempo_estimado_deslocacao - tempo_deslocacao;
-      console.log(tempo_deslocacao);
-      console.log(tempo_estimado_deslocacao),
-      console.log(diferencaTempo);
-      if (!err) {
-          if (rows.length == 0) {
-          res.status(404).send("Data not found");
-        } else {
-          res.status(200).send(diferencaTempo.toString());
-        }
-      } else res.status(400).send({ Msg: err.code });
-    }
-  );
+      }
+    });
 }
 
 module.exports = {
@@ -399,11 +373,11 @@ module.exports = {
   readOcorrenciaAtual: readOcorrenciaAtual,
   readGrafico: readGrafico,
   readDadosOcorrencia: readDadosOcorrencia,
-  readDiferencaTempo: readDiferencaTempo,
   readTestemunha: readTestemunha,
+  readDiferencaTempo: readDiferencaTempo,
   updateCreditoOcorrencia: updateCreditoOcorrencia,
   updateConfirmarPartidaOcorrencia: updateConfirmarPartidaOcorrencia,
   updateDuracaoOcorrencia: updateDuracaoOcorrencia,
   updatePercentagemSobrevivente: updatePercentagemSobrevivente,
-  updateTempoDeslocacao: updateTempoDeslocacao,
+  updateTempoDeslocacao: updateTempoDeslocacao
 };
