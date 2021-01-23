@@ -30,6 +30,16 @@
 
     <!-- Custom styles -->
     <link href="/FrontEnd/css/sb-admin-2.min.css" rel="stylesheet" />
+
+    <!-- PWA -->
+    <link rel="manifest" href="/FrontEnd/manifest.json" />
+    <!-- ios support -->
+    <link
+      rel="apple-touch-icon"
+      href="assets/icons/apple-icon-192x192-dunplab-manifest-16715.png"
+    />
+    <meta name="apple-mobile-web=app-status-bar" content="#00aae7" />
+    <meta name="theme-color" content="#00aae7" />
   </head>
 
   <body id="page-top">
@@ -201,8 +211,26 @@
                         <div class="col-sm-10">
                           <input
                             type="text"
-                            class="form-control"
+                            readonly
+                            class="form-control-plaintext"
                             id="PerfilUser"
+                            value="12341"
+                          />
+                          <br />
+                        </div>
+
+                        <label
+                          for="PerfilEspecialidade"
+                          class="col-sm-2 col-form-label"
+                          ><strong>Especialidade:</strong></label
+                        >
+                        <div class="col-sm-10">
+                          <input
+                            type="text"
+                            readonly
+                            class="form-control-plaintext"
+                            id="PerfilEspecialidade"
+                            value="Alto mar"
                           />
                           <br />
                         </div>
@@ -246,22 +274,6 @@
                               </button>
                             </div>-->
                           </div>
-                        </div>
-
-                        <label
-                          for="PerfilEspecialidade"
-                          class="col-sm-2 col-form-label"
-                          ><strong>Especialidade:</strong></label
-                        >
-                        <div class="col-sm-10">
-                          <input
-                            type="text"
-                            readonly
-                            class="form-control-plaintext"
-                            id="PerfilEspecialidade"
-                            value="Alto mar"
-                          />
-                          <br />
                         </div>
 
                         <label for="PerfilEmail" class="col-sm-2 col-form-label"
@@ -628,5 +640,6 @@
     <script src="/FrontEnd/js/sb-admin-2.min.js"></script>
 
     <script src="/FrontEnd/controllers/controllerUtilizador.js"></script>
+    <script src="/FrontEnd/app.js"></script>
   </body>
 </html>
