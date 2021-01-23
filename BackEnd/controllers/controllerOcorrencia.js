@@ -196,7 +196,7 @@ function readTestemunha(req,res) {
         if (rows.length == 0) {
           res.status(404).send("Data not found");
         } else {
-          res.status(200).send(rows[0]);
+          res.status(200).send(rows);
         }
       } else console.log("Error while performing Query.", err);
   });
