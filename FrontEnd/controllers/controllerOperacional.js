@@ -1,5 +1,4 @@
 window.onload() = function () {
-  ocorrAtual();
   //mostraNome();
 };
 
@@ -28,5 +27,5 @@ function mostraNome() {
 }
 
 $(document).ready(function () {
-  mostraNome();
+  //mostraNome();
 });

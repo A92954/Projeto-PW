@@ -69,15 +69,12 @@ $(document).ready(function () {
     var id_ocorr = $("td", this).eq(0).text(); //eq(2) increase the value inside eq() will display the txt column wise.
     $("#id_ocorr_selec").text(id_ocorr);
 
-    var response = fetch(
-      `http://127.0.0.1:3000/materials/${id_ocorr}/material`
-    );
-    var mat_usado = JSON.stringify(response);
-    $("#material_usado").text(mat_usado);
+    verEqOcorr(id_ocorr);
+    materialUsadoPassado(id_ocorr);
 
     $(document).ready(function () {
       $("#tabela-testemunha-acabado").DataTable();
-      getTestemunha();
+      getTestemunha(id_ocorr);
     });
 
     var credito_equipa = $("td", this).eq(5).text();
@@ -88,9 +85,8 @@ $("#tabela-historico-ocorrencias").on("keyup", function () {
   tableInstance.search(this.value).draw(); // try this easy code and check if works at first
 });
 
-function getTestemunha() {
+function getTestemunha(par) {
   let table = $("#tabela-testemunha-acabado").DataTable();
-  var par = id_ocorr;
 
   fetch(`http://127.0.0.1:3000/occurrences/${par}/witnesses`)
     .then((res) => res.json())
@@ -110,25 +106,54 @@ function getTestemunha() {
     .catch((err) => console.error(err));
 }
 
-function getEquipa() {
-  let table = $("#tabela-equipa-oco-decorrer").DataTable();
-  var par = id_ocorr;
+function verEqOcorr(ler) {
+  //let table = $("#tabela-equipa-oco-atual").DataTable();
+  fetch(`http://127.0.0.1:3000/teams/${ler}/view_team`, {
+    headers: { "Content-Type": "application/json" },
+    method: "GET",
+  })
+    .then((res) => res.json())
 
-  fetch(`http://127.0.0.1:3000/teams/${par}/members`)  
+    .then((out) => {
+      let id_eq = out[0].id_equipa;
+      getEquipa(id_eq);
+    })
+
+    .catch((err) => {
+      alert("Erro!" + err);
+    });
+}
+
+function getEquipa(par) {
+  let table = $("#tabela-equipa-oco-decorrer").DataTable();
+
+  fetch(`http://127.0.0.1:3000/teams/${par}/members`)
     .then((res) => res.json())
     .then((out) => {
       console.log(out);
       $.each(out, function (index, value) {
         console.log(value),
-          table.row
-            .add([
-              value.id_operacional,
-              value.username,
-            ])
-            .draw();
+          table.row.add([value.id_operacional, value.username]).draw();
       });
     })
     .catch((err) => console.error(err));
+}
+
+function materialUsadoPassado(ler) {
+  fetch(`http://127.0.0.1:3000/materials/${ler}/material`, {
+    //mudar a rota do fetch
+    headers: { "Content-Type": "application/json" },
+    method: "GET",
+  })
+    .then((res) => res.json())
+    .then((out) => {
+      $.each(out, function (index, valor) {
+        var x = document.getElementById("exampleFormControlSelect4");
+        var c = document.createElement("option");
+        c.text = valor.quantidade_usada + " --> " + valor.nome_material;
+        x.options.add(c, 1);
+      });
+    });
 }
 
 // TENTAR SUBLINHAR A LINHA DO RANKING DO GAJO (acho q está só da para fazer qd der o login, para sabermos quem está ligado)
