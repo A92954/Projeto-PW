@@ -1,20 +1,16 @@
 //quando inicia a página faz
 window.onload = function () {
-  getOcorr();
+  try {
+    getOcorr();
+  } catch (err) {
+    alert("Erro!" + err);
+  }
 };
-
-/*document.getElementById("btnTestemunhas").onclick = function () {
-  confirmarOcorrencia();
-};*/
 
 async function getOcorr() {
   fetch("http://127.0.0.1:3000/agents/7/accurring")
     .then((res) => res.json())
     .then((out) => {
-      /*$.each(out, function (index, valor) {
-        console.log(valor.id_ocorrencia);
-        return valor.id_ocorrencia;
-      });*/
       let id_ocorr;
       id_ocorr = out[0].id_ocorrencia;
       verEqOcorrAtual(id_ocorr);
@@ -28,15 +24,6 @@ async function getOcorr() {
     .catch((err) => console.error(err));
 }
 
-/*async function getOcorr() {
-  const response = await fetch("http://127.0.0.1:3000/agents/7/accurring");
-  const data = await response.json();
-  console.log(data.id_ocorrencia);
-}*/
-
-//let id_ocorr = getOcorr();
-//let id_ocorr = "7";
-
 function confirmarOcorrencia(ler) {
   fetch(`http://127.0.0.1:3000/materials/${ler}/material`, {
     //mudar a rota do fetch
@@ -46,8 +33,6 @@ function confirmarOcorrencia(ler) {
     .then((res) => res.json())
     .then((out) => {
       $.each(out, function (index, valor) {
-        //document.getElementById("teste").innerHTML = "Local da ocorrência: ";
-
         var x = document.getElementById("exampleFormControlSelect2");
         var c = document.createElement("option");
         c.text = valor.quantidade_usada + " --> " + valor.nome_material;
@@ -140,11 +125,6 @@ function verEqOcorrAtual(ler) {
     });
 }
 
-/*$(document).ready(function () {
-  $("tabela-equipa-oco-atual").DataTable();
-  verEqOcorrAtual();
-});*/
-
 //REFRESH DA TABELA
 function tabelaHist() {
   let table = $("#tabela-historico-ocorrencias").DataTable();
@@ -153,20 +133,13 @@ function tabelaHist() {
     .then((res) => res.json())
     .then((out) => {
       $.each(out, function (index, value) {
-        var m = new Date(value.data_ocorrencia);
-        var dataString = m.getUTCFullYear() + "/" +
-        ("0" + (m.getUTCMonth()+1)).slice(-2) + "/" +
-        ("0" + m.getUTCDate()).slice(-2) + " " +
-        ("0" + m.getUTCHours()).slice(-2) + ":" +
-        ("0" + m.getUTCMinutes()).slice(-2) + ":" +
-        ("0" + m.getUTCSeconds()).slice(-2);
         table.row
           .add([
             value.id_ocorrencia,
             value.freguesia,
             value.id_equipa,
             value.descricao_urgencia,
-            dataString,
+            value.data_ocorrencia,
             "FIller",
           ])
           .draw();
