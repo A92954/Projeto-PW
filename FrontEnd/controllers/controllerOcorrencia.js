@@ -1,7 +1,6 @@
 //quando inicia a página faz
 window.onload = function () {
   getOcorr();
-  verOcorrenciaAtual();
 };
 
 /*document.getElementById("btnTestemunhas").onclick = function () {
@@ -18,9 +17,12 @@ async function getOcorr() {
       });*/
       let id_ocorr;
       id_ocorr = out[0].id_ocorrencia;
+      verEqOcorrAtual(id_ocorr);
+
       document.getElementById("btnTestemunhas").onclick = function () {
         confirmarOcorrencia(id_ocorr);
       };
+
       materialUsado(id_ocorr);
     })
     .catch((err) => console.error(err));
@@ -51,10 +53,10 @@ function confirmarOcorrencia(ler) {
         c.text = valor.quantidade_usada + " --> " + valor.nome_material;
         x.options.add(c, 1);
       });
-    })
-    .catch((err) => {
-      alert("Erro!" + err);
     });
+  /*.catch((err) => {
+      alert("Erro!" + err);
+    });*/
 }
 
 function materialUsado(ler) {
@@ -73,14 +75,14 @@ function materialUsado(ler) {
         c.text = valor.quantidade_usada + " --> " + valor.nome_material;
         x.options.add(c, 1);
       });
-    })
-    .catch((err) => {
-      alert("Erro!" + err);
     });
+  /*.catch((err) => {
+      alert("Erro!" + err);
+    });*/
 }
 
 //REFRESH DA TABELA
-function verOcorrenciaAtual() {
+function verOcorrenciaAtual(ler) {
   let id_eq = "7";
   fetch(`http://127.0.0.1:3000/agents/${id_eq}/accurring`, {
     headers: { "Content-Type": "application/json" },
@@ -103,10 +105,9 @@ function verOcorrenciaAtual() {
     });
 }
 
-function verEqOcorrAtual() {
+function verEqOcorrAtual(ler) {
   let table = $("#tabela-equipa-oco-atual").DataTable();
-  let id_ocorr = "4";
-  fetch(`http://127.0.0.1:3000/teams/${id_ocorr}/view_team`, {
+  fetch(`http://127.0.0.1:3000/teams/${ler}/view_team`, {
     headers: { "Content-Type": "application/json" },
     method: "GET",
   })
@@ -116,7 +117,8 @@ function verEqOcorrAtual() {
       $.each(out, function (index, valor) {
         document.getElementById("label_nomeEquipa").innerHTML =
           "Equipa: " + valor.nome_equipa;
-        var id_eq = valor.id_equipa;
+        let id_eq = valor.id_equipa;
+        verOcorrenciaAtual(id_eq);
 
         fetch(`http://127.0.0.1:3000/teams/${id_eq}/members`, {
           headers: { "Content-Type": "application/json" },
@@ -137,7 +139,12 @@ function verEqOcorrAtual() {
       alert("Erro!" + err);
     });
 }
-  
+
+/*$(document).ready(function () {
+  $("tabela-equipa-oco-atual").DataTable();
+  verEqOcorrAtual();
+});*/
+
 //REFRESH DA TABELA
 function tabelaHist() {
   let table = $("#tabela-historico-ocorrencias").DataTable();
@@ -146,13 +153,20 @@ function tabelaHist() {
     .then((res) => res.json())
     .then((out) => {
       $.each(out, function (index, value) {
+        var m = new Date(value.data_ocorrencia);
+        var dataString = m.getUTCFullYear() + "/" +
+        ("0" + (m.getUTCMonth()+1)).slice(-2) + "/" +
+        ("0" + m.getUTCDate()).slice(-2) + " " +
+        ("0" + m.getUTCHours()).slice(-2) + ":" +
+        ("0" + m.getUTCMinutes()).slice(-2) + ":" +
+        ("0" + m.getUTCSeconds()).slice(-2);
         table.row
           .add([
             value.id_ocorrencia,
             value.freguesia,
             value.id_equipa,
             value.descricao_urgencia,
-            value.data_ocorrencia,
+            dataString,
             "FIller",
           ])
           .draw();
