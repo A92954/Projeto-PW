@@ -1,4 +1,4 @@
-const LocalStrategy = require('passport-local').Strategy;
+/*const LocalStrategy = require('passport-local').Strategy;
 
 module.exports = function(passport) {
 
@@ -41,4 +41,4 @@ module.exports = function(passport) {
     )); 
 
 
-}
+}*/

@@ -1,57 +1,61 @@
-const express = require("express");
-//const indexRoute = require('./routes/index');
-const routeM = require("./routes/routeM");
-const expressSanitizer = require("express-sanitizer");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-const mysql = require("mysql");
+
+const express = require('express');
+
+const hostname = process.env.HOST || '127.0.0.1';
+const port = process.env.PORT || 3000;
+
+//carregar bibliotecas
+const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const session = require("express-session");
-const app = express();
-const hostname = "127.0.0.1";
-const port = 3000;
-const BodyParser = require("body-parser");
-const usersRouter = require("./routes/usersRouter");
+const cors = require("cors");
+const bodyParser = require('body-parser');
+const expressSanitizer = require('express-sanitizer');
+//const expressValidator = require('express-validator');
+const { body } = require('express-validator');
 
-require("./auth")(passport);
+//iniciar aplicação
+const app = express(); 
 
-app.set("view engine", "ejs");
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(expressSanitizer());
+//app.use(expressValidator());
+app.use(express.json());
 
-app.use(
-  session({
-    secret: "123",
-    resave: false,
-    saveUninitialized: false,
-    cookie: { maxAge: 30 * 60 * 1000 }, //30min
-  })
-);
+//forçar uso de bibliotecas
+app.use(cors({
+    exposedHeaders: ['Location'],
+}));
 
+
+app.use('/assets', express.static('assets'));
+app.use('/views', express.static('views'));
+app.listen(port, function(err){
+    if (!err) {
+        console.log(`Server running at http://${hostname}:${port}/`);
+    }
+    else {
+        console.log(err);
+    }
+});
+
+/* //LOGIN
+app.use(session ( {
+    secret: 'secret key',
+    resave: true,
+    saveUninitialized: true 
+
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(
-  cors({
-    exposedHeaders: ["Location"],
-  })
-);
-app.use(BodyParser.json());
-app.use(BodyParser.urlencoded({ extended: true }));
-app.use(expressSanitizer());
-app.use(express.static(__dirname + "/public"));
-app.use("/", routeM);
+app.post ('/login',
+passport.authenticate('local', {successRedirect: '/', 
+ failureRedirect: '/login',
+ failureFlash: true
+})); */
 
-function authenticationMiddleware(req, res, next) {
-  if (req.isAuthenticated()) return next();
-  res.redirect("/login?fail=true");
-}
-
-const loginRouter = require("./routes/loginRouter");
-
-app.use("/users", authenticationMiddleware, usersRouter);
-app.use("/login", loginRouter);
-
-app.listen(port, function () {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
-
+// criar um loader
 module.exports = app;
+require('./loader.js'); 
