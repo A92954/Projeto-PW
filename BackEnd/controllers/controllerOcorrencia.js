@@ -190,7 +190,7 @@ function readDadosOcorrencia(req, res){
 
 function readTestemunha(req,res) {
   const id_ocorrencia = req.params.id_ocorrencia;
-  const query = connect.con.query('SELECT de.id_ocorrencia, te.id_testemunha, te.nome_testemunha, te.localidade_testemunha, te.profissao_testemunha FROM testemunha te, depoimento de WHERE te.id_testemunha = de.id_testemunha AND de.id_ocorrencia = ?', id_ocorrencia,
+  const query = connect.con.query('SELECT de.id_ocorrencia, te.id_testemunha, te.nome_testemunha, te.localidade_testemunha, te.profissao_testemunha, te.email_testemunha, te.notas_testemunha FROM testemunha te, depoimento de WHERE te.id_testemunha = de.id_testemunha AND de.id_ocorrencia = ?', id_ocorrencia,
     function(err,rows,fields){
       if (!err) {
         if (rows.length == 0) {
