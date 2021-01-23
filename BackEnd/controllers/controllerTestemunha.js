@@ -19,12 +19,12 @@ function read(req, res) {
 
 
 function save(req, res) {
-  const id_ocorrencia = req.params.id_ocorrencia;
-  const nome_testemunha = req.body.nome_testemunha;
-  const email_testemunha = req.body.email_testemunha;
-  const profissao_testemunha = req.body.profissao_testemunha;
-  const localidade_testemunha = req.body.localidade_testemunha;
-  const notas_testemunha = req.body.notas_testemunha;
+  var id_ocorrencia = req.params.id_ocorrencia;
+  var nome_testemunha = req.body.nome_testemunha;
+  var email_testemunha = req.body.email_testemunha;
+  var profissao_testemunha = req.body.profissao_testemunha;
+  var localidade_testemunha = req.body.localidade_testemunha;
+  var notas_testemunha = req.body.notas_testemunha;
   let id_testemunha;
   const post = [nome_testemunha, email_testemunha, profissao_testemunha, localidade_testemunha, notas_testemunha];
   const query = connect.con.query("INSERT INTO testemunha  SET nome_testemunha = ?, email_testemunha = ?, profissao_testemunha = ?, localidade_testemunha = ?, notas_testemunha = ?",post,

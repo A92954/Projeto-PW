@@ -76,7 +76,7 @@
               </div>
               <div class="card-body">
                 <div class="form-group row">
-                  <label for="tempoEstimado" class="col-sm-2 col-form-label"
+                  <label for="tempoEstimado" class="col-sm-2 col-form-label" id="label_tempoEstimado"
                     >Tempo Estimado</label
                   >
                   <div class="col-sm-4">
@@ -91,7 +91,7 @@
                 </div>
 
                 <div class="form-group row">
-                  <label for="tempoReal" class="col-sm-2 col-form-label"
+                  <label for="tempoReal" class="col-sm-2 col-form-label" id="label_tempoReal"
                     >Tempo Real</label
                   >
                   <div class="col-sm-4">
@@ -106,7 +106,7 @@
                 </div>
 
                 <div class="form-group row">
-                  <label for="tempoDiferenca" class="col-sm-2 col-form-label"
+                  <label for="tempoDiferenca" class="col-sm-2 col-form-label" id="label_difTempo"
                     >Diferença</label
                   >
                   <div class="col-sm-4">
@@ -455,6 +455,7 @@
                     />
                     <br />
                     <input
+                      id="profissaoTestemunha"
                       class="form-control form-control-sm"
                       type="text"
                       placeholder="Profissão"
@@ -468,6 +469,7 @@
                     />
                     <br />
                     <textarea
+                      id="notasTestemunha"
                       class="form-control form-control-sm"
                       id="notas-testemunhas"
                       rows="4"
@@ -477,8 +479,8 @@
                 </div>
 
                 <div class="modal-footer">
-                  <a href="/FrontEnd/No_Local.html"
-                    ><button type="submit" class="btn btn-primary">
+                  <a 
+                    ><button id="btn_criarTestemunha" type="submit" class="btn btn-primary"> 
                       Confirmar
                     </button></a
                   >
@@ -568,5 +570,8 @@
 
     <!-- Page level custom scripts -->
     <script src="/FrontEnd/js/demo/datatables-demo.js"></script>
+
+   
+    <script type="text/javascript" src="./controllers/controllerTestemunha.js"></script>
   </body>
 </html>
