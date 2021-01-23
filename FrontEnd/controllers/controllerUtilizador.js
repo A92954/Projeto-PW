@@ -1,6 +1,4 @@
-window.onload = function () {
-  mostraNome();
-};
+window.onload = function () {};
 
 function atualizarUser() {
   var data = {};
