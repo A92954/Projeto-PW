@@ -91,15 +91,17 @@ function getTestemunha(par) {
   fetch(`http://127.0.0.1:3000/occurrences/${par}/witnesses`)
     .then((res) => res.json())
     .then((out) => {
-      $.each(out, function (index, value) {
-        table.row
-          .add([
-            value.nome_testemunha,
-            value.localidade_testemunha,
-            value.profissao_testemunha,
-          ])
-          .draw();
-      });
+      console.log(out),
+        $.each(out, function (index, value) {
+          console.log(value),
+            table.row
+              .add([
+                value.nome_testemunha,
+                value.localidade_testemunha,
+                value.profissao_testemunha,
+              ])
+              .draw();
+        });
     })
     .catch((err) => console.error(err));
 }
