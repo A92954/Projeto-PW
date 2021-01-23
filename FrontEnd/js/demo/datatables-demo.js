@@ -85,23 +85,33 @@ $("#tabela-historico-ocorrencias").on("keyup", function () {
   tableInstance.search(this.value).draw(); // try this easy code and check if works at first
 });
 
+$("#historico-popup").on("hidden.bs.modal", function (e) {
+  $("#tabela-equipa-oco-decorrer").DataTable().destroy();
+  $("#tabela-testemunha-acabado").DataTable().destroy();
+});
+
+$("#sairModal").onclick = function () {
+  $("#tabela-equipa-oco-decorrer").DataTable().destroy();
+  $("#tabela-testemunha-acabado").DataTable().destroy();
+};
+
 function getTestemunha(par) {
   let table = $("#tabela-testemunha-acabado").DataTable();
 
   fetch(`http://127.0.0.1:3000/occurrences/${par}/witnesses`)
     .then((res) => res.json())
     .then((out) => {
-      console.log(out);
-      $.each(out, function (index, value) {
-        console.log(value),
-          table.row
-            .add([
-              value.nome_testemunha,
-              value.profissao_testemunha,
-              value.localidade_testemunha,
-            ])
-            .draw();
-      });
+      console.log(out),
+        $.each(out, function (index, value) {
+          console.log(value),
+            table.row
+              .add([
+                value.nome_testemunha,
+                value.localidade_testemunha,
+                value.profissao_testemunha,
+              ])
+              .draw();
+        });
     })
     .catch((err) => console.error(err));
 }
@@ -126,14 +136,11 @@ function verEqOcorr(ler) {
 
 function getEquipa(par) {
   let table = $("#tabela-equipa-oco-decorrer").DataTable();
-
   fetch(`http://127.0.0.1:3000/teams/${par}/members`)
     .then((res) => res.json())
     .then((out) => {
-      console.log(out);
       $.each(out, function (index, value) {
-        console.log(value),
-          table.row.add([value.id_operacional, value.username]).draw();
+        table.row.add([value.id_operacional, value.username]).draw();
       });
     })
     .catch((err) => console.error(err));
