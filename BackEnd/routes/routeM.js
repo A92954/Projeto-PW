@@ -27,6 +27,7 @@ router.put("/teams/:id_equipa/credit_team", controllerEquipa.updateCreditoEquipa
 //Ocorrencia
 
 router.get("/occurrences", controllerOcorrencia.read);
+router.get("/occurrences/:id_ocorrencia/description", controllerOcorrencia.readDescricao);
 router.get("/occurrences/finished", controllerOcorrencia.readAcabada);
 router.get("/occurrences/:id_ocorrencia", controllerOcorrencia.readOcorrenciaX);
 router.get("/occurrences/:id_ocorrencia/read_credit", controllerOcorrencia.readCreditoOcorrenciaX);
