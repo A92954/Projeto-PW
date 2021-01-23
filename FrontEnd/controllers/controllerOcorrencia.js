@@ -3,16 +3,20 @@ window.onload = function () {
   getOcorr();
 };
 
+
+let id_ocorr;
+
 function getOcorr() {
   fetch("http://127.0.0.1:3000/agents/7/accurring")
     .then((res) => res.json())
     .then((out) => {
-      let id_ocorr;
+     
+      //let id_ocorr;
       id_ocorr = out[0].id_ocorrencia;
       verEqOcorrAtual(id_ocorr);
 
       //document.getElementById("btnTestemunhas").onclick = function () {
-      confirmarOcorrencia(id_ocorr);
+    //  confirmarOcorrencia(id_ocorr);
       //};
 
       //materialUsado(id_ocorr);
@@ -42,9 +46,32 @@ function verEqOcorrAtual(ler) {
     });
 }
 
+document.getElementById("btn_iniciar").onclick = function () {
+confirmarOcorrencia();
+  };
+ // '+ id_ocorr +'
 //confirmar material e presença
-function confirmarOcorrencia(ler) {
-  fetch(`http://127.0.0.1:3000/materials/${ler}/material`, {
+function confirmarOcorrencia() {
+  console.log(id_ocorr);
+  fetch('http://127.0.0.1:3000/occurrences/4/check_departure', {
+    //mudar a rota do fetch
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+   
+  })
+    .then((res) => res.text())
+    .then((out) => {
+     alert(out);
+      
+    })
+    .catch(error => {
+      alert(error);
+  });
+}
+
+//confirmar material e presença
+/*function confirmarOcorrencia() {
+  fetch('http://127.0.0.1:3000/occurrences/'+ id_ocorr +'/check_departure', {
     //mudar a rota do fetch
     headers: { "Content-Type": "application/json" },
     method: "GET",
@@ -58,7 +85,7 @@ function confirmarOcorrencia(ler) {
         x.options.add(c, 1);
       });
     });
-}
+}*/
 
 //mostrar materiais no relatorio
 function materialUsado(ler) {

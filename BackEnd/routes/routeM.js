@@ -75,9 +75,6 @@ router.put(
 //Testemunha
 
 router.get("/witnesses", controllerTestemunha.read);
-router.post(
-  "/witnesses/:id_ocorrencia/registration",
-  controllerTestemunha.save
-);
+router.post("/witnesses/:id_ocorrencia/registration",controllerTestemunha.save);
 
 module.exports = router;

@@ -87,6 +87,7 @@ function getTestemunhas() {
 document.getElementById("btn_criarTestemunha").onclick = function () {
 createTestemunha();
 console.log("clicado");
+
 };
 
 
@@ -103,17 +104,13 @@ function createTestemunha() {
     fetch('http://127.0.0.1:3000/witnesses/4/registration', {  
       headers: { 'Content-Type': 'application/json' },
       method: 'POST',
-      body: JSON.stringify(
-        data
-         // id_ocorrencia: idocorrencia,
-      )
-
-
-  })
+      body: JSON.stringify(data)
+})
   .then(function(response) {
     return response.json();
   }).then(function(data) {
    console.log(data);
+   window.location.reload();
   });
 }
 
