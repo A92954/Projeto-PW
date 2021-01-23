@@ -3,7 +3,7 @@
   "name": "Polícia Marítima",
   "lang": "pt",
   "description": "A Polícia Marítima é um órgão que garante e fiscaliza o cumprimento das leis e regulamentos nos espaços integrantes do Domínio Público Marítimo.",
-  "start_url": "http://127.0.0.1:5500/FrontEnd/",
+  "start_url": "http://127.0.0.1:5502/FrontEnd/",
   "background_color": "#4e73df",
   "theme_color": "#4e73df",
   "dir": "ltr",
