@@ -209,17 +209,32 @@
               </div>
             </div>
 
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-primary"
-                id="btnTestemunhas"
-                data-toggle="modal"
-                data-target="#concluir-operacao"
-              >
-                Concluir operação
-              </button>
-            </div>
+            <form id="form" action="/FrontEnd/Pagina-principal.html">
+              <div class="modal-body">
+                <h6>Indique a percentagem de sobreviventes</h6>
+                <input
+                  type="range"
+                  min="0"
+                  id="vitimas-s"
+                  max="100"
+                  oninput="this.nextElementSibling.value = this.value"
+                />
+                <output id="N-sobreviventes">%</output>
+                <p id="text" style="display: none">Preencha esta opção.</p>
+              </div>
+              <div class="modal-footer">
+                <button
+                  id="botao"
+                  type="submit"
+                  class="btn btn-primary"
+                  onclick="verificacao()"
+                >
+                  Concluir operação
+                </button>
+              </div>
+            </form>
+
+            
             <!-- Footer -->
             <footer class="page-footer font-small mdb-color pt-4">
               <div class="footer-copyright text-center text-black-50 py-3">
@@ -314,60 +329,7 @@
             </div>
           </div>
 
-          <!-- Concluir operação Modal (isto so vai aparecer para o operacional que confirmou o material)-->
-          <div
-            class="modal fade"
-            id="concluir-operacao"
-            tabindex="-1"
-            role="dialog"
-            aria-labelledby="exampleModalCenterTitle"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <img
-                    class="modal-title"
-                    id="exampleModalLongTitle"
-                    src="/FrontEnd/img/icone.jpg"
-                    width="100rem"
-                  />
-
-                  <button
-                    type="button"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <form id="form" action="/FrontEnd/Pagina-principal.html">
-                  <div class="modal-body">
-                    <h6>Indique a percentagem de sobreviventes</h6>
-                    <input
-                      type="range"
-                      min="0"
-                      id="vitimas-s"
-                      max="100"
-                      oninput="this.nextElementSibling.value = this.value"
-                    />
-                    <output id="N-sobreviventes">%</output>
-                    <p id="text" style="display: none">Preencha esta opção.</p>
-                  </div>
-                  <div class="modal-footer">
-                    <button
-                      id="botao"
-                      type="submit"
-                      class="btn btn-primary"
-                      onclick="verificacao()"
-                    >
-                      Concluir
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
+          
           </div>
         </div>
       </div>
@@ -401,8 +363,8 @@
       src="./controllers/controllerTestemunha.js"
     ></script>
     <script
-    type="text/javascript"
-    src="./controllers/controllerTempos.js"
-  ></script>
+      type="text/javascript"
+      src="./controllers/controllerTempos.js"
+    ></script>
   </body>
 </html>
