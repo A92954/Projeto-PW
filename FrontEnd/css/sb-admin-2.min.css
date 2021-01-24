@@ -1,3 +1,7 @@
+.inactiveLink {
+  pointer-events: none;
+  cursor: default;
+}
 #colFormLabelLg {
   background-color: white;
 }

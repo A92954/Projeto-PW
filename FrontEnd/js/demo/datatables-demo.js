@@ -66,6 +66,15 @@ $(document).ready(function () {
   $("#tabela-historico-ocorrencias").DataTable();
   $("#tabela-historico-ocorrencias tbody").on("click", "tr", function () {
     $("#historico-popup").modal("show");
+
+    var select = document.getElementById("exampleFormControlSelect4");
+    var length = select.options.length;
+    for (i = length - 1; i >= 0; i--) {
+      select.options[i] = null;
+    }
+
+    $("#tabela-equipa-oco-decorrer").DataTable().clear();
+    $("#tabela-testemunha-acabado").DataTable().clear();
     var id_ocorr = $("td", this).eq(0).text(); //eq(2) increase the value inside eq() will display the txt column wise.
     $("#id_ocorr_selec").text(id_ocorr);
 
@@ -90,11 +99,6 @@ $("#historico-popup").on("hidden.bs.modal", function (e) {
   $("#tabela-testemunha-acabado").DataTable().destroy();
 });
 
-$("#sairModal").onclick = function () {
-  $("#tabela-equipa-oco-decorrer").DataTable().destroy();
-  $("#tabela-testemunha-acabado").DataTable().destroy();
-};
-
 function getTestemunha(par) {
   let table = $("#tabela-testemunha-acabado").DataTable();
 
@@ -103,14 +107,13 @@ function getTestemunha(par) {
     .then((out) => {
       console.log(out),
         $.each(out, function (index, value) {
-          console.log(value),
-            table.row
-              .add([
-                value.nome_testemunha,
-                value.localidade_testemunha,
-                value.profissao_testemunha,
-              ])
-              .draw();
+          table.row
+            .add([
+              value.nome_testemunha,
+              value.localidade_testemunha,
+              value.profissao_testemunha,
+            ])
+            .draw();
         });
     })
     .catch((err) => console.error(err));
@@ -139,9 +142,13 @@ function getEquipa(par) {
   fetch(`http://127.0.0.1:3000/teams/${par}/members`)
     .then((res) => res.json())
     .then((out) => {
-      $.each(out, function (index, value) {
-        table.row.add([value.id_operacional, value.username]).draw();
-      });
+      if (out.isEmpty()) {
+        alert("Não existe Equipa");
+      } else {
+        $.each(out, function (index, value) {
+          table.row.add([value.id_operacional, value.username]).draw();
+        });
+      }
     })
     .catch((err) => console.error(err));
 }
