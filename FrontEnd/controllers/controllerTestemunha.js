@@ -110,8 +110,9 @@ function createTestemunha() {
     return response.json();
   }).then(function(data) {
    console.log(data);
-   window.location.reload();
+  // window.location.reload();
   });
+  window.location.reload();
 }
 
 /*
