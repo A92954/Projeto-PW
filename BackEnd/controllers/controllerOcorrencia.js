@@ -113,24 +113,27 @@ function readOcorrenciaAtual(req, res) {
     "SELECT id_equipa FROM operacional WHERE id_operacional = ?",
     id_operacional,
     function (err, rows, fields) {
-      id_equipa = rows[0].id_equipa;
-      const secondquery = connect.con.query(
-        "SELECT id_estado, id_ocorrencia FROM ocorrencia WHERE id_equipa = ? and data_fim_ocorrencia IS NULL",
-        id_equipa,
-        function (err, rows, fields) {
-          id_estado = rows[0].id_estado;
-          id_ocorrencia = rows[0].id_ocorrencia;
-          if (id_estado == 2) {
-            const thirdquery = connect.con.query(
-              "SELECT oc.id_ocorrencia, lo.freguesia, ur.descricao_urgencia, eq.nome_equipa, ma.nome_material, om.quantidade_usada, oc.data_ocorrencia, op.id_operacional, op.username FROM localizacao lo, grau_urgencia ur, equipa eq, material ma, ocorrencia_material om, ocorrencia oc, operacional op WHERE oc.id_local = lo.id_local and oc.id_equipa = eq.id_equipa and oc.id_nivel = ur.id_nivel and oc.id_ocorrencia = om.id_ocorrencia and om.id_material = ma.id_material and op.id_equipa = eq.id_equipa and oc.id_ocorrencia = ?",
-              id_ocorrencia,
-              function (err, rows, fields) {
-                res.send(rows);
-              }
-            );
+      id_estado = rows[0].id_estado;
+      id_ocorrencia = rows[0].id_ocorrencia;
+      if (id_estado == 1) {
+        const thirdquery = connect.con.query(
+          "SELECT oc.id_ocorrencia, lo.freguesia, ur.descricao_urgencia, eq.nome_equipa, ma.nome_material, om.quantidade_usada, oc.data_ocorrencia, op.id_operacional, op.username FROM localizacao lo, grau_urgencia ur, equipa eq, material ma, ocorrencia_material om, ocorrencia oc, operacional op WHERE oc.id_local = lo.id_local and oc.id_equipa = eq.id_equipa and oc.id_nivel = ur.id_nivel and oc.id_ocorrencia = om.id_ocorrencia and om.id_material = ma.id_material and op.id_equipa = eq.id_equipa and oc.id_ocorrencia = ?",
+          id_ocorrencia,
+          function (err, rows, fields) {
+            id_estado = rows[0].id_estado;
+            id_ocorrencia = rows[0].id_ocorrencia;
+            if (id_estado == 2) {
+              const thirdquery = connect.con.query(
+                "SELECT oc.id_ocorrencia, lo.freguesia, ur.descricao_urgencia, eq.nome_equipa, ma.nome_material, om.quantidade_usada, oc.data_ocorrencia, op.id_operacional, op.username FROM localizacao lo, grau_urgencia ur, equipa eq, material ma, ocorrencia_material om, ocorrencia oc, operacional op WHERE oc.id_local = lo.id_local and oc.id_equipa = eq.id_equipa and oc.id_nivel = ur.id_nivel and oc.id_ocorrencia = om.id_ocorrencia and om.id_material = ma.id_material and op.id_equipa = eq.id_equipa and oc.id_ocorrencia = ?",
+                id_ocorrencia,
+                function (err, rows, fields) {
+                  res.send(rows);
+                }
+              );
+            }
           }
-        }
-      );
+        );
+      }
     }
   );
 }
