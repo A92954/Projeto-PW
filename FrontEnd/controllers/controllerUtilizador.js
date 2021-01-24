@@ -1,12 +1,14 @@
 window.onload = function () {
   document.getElementById("btnLogin").onclick = function () {
-    login12();
+    login();
     console.log("clicado");
   };
 
+  let username;
   // Autenticar administrador na área privada
-  function login12() {
+  function login() {
     //data
+    username = document.getElementById("inputUser").value;
     var data = {};
     data.username = document.getElementById("inputUser").value;
     data.password = document.getElementById("inputPassword").value;
@@ -17,7 +19,7 @@ window.onload = function () {
     })
       .then((res) => res.json())
       .then((out) => {
-        alert(out.msg);
+        localStorage.setItem("User", username);
         window.location.href =
           "http://127.0.0.1:5502/FrontEnd/Pagina-principal.html";
       })

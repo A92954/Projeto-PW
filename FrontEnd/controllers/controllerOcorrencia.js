@@ -3,6 +3,8 @@ window.onload = function () {
   getOcorr();
 };
 
+alert(localStorage.User);
+
 let id_ocorr;
 
 function getOcorr() {
