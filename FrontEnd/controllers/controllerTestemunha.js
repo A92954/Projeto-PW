@@ -1,6 +1,7 @@
 
 window.onload = function () {
   getTestemunhas();
+  materialUsadoNoLocal();
   document.getElementById("btn_criarTestemunha").onclick = function () {
     createTestemunha();
     };
@@ -50,3 +51,19 @@ console.log("Adicionado com sucesso!");
   window.location.reload();
 }
 
+function materialUsadoNoLocal() {
+  fetch('http://127.0.0.1:3000/materials/4/confirm', {
+    //mudar a rota do fetch
+    headers: { "Content-Type": "application/json" },
+    method: "GET",
+  })
+    .then((res) => res.json())
+    .then((out) => {
+      $.each(out, function (index, valor) {
+        var x = document.getElementById("listaMatUtilizadoNoLocal");
+        var c = document.createElement("option");
+        c.text = valor.quantidade_usada + " --> " + valor.nome_material;
+        x.options.add(c, 1);
+      });
+    });
+}

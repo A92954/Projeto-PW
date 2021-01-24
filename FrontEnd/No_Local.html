@@ -120,7 +120,7 @@
                     ></textarea>
                   </div>
                   <div class="col-sm-2">
-                    <button type="button" class="btn btn-primary">
+                    <button id="btn_calcularDiferenca" type="button" class="btn btn-primary">
                       Calcular Diferença
                     </button>
                   </div>
@@ -213,9 +213,7 @@
               <button
                 type="button"
                 class="btn btn-primary"
-                id="btnTestemunhas"
-                data-toggle="modal"
-                data-target="#concluir-operacao"
+                id="btn_ConcluirOperacao"
               >
                 Concluir operação
               </button>
@@ -404,5 +402,9 @@
     type="text/javascript"
     src="./controllers/controllerTempos.js"
   ></script>
+  <script
+  type="text/javascript"
+  src="./controllers/controllerConfirmarOcorrencia.js"
+></script>
   </body>
 </html>
