@@ -1,7 +1,6 @@
 //quando inicia a página faz
 window.onload = function () {
   let user = localStorage.User;
-  console.log(user);
   getIdOp(user);
 };
 
@@ -12,7 +11,6 @@ function getIdOp(ler) {
     .then((res) => res.json())
     .then((out) => {
       let id_oper = out[0].id_operacional;
-      console.log(id_oper);
       getOcorr(id_oper);
     })
     .catch((err) => console.error(err));
@@ -22,7 +20,6 @@ function getOcorr(id_op) {
   fetch(`http://127.0.0.1:3000/occurrences/${id_op}/accurring`)
     .then((res) => res.json())
     .then((out) => {
-      //let id_ocorr;
       id_ocorr = out[0].id_ocorrencia;
       verEqOcorrAtual(id_ocorr);
 
@@ -63,17 +60,15 @@ document.getElementById("btn_iniciar").onclick = function () {
 // '+ id_ocorr +'
 //confirmar material e presença
 function confirmarOcorrencia() {
-  console.log(id_ocorr);
-  fetch('http://127.0.0.1:3000/occurrences/29/check_departure', {
+  fetch("http://127.0.0.1:3000/occurrences/29/check_departure", {
     //mudar a rota do fetch
     method: "PUT",
     headers: { "Content-Type": "application/json" },
   })
     .then((res) => res.text())
     .then((out) => {
-     alert(out);
-     window.location.href=("http://127.0.0.1:5501/FrontEnd/Relatorio.html");
-      
+      alert(out);
+      window.location.href = "http://127.0.0.1:5501/FrontEnd/Relatorio.html";
     })
     .catch((error) => {
       alert(error);

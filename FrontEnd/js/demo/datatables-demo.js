@@ -142,7 +142,7 @@ function getEquipa(par) {
   fetch(`http://127.0.0.1:3000/teams/${par}/members`)
     .then((res) => res.json())
     .then((out) => {
-      if (JSON.stringify(out) == "{}") {
+      if (typeof out === null) {
         alert("Não existe Equipa");
       } else {
         $.each(out, function (index, value) {
