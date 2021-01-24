@@ -312,60 +312,7 @@
             </div>
           </div>
 
-          <!-- Concluir operação Modal (isto so vai aparecer para o operacional que confirmou o material)-->
-          <div
-            class="modal fade"
-            id="concluir-operacao"
-            tabindex="-1"
-            role="dialog"
-            aria-labelledby="exampleModalCenterTitle"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <img
-                    class="modal-title"
-                    id="exampleModalLongTitle"
-                    src="/FrontEnd/img/icone.jpg"
-                    width="100rem"
-                  />
-
-                  <button
-                    type="button"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <form id="form" action="/FrontEnd/Pagina-principal.html">
-                  <div class="modal-body">
-                    <h6>Indique a percentagem de sobreviventes</h6>
-                    <input
-                      type="range"
-                      min="0"
-                      id="vitimas-s"
-                      max="100"
-                      oninput="this.nextElementSibling.value = this.value"
-                    />
-                    <output id="N-sobreviventes">%</output>
-                    <p id="text" style="display: none">Preencha esta opção.</p>
-                  </div>
-                  <div class="modal-footer">
-                    <button
-                      id="botao"
-                      type="submit"
-                      class="btn btn-primary"
-                      onclick="verificacao()"
-                    >
-                      Concluir
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
+          
           </div>
         </div>
       </div>
@@ -399,6 +346,7 @@
       src="./controllers/controllerTestemunha.js"
     ></script>
     <script
+<<<<<<< HEAD
     type="text/javascript"
     src="./controllers/controllerTempos.js"
   ></script>
@@ -406,5 +354,10 @@
   type="text/javascript"
   src="./controllers/controllerConfirmarOcorrencia.js"
 ></script>
+=======
+      type="text/javascript"
+      src="./controllers/controllerTempos.js"
+    ></script>
+>>>>>>> 5ea3e695814cc6addca9dca90fd539e063c57207
   </body>
 </html>

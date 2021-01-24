@@ -25,18 +25,22 @@ window.onload = function () {
           window.location.href =
             "http://127.0.0.1:5502/FrontEnd/Pagina-principal.html";
         } else {
-          alert("TOU FARTO DE JAVASCRIPT");
+          alert("Username ou password errado");
         }
       })
       .catch((error) => {
         alert(error);
       });
   }
+
+  let user = localStorage.User;
+  document.getElementById("btnAtualiza").onclick = function () {
+    atualizarUser(user);
+  };
 };
 
-function atualizarUser() {
+function atualizarUser(user) {
   var data = {};
-  var username = "Portela_20";
   //data.username = document.getElementById("PerfilUser").value;
   data.nome = document.getElementById("PerfilNome1").value;
   data.email_utilizador = document.getElementById("PerfilEmail1").value;
@@ -44,7 +48,7 @@ function atualizarUser() {
 
   console.log(data);
 
-  fetch(`http://127.0.0.1:3000/users/${username}`, {
+  fetch(`http://127.0.0.1:3000/users/${user}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
