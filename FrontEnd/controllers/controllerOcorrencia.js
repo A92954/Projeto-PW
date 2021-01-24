@@ -53,7 +53,7 @@ function verEqOcorrAtual(ler) {
 document.getElementById("btn_iniciar").onclick = function () {
   confirmarOcorrencia();
 };
-// '+ id_ocorr +'
+
 //confirmar material e presença
 function confirmarOcorrencia() {
   fetch("http://127.0.0.1:3000/occurrences/29/check_departure", {

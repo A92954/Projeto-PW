@@ -71,7 +71,7 @@ async function chartIT() {
         {
           label: "Ocorrências",
           lineTension: 0.3,
-          backgroundColor: "rgba(78, 115, 223, 0.05)",
+          backgroundColor: "rgba(78, 115, 223, 0.2)",
           borderColor: "rgba(78, 115, 223, 1)",
           pointRadius: 3,
           pointBackgroundColor: "rgba(78, 115, 223, 1)",
