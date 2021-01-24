@@ -19,9 +19,14 @@ window.onload = function () {
     })
       .then((res) => res.json())
       .then((out) => {
-        localStorage.setItem("User", username);
-        window.location.href =
-          "http://127.0.0.1:5502/FrontEnd/Pagina-principal.html";
+        console.log(out);
+        if (out.msg == "Success") {
+          localStorage.setItem("User", username);
+          window.location.href =
+            "http://127.0.0.1:5502/FrontEnd/Pagina-principal.html";
+        } else {
+          alert("TOU FARTO DE JAVASCRIPT");
+        }
       })
       .catch((error) => {
         alert(error);

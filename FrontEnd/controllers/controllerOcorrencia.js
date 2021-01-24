@@ -1,4 +1,3 @@
-//quando inicia a página faz
 window.onload = function () {
   let user = localStorage.User;
   getIdOp(user);
