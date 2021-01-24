@@ -32,11 +32,12 @@ window.onload = function () {
         alert(error);
       });
   }
+
+  let user = localStorage.User;
 };
 
 function atualizarUser() {
   var data = {};
-  var username = "Portela_20";
   //data.username = document.getElementById("PerfilUser").value;
   data.nome = document.getElementById("PerfilNome1").value;
   data.email_utilizador = document.getElementById("PerfilEmail1").value;
@@ -44,7 +45,7 @@ function atualizarUser() {
 
   console.log(data);
 
-  fetch(`http://127.0.0.1:3000/users/${username}`, {
+  fetch(`http://127.0.0.1:3000/users/${user}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
