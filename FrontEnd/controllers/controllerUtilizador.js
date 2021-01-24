@@ -40,7 +40,7 @@ function atualizarUser() {
   console.log(data); //debugging para ver os dados que foram enviados
   //chamada fetch para envio dos dados para o servior via POST
 
-  fetch(`http://127.0.0.1:3000/utilizador/${username}`, {
+  fetch(`http://127.0.0.1:3000/users/${username}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
