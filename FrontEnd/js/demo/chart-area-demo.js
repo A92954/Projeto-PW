@@ -39,11 +39,9 @@ async function getData() {
   const table = data.split(",").slice(0);
   table.forEach((row) => {
     const columns = row.split(":");
-    const mes = columns[0];
-    xlabels.push(mes);
     const ocorr = columns[1];
     yOcorr.push(ocorr);
-    console.log(mes, ocorr);
+    console.log(ocorr);
   });
 }
 
@@ -55,7 +53,20 @@ async function chartIT() {
   var myLineChart = new Chart(ctx, {
     type: "line",
     data: {
-      labels: xlabels,
+      labels: [
+        "Janeiro",
+        "Fevereiro",
+        "Março",
+        "Abril",
+        "Maio",
+        "Junho",
+        "Julho",
+        "Agosto",
+        "Setembro",
+        "Outubro",
+        "Novembro",
+        "Dezembro",
+      ],
       datasets: [
         {
           label: "Ocorrências",

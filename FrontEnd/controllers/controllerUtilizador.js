@@ -25,7 +25,7 @@ window.onload = function () {
           window.location.href =
             "http://127.0.0.1:5502/FrontEnd/Pagina-principal.html";
         } else {
-          alert("TOU FARTO DE JAVASCRIPT");
+          alert("Username ou password errado");
         }
       })
       .catch((error) => {
@@ -34,9 +34,12 @@ window.onload = function () {
   }
 
   let user = localStorage.User;
+  document.getElementById("btnAtualiza").onclick = function () {
+    atualizarUser(user);
+  };
 };
 
-function atualizarUser() {
+function atualizarUser(user) {
   var data = {};
   //data.username = document.getElementById("PerfilUser").value;
   data.nome = document.getElementById("PerfilNome1").value;

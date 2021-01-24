@@ -1,13 +1,34 @@
 window.onload = function () {
-  getTestemunhas();
-  document.getElementById("btn_criarTestemunha").onclick = function () {
-    createTestemunha();
-  };
+  let user = localStorage.User;
+  getIdOp(user);
 };
 
-function getTestemunhas() {
+function getIdOp(ler) {
+  fetch(`http://127.0.0.1:3000/users/${ler}/info`)
+    .then((res) => res.json())
+    .then((out) => {
+      let id_oper = out[0].id_operacional;
+      getOcorr(id_oper);
+    })
+    .catch((err) => console.error(err));
+}
+
+function getOcorr(id_op) {
+  fetch(`http://127.0.0.1:3000/occurrences/${id_op}/accurring`)
+    .then((res) => res.json())
+    .then((out) => {
+      id_ocorr = out[0].id_ocorrencia;
+      getTestemunhas(id_ocorr);
+      document.getElementById("btn_criarTestemunha").onclick = function () {
+        createTestemunha(id_ocorr);
+      };
+    })
+    .catch((err) => console.error(err));
+}
+
+function getTestemunhas(ler) {
   let table = $("#tabela-testemunhas").DataTable();
-  fetch("http://127.0.0.1:3000/occurrences/4/witnesses")
+  fetch(`http://127.0.0.1:3000/occurrences/${ler}/witnesses`)
     .then((res) => res.json())
 
     .then((out) => {
@@ -28,7 +49,7 @@ function getTestemunhas() {
     });
 }
 
-function createTestemunha() {
+function createTestemunha(ler) {
   console.log("Adicionado com sucesso!");
   var data = {};
   data.nome_testemunha = document.getElementById("nomeTestemunha").value;
@@ -38,7 +59,7 @@ function createTestemunha() {
   data.notas_testemunha = document.getElementById("notasTestemunha").value;
   // var idocorrencia="4";   ${idocorrencia}
   console.log(data);
-  fetch(`http://127.0.0.1:3000/witnesses/${id_ocorr}/registration`, {
+  fetch(`http://127.0.0.1:3000/witnesses/${ler}/registration`, {
     headers: { "Content-Type": "application/json" },
     method: "POST",
     body: JSON.stringify(data),
