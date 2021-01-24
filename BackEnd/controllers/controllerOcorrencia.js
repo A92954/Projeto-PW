@@ -220,7 +220,7 @@ function readDiferencaTempo(req, res){
   let tempo_deslocacao;
   let tempo_estimado_deslocacao;
   let diferencaTempo;
-  const query = connect.con.query("SELECT tempo_deslocacao, tempo_estimado_deslocacao FROM ocorrencia WHERE id_ocorrencia = ?",id_ocorrencia,
+  const query = connect.con.query('SELECT tempo_deslocacao, tempo_estimado_deslocacao FROM ocorrencia WHERE id_ocorrencia = ?', id_ocorrencia,
   function(err,rows,fields){
     tempo_deslocacao = rows[0].tempo_deslocacao;
     tempo_estimado_deslocacao = rows[0].tempo_estimado_deslocacao;
@@ -354,7 +354,6 @@ function updateDuracaoOcorrencia(req, res) {
 function updatePercentagemSobrevivente(req, res) {
   const id_ocorrencia = req.params.id_ocorrencia;
   const percentagem_sobrevivente = req.body.percentagem_sobrevivente;
-  if (err) return res.status(500).end();
   if (0 <= percentagem_sobrevivente && percentagem_sobrevivente <= 100) {
     const query = connect.con.query('UPDATE ocorrencia SET percentagem_sobrevivente = ? WHERE id_ocorrencia = ?', [percentagem_sobrevivente, id_ocorrencia],
     function (err, rows, fields) {
@@ -370,7 +369,7 @@ function updatePercentagemSobrevivente(req, res) {
 function updateTempoDeslocacao(req, res){
   const id_ocorrencia = req.params.id_ocorrencia;
   const tempo_deslocacao = req.body.tempo_deslocacao; //tempo real
-  const tempo_estimado_deslocacao = req.body.tempo_estimado_deslocacao;//tempo estimado 
+  const tempo_estimado_deslocacao = req.body.tempo_estimado_deslocacao; //tempo estimado 
   let update = [tempo_deslocacao, tempo_estimado_deslocacao, id_ocorrencia];
   const query = connect.con.query('UPDATE ocorrencia SET tempo_deslocacao = ?, tempo_estimado_deslocacao = ? WHERE id_ocorrencia = ?', update,
   function(err,rows,fields){
@@ -381,6 +380,113 @@ function updateTempoDeslocacao(req, res){
     else {
       res.status(400).send({ msg: err.code});
       console.log('Error while performing Query.', err);
+    }
+  });
+}
+
+//Funcao que altera a data de fim da ocorrencia assim que clica no botao para finalizar a ocorrencia
+function updateDataFim(req, res) {
+  const id_ocorrencia = req.params.id_ocorrencia;
+  const id_estado = 2;
+  const data_fim_ocorrencia = new Date();
+  const disponibilidade = "Disponivel";
+  const update1 = [id_estado, data_fim_ocorrencia, id_ocorrencia];
+  const query = connect.con.query('UPDATE ocorrencia SET id_estado = ?, data_fim_ocorrencia = ? WHERE id_ocorrencia = ?', update1,
+  function (err, rows, fields) {
+    console.log(query.sql);
+    if(!err) {
+      //Voltar a guardar o material utilizado
+      const secondquery = connect.con.query('SELECT id_material, quantidade_usada FROM ocorrencia_material WHERE id_ocorrencia = ?', id_ocorrencia,
+      function (err, rows, fields) {
+        console.log(secondquery.sql);
+        if(err) {
+          console.log(err);
+          res.status(400).send({ msg: err.code });
+        }
+        else {
+          if(!rows.length == 0) {
+            let numeroRows = rows.length;
+            //console.log(numeroRows);
+            for(let i = 0; i < numeroRows; i++) {
+              const id_material = rows[i].id_material;
+              const quantidade_usada = rows[i].quantidade_usada;
+              const thirdquery = connect.con.query('SELECT quantidade_disponivel FROM material WHERE id_material = ?', id_material,
+              function (err, rows, fields) {
+                console.log(thirdquery.sql);
+                if(err) {
+                  console.log(err);
+                  res.status(400).send({ msg: err.code });
+                }
+                else {
+                  if(!rows.length == 0) {
+                    let quantidade_disponivel = rows[0].quantidade_disponivel;
+                    quantidade_disponivel = quantidade_disponivel + quantidade_usada;
+                    const update2 = [quantidade_disponivel,id_material];
+                    const fourthquery = connect.con.query('UPDATE material SET quantidade_disponivel = ? WHERE id_material = ?', update2,
+                    function (err, rows, fields) {
+                      console.log(fourthquery.sql);
+                      if(err) {
+                        res.status(400).send({ msg: err.code });
+                      }
+                    });
+                  }
+                }
+              });
+            }
+          }
+        }
+      });
+      //Tornar disponivel os voluntarios
+      const fifthquery = connect.con.query('SELECT id_voluntario FROM ocorrencia_voluntario WHERE id_ocorrencia = ?', id_ocorrencia,
+      function (err, rows, fields) {
+        console.log(fifthquery.sql);
+        if(err) {
+          console.log(err);
+          res.status(400).send({ msg: err.code });
+        }
+        else {
+          if(!rows.length == 0) {
+            let numeroRows2 = rows.length;
+            for(let a = 0; a < numeroRows2; a++) {
+              const id_voluntario = rows[a].id_voluntario;
+              const update3 = [disponibilidade,id_voluntario];
+              const sixthquery = connect.con.query('UPDATE voluntario SET disponibilidade = ? WHERE id_voluntario = ?', update3,
+              function (err, rows, fields) {
+                console.log(sixthquery.sql);
+                if(err) {
+                  res.status(400).send({ msg: err.code });
+                }
+              });
+            }
+          }
+        }
+      });
+      //Tornar disponivel a equipa
+      const seventhquery = connect.con.query('SELECT id_equipa FROM ocorrencia WHERE id_ocorrencia = ?', id_ocorrencia,
+        function (err, rows, fields) {
+          console.log(seventhquery.sql);
+          if(err) {
+            console.log(err);
+            res.status(400).send({ msg: err.code });
+          }
+          else {
+            if(!rows.length == 0) {
+              const id_equipa = rows[0].id_equipa;
+              const update4 = [disponibilidade,id_equipa];
+              const eigthquery = connect.con.query('UPDATE equipa SET disponibilidade = ? WHERE id_equipa = ?', update4,
+              function (err, rows, fields) {
+                console.log(eigthquery.sql);
+                if(err) {
+                  res.status(400).send({ msg: err.code });
+                }
+              });
+            }
+          }
+        });
+      res.status(200).send("Alterações realizadas com sucesso");
+    }
+    else {
+      res.status(404).send({ msg: "Data not found"});
     }
   });
 }
@@ -400,5 +506,6 @@ module.exports = {
   updateConfirmarPartidaOcorrencia: updateConfirmarPartidaOcorrencia,
   updateDuracaoOcorrencia: updateDuracaoOcorrencia,
   updatePercentagemSobrevivente: updatePercentagemSobrevivente,
-  updateTempoDeslocacao: updateTempoDeslocacao
+  updateTempoDeslocacao: updateTempoDeslocacao,
+  updateDataFim: updateDataFim
 }
