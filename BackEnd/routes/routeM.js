@@ -14,7 +14,25 @@ router.get("/", function (req, res) {res.send("Pagina principal");});
 router.get("/users", controllerUtilizador.read);
 router.get("/users/:username/info", controllerUtilizador.readUtilizadorX);
 router.get("/users/:username/role", controllerUtilizador.readEspecialidadeUtilizador);
-router.put("/users/:username", controllerUtilizador.updateUtilizador);
+router.put("/users/:username", 
+    [
+        body('nome')
+            .not()
+            .isEmpty()
+            .withMessage('Insira um nome válido'),
+        body('email_utilizador')
+            .isEmail()
+            .withMessage('Insira um email válido'),
+        body('password')
+            .isLength({ min: 8, max: 15 })
+            .withMessage('Password deve ter entre 8 e 15 caracteres')
+    ], function (req, res) {
+        const err = validationResult(req);
+        if (!err.isEmpty()) {
+            return res.status(400).send({ msg: err.code});
+        }
+        controllerUtilizador.updateUtilizador(req, res);
+    });
 
 //Equipa
 
@@ -40,8 +58,36 @@ router.get("/occurrences/:id_ocorrencia/witnesses", controllerOcorrencia.readTes
 router.put("/occurrences/:id_ocorrencia/credit", controllerOcorrencia.updateCreditoOcorrencia);
 router.put("/occurrences/:id_ocorrencia/check_departure", controllerOcorrencia.updateConfirmarPartidaOcorrencia);
 router.put("/occurrences/:id_ocorrencia/duration", controllerOcorrencia.updateDuracaoOcorrencia);
-router.put("/occurrences/:id_ocorrencia/survival", controllerOcorrencia.updatePercentagemSobrevivente);
-router.put("/occurrences/:id_ocorrencia/times", controllerOcorrencia.updateTempoDeslocacao);
+router.put("/occurrences/:id_ocorrencia/survival",
+    [
+        body('percentagem_sobrevivente')
+            .not()
+            .isEmpty()
+            .withMessage('Insira um valor para a percentagem de sobreviventes')
+    ], function(req, res) {
+        const err = validationResult(req);
+        if(!err.isEmpty()) {
+            return res.status(400).send({ msg: err.code});
+        }
+        controllerOcorrencia.updatePercentagemSobrevivente(req, res);
+    });
+router.put("/occurrences/:id_ocorrencia/times",
+    [
+        body('tempo_deslocacao')
+            .not()
+            .isEmpty()
+            .withMessage('Insira o valor que demorou a chegar ao local'),
+        body('tempo_estimado_deslocacao')
+            .not()
+            .isEmpty()
+            .withMessage('Insira o valor dado pelo mapa...')
+    ], function(req, res) {
+        const err = validationResult(req);
+        if(!err.isEmpty()) {
+            return res.status(400).send({ msg: err.code});
+        }
+        controllerOcorrencia.updateTempoDeslocacao(req, res);
+    });
 router.put("/occurrences/:id_ocorrencia/finishdate", controllerOcorrencia.updateDataFim);
 
 //Operacional
@@ -64,6 +110,25 @@ router.put("/materials/:id_ocorrencia/:id_material/withdraw", controllerMaterial
 //Testemunha
 
 router.get("/witnesses", controllerTestemunha.read);
-router.post("/witnesses/:id_ocorrencia/registration", controllerTestemunha.save);
+router.post("/witnesses/:id_ocorrencia/registration", 
+    [
+        body('nome_testemunha')
+            .not()
+            .isEmpty()
+            .withMessage("Por favor insira o nome da testemunha"),
+        body('email_testemunha')
+            .isEmail()
+            .withMessage("Por favor insira um email válido (ex: teste@gmail.com)"),
+        body('notas_testemunha')
+            .not()
+            .isEmpty()
+            .withMessage("Por favor insira o depoimento realizado pela testemunha")
+    ], function(req, res) {
+        const err = validationResult(req);
+        if(!err.isEmpty()) {
+            return res.status(400).send({ msg: err.code});
+        }
+        controllerTestemunha.save(req, res);
+    });
 
 module.exports = router;

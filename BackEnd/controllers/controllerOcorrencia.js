@@ -354,7 +354,6 @@ function updateDuracaoOcorrencia(req, res) {
 function updatePercentagemSobrevivente(req, res) {
   const id_ocorrencia = req.params.id_ocorrencia;
   const percentagem_sobrevivente = req.body.percentagem_sobrevivente;
-  if (err) return res.status(500).end();
   if (0 <= percentagem_sobrevivente && percentagem_sobrevivente <= 100) {
     const query = connect.con.query('UPDATE ocorrencia SET percentagem_sobrevivente = ? WHERE id_ocorrencia = ?', [percentagem_sobrevivente, id_ocorrencia],
     function (err, rows, fields) {
@@ -370,7 +369,7 @@ function updatePercentagemSobrevivente(req, res) {
 function updateTempoDeslocacao(req, res){
   const id_ocorrencia = req.params.id_ocorrencia;
   const tempo_deslocacao = req.body.tempo_deslocacao; //tempo real
-  const tempo_estimado_deslocacao = req.body.tempo_estimado_deslocacao;//tempo estimado 
+  const tempo_estimado_deslocacao = req.body.tempo_estimado_deslocacao; //tempo estimado 
   let update = [tempo_deslocacao, tempo_estimado_deslocacao, id_ocorrencia];
   const query = connect.con.query('UPDATE ocorrencia SET tempo_deslocacao = ?, tempo_estimado_deslocacao = ? WHERE id_ocorrencia = ?', update,
   function(err,rows,fields){
