@@ -96,11 +96,6 @@ $("#tabela-historico-ocorrencias").on("keyup", function () {
   tableInstance.search(this.value).draw(); // try this easy code and check if works at first
 });
 
-$("#historico-popup").on("hidden.bs.modal", function (e) {
-  $("#tabela-equipa-oco-decorrer").DataTable().destroy();
-  $("#tabela-testemunha-acabado").DataTable().destroy();
-});
-
 function getTestemunha(par) {
   let table = $("#tabela-testemunha-acabado").DataTable();
 

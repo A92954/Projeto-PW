@@ -42,8 +42,7 @@ function atualizarUser() {
   data.email_utilizador = document.getElementById("PerfilEmail1").value;
   data.password = document.getElementById("password-perfil1").value;
 
-  console.log(data); //debugging para ver os dados que foram enviados
-  //chamada fetch para envio dos dados para o servior via POST
+  console.log(data);
 
   fetch(`http://127.0.0.1:3000/users/${username}`, {
     method: "PUT",
@@ -58,22 +57,5 @@ function atualizarUser() {
     //Then with the error genereted...
     .catch((error) => {
       console.error("Error:", error);
-    });
-}
-
-function mostraNome() {
-  fetch("http://127.0.0.1:3000/agents/7/agent", {
-    headers: { "Content-Type": "application/json" },
-    method: "GET",
-  })
-    .then((res) => res.json())
-    .then((out) => {
-      $.each(out, function (index, valor) {
-        //
-        document.getElementById("span_nome").innerHTML = valor.username;
-      });
-    })
-    .catch((err) => {
-      alert("Erro!" + err);
     });
 }
