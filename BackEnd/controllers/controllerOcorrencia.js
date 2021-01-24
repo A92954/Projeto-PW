@@ -220,7 +220,7 @@ function readDiferencaTempo(req, res){
   let tempo_deslocacao;
   let tempo_estimado_deslocacao;
   let diferencaTempo;
-  const query = connect.con.query("SELECT tempo_deslocacao, tempo_estimado_deslocacao FROM ocorrencia WHERE id_ocorrencia = ?",id_ocorrencia,
+  const query = connect.con.query('SELECT tempo_deslocacao, tempo_estimado_deslocacao FROM ocorrencia WHERE id_ocorrencia = ?', id_ocorrencia,
   function(err,rows,fields){
     tempo_deslocacao = rows[0].tempo_deslocacao;
     tempo_estimado_deslocacao = rows[0].tempo_estimado_deslocacao;
