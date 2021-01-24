@@ -75,6 +75,7 @@ $(document).ready(function () {
 
     $("#tabela-equipa-oco-decorrer").DataTable().clear();
     $("#tabela-testemunha-acabado").DataTable().clear();
+
     var id_ocorr = $("td", this).eq(0).text(); //eq(2) increase the value inside eq() will display the txt column wise.
     $("#id_ocorr_selec").text(id_ocorr);
 
@@ -142,13 +143,9 @@ function getEquipa(par) {
   fetch(`http://127.0.0.1:3000/teams/${par}/members`)
     .then((res) => res.json())
     .then((out) => {
-      if (typeof out === null) {
-        alert("Não existe Equipa");
-      } else {
-        $.each(out, function (index, value) {
-          table.row.add([value.id_operacional, value.username]).draw();
-        });
-      }
+      $.each(out, function (index, value) {
+        table.row.add([value.id_operacional, value.username]).draw();
+      });
     })
     .catch((err) => console.error(err));
 }

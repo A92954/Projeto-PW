@@ -21,12 +21,8 @@ function getOcorr(id_op) {
     .then((res) => res.json())
     .then((out) => {
       id_ocorr = out[0].id_ocorrencia;
+
       verEqOcorrAtual(id_ocorr);
-
-      //document.getElementById("btnTestemunhas").onclick = function () {
-      //  confirmarOcorrencia(id_ocorr);
-      //};
-
       materialUsado(id_ocorr);
     })
     .catch((err) => console.error(err));
@@ -45,6 +41,7 @@ function verEqOcorrAtual(ler) {
       document.getElementById("label_nomeEquipa").innerHTML =
         "Equipa: " + out[0].nome_equipa;
       let id_eq = out[0].id_equipa;
+
       verOcorrenciaAtual(id_eq);
       mostraEq(id_eq);
     })
@@ -74,24 +71,6 @@ function confirmarOcorrencia() {
       alert(error);
     });
 }
-
-//confirmar material e presença
-/*function confirmarOcorrencia() {
-  fetch('http://127.0.0.1:3000/occurrences/'+ id_ocorr +'/check_departure', {
-    //mudar a rota do fetch
-    headers: { "Content-Type": "application/json" },
-    method: "GET",
-  })
-    .then((res) => res.json())
-    .then((out) => {
-      $.each(out, function (index, valor) {
-        var x = document.getElementById("exampleFormControlSelect2");
-        var c = document.createElement("option");
-        c.text = valor.quantidade_usada + " --> " + valor.nome_material;
-        x.options.add(c, 1);
-      });
-    });
-}*/
 
 //mostrar materiais no relatorio
 function materialUsado(ler) {
@@ -143,7 +122,7 @@ function mostraEq(ler) {
     .then((out) => {
       $("#tabela-equipa-oco-atual tbody").empty();
       $.each(out, function (index, value) {
-        table.row.add([value.id_equipa, value.username]).draw();
+        table.row.add([value.id_operacional, value.username]).draw();
       });
     });
 }
