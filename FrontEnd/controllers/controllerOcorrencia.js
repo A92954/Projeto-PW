@@ -1,14 +1,25 @@
 //quando inicia a página faz
 window.onload = function () {
-  getOcorr();
+  let user = localStorage.User;
+  console.log(user);
+  getIdOp(user);
 };
-
-alert(localStorage.User);
 
 let id_ocorr;
 
-function getOcorr() {
-  fetch("http://127.0.0.1:3000/occurrences/7/accurring")
+function getIdOp(ler) {
+  fetch(`http://127.0.0.1:3000/users/${ler}/info`)
+    .then((res) => res.json())
+    .then((out) => {
+      let id_oper = out[0].id_operacional;
+      console.log(id_oper);
+      getOcorr(id_oper);
+    })
+    .catch((err) => console.error(err));
+}
+
+function getOcorr(id_op) {
+  fetch(`http://127.0.0.1:3000/occurrences/${id_op}/accurring`)
     .then((res) => res.json())
     .then((out) => {
       //let id_ocorr;
