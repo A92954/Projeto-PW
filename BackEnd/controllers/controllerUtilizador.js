@@ -1,4 +1,6 @@
 const connect = require("../database");
+const bcrypt = require("bcryptjs");
+const saltRounds = 10;
 
 //Funcao que le todos os dados refentes aos utilizadores
 function read(req, res) {
@@ -64,21 +66,23 @@ function updateUtilizador(req, res) {
   const nome = req.body.nome;
   const email_utilizador = req.body.email_utilizador;
   const password = req.body.password;
-  const update = [nome, email_utilizador, password, username];
-  const query = connect.con.query(
-    "UPDATE utilizador SET nome = ?, email_utilizador = ?, password = ? WHERE username = ?",
-    update,
-    function (err, rows, fields) {
-      console.log(query.sql);
-      if (!err) {
-        console.log("Number of records updated: " + rows.affectedRows);
-        res.status(200).send({ msg: "Dados utilizador alterados" });
-      } else {
-        res.status(400).send({ msg: err.code });
-        console.log("Error while performing Query.", err);
+  bcrypt.hash(password, saltRounds).then(function (hash) {
+    const update = [nome, email_utilizador, hash, username];
+    const query = connect.con.query(
+      "UPDATE utilizador SET nome = ?, email_utilizador = ?, password = ? WHERE username = ?",
+      update,
+      function (err, rows, fields) {
+        console.log(query.sql);
+        if (!err) {
+          console.log("Number of records updated: " + rows.affectedRows);
+          res.status(200).send({ msg: "Dados utilizador alterados" });
+        } else {
+          res.status(400).send({ msg: err.code });
+          console.log("Error while performing Query.", err);
+        }
       }
-    }
-  );
+    );
+  });
 }
 
 module.exports = {
