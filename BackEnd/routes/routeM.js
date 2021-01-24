@@ -11,9 +11,10 @@ router.get("/", function (req, res) {res.send("Pagina principal");});
 
 //Utilizador
 
-router.get("/utilizador", controllerUtilizador.read);
-router.get("/utilizador/:username/role", controllerUtilizador.readEspecialidadeUtilizador);
-router.put("/utilizador/:username", controllerUtilizador.updateUtilizador);
+router.get("/users", controllerUtilizador.read);
+router.get("/users/:username/info", controllerUtilizador.readUtilizadorX);
+router.get("/users/:username/role", controllerUtilizador.readEspecialidadeUtilizador);
+router.put("/users/:username", controllerUtilizador.updateUtilizador);
 
 //Equipa
 
@@ -31,7 +32,7 @@ router.get("/occurrences/:id_ocorrencia/description", controllerOcorrencia.readD
 router.get("/occurrences/finished", controllerOcorrencia.readAcabada);
 router.get("/occurrences/:id_ocorrencia", controllerOcorrencia.readOcorrenciaX);
 router.get("/occurrences/:id_ocorrencia/read_credit", controllerOcorrencia.readCreditoOcorrenciaX);
-router.get("/agents/:id_operacional/accurring", controllerOcorrencia.readOcorrenciaAtual);
+router.get("/occurrences/:id_operacional/accurring", controllerOcorrencia.readOcorrenciaAtual);
 router.get("/occurrencesGraphic", controllerOcorrencia.readGrafico);
 router.get("/occurrences/:id_ocorrencia/sendmail", controllerOcorrencia.readDadosOcorrencia);
 router.get("/occurrences/:id_ocorrencia/timeDiff", controllerOcorrencia.readDiferencaTempo);
@@ -48,38 +49,20 @@ router.get("/agents", controllerOperacional.read);
 router.get("/agents/:id_operacional/agent", controllerOperacional.readOperacional);
 router.get("/agents/:id_operacional/role", controllerOperacional.readEspecialidade);
 router.get("/agents/:id_operacional/occurrence", controllerOperacional.readOcorrenciaOperacional);
-router.get(
-  "/agents/:id_operacional/read_credit",
-  controllerOperacional.readCreditoOperacional
-);
+router.get("/agents/:id_operacional/read_credit", controllerOperacional.readCreditoOperacional);
 router.get("/agentsRanking", controllerOperacional.readRankingOperacional);
-router.put(
-  "/agents/:id_operacional/put_credit",
-  controllerOperacional.updateCreditoOperacional
-);
+router.put("/agents/:id_operacional/put_credit", controllerOperacional.updateCreditoOperacional);
 
 //Material
 
 router.get("/materials", controllerMaterial.read);
-router.get(
-  "/materials/:id_ocorrencia/material",
-  controllerMaterial.readMaterialOcorrencia
-);
-router.get(
-  "/materials/:id_material/confirm",
-  controllerMaterial.readConfirmarMaterialUsado
-);
-router.put(
-  "/materials/:id_ocorrencia/:id_material/withdraw",
-  controllerMaterial.updateConfirmarLevantamento
-);
+router.get("/materials/:id_ocorrencia/material", controllerMaterial.readMaterialOcorrencia);
+router.get("/materials/:id_material/confirm", controllerMaterial.readConfirmarMaterialUsado);
+router.put("/materials/:id_ocorrencia/:id_material/withdraw", controllerMaterial.updateConfirmarLevantamento);
 
 //Testemunha
 
 router.get("/witnesses", controllerTestemunha.read);
-router.post(
-  "/witnesses/:id_ocorrencia/registration",
-  controllerTestemunha.save
-);
+router.post("/witnesses/:id_ocorrencia/registration", controllerTestemunha.save);
 
 module.exports = router;
