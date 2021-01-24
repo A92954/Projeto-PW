@@ -53,7 +53,7 @@ confirmarOcorrencia();
 //confirmar material e presença
 function confirmarOcorrencia() {
   console.log(id_ocorr);
-  fetch('http://127.0.0.1:3000/occurrences/4/check_departure', {
+  fetch('http://127.0.0.1:3000/occurrences/29/check_departure', {
     //mudar a rota do fetch
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -62,6 +62,7 @@ function confirmarOcorrencia() {
     .then((res) => res.text())
     .then((out) => {
      alert(out);
+     window.location.href=("http://127.0.0.1:5501/FrontEnd/Relatorio.html");
       
     })
     .catch(error => {
