@@ -2,8 +2,8 @@
   //verificarTempos();
    alert("TEMPOS");
 };*/
-document.getElementById("").onclick = function () {
-  //verificarTempos();
+document.getElementById("btn_calcularDiferenca").onclick = function () {
+  verificarTempos();
 };
 
 function verificarTempos() {
