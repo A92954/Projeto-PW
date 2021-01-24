@@ -107,14 +107,13 @@ function getTestemunha(par) {
     .then((out) => {
       console.log(out),
         $.each(out, function (index, value) {
-          console.log(value),
-            table.row
-              .add([
-                value.nome_testemunha,
-                value.localidade_testemunha,
-                value.profissao_testemunha,
-              ])
-              .draw();
+          table.row
+            .add([
+              value.nome_testemunha,
+              value.localidade_testemunha,
+              value.profissao_testemunha,
+            ])
+            .draw();
         });
     })
     .catch((err) => console.error(err));
@@ -143,9 +142,13 @@ function getEquipa(par) {
   fetch(`http://127.0.0.1:3000/teams/${par}/members`)
     .then((res) => res.json())
     .then((out) => {
-      $.each(out, function (index, value) {
-        table.row.add([value.id_operacional, value.username]).draw();
-      });
+      if (out.isEmpty()) {
+        alert("Não existe Equipa");
+      } else {
+        $.each(out, function (index, value) {
+          table.row.add([value.id_operacional, value.username]).draw();
+        });
+      }
     })
     .catch((err) => console.error(err));
 }
