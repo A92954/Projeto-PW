@@ -1,5 +1,30 @@
 window.onload = function () {
-  mostraNome();
+  document.getElementById("btnLogin").onclick = function () {
+    login12();
+    console.log("clicado");
+  };
+
+  // Autenticar administrador na área privada
+  function login12() {
+    //data
+    var data = {};
+    data.username = document.getElementById("inputUser").value;
+    data.password = document.getElementById("inputPassword").value;
+    fetch("http://127.0.0.1:3000/signin/", {
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((out) => {
+        alert(out.msg);
+        window.location.href =
+          "http://127.0.0.1:5502/FrontEnd/Pagina-principal.html";
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }
 };
 
 function atualizarUser() {
