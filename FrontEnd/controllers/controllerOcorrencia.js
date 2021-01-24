@@ -6,7 +6,7 @@ window.onload = function () {
 let id_ocorr;
 
 function getOcorr() {
-  fetch("http://127.0.0.1:3000/agents/7/accurring")
+  fetch("http://127.0.0.1:3000/occurrences/7/accurring")
     .then((res) => res.json())
     .then((out) => {
       //let id_ocorr;
@@ -103,7 +103,7 @@ function materialUsado(ler) {
 
 //mostrar informacoes da ocorrencia atual
 function verOcorrenciaAtual(ler) {
-  fetch(`http://127.0.0.1:3000/agents/${ler}/accurring`, {
+  fetch(`http://127.0.0.1:3000/occurrences/${ler}/accurring`, {
     headers: { "Content-Type": "application/json" },
     method: "GET",
   })
