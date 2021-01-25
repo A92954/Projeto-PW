@@ -203,20 +203,12 @@ function tabelaHist() {
 function tabelaOcDecorrer() {
   let table = $("tabela-ocorrencias-decorrer").DataTable();
 
-  fetch("http://127.0.0.1:3000/occurrences/finished")
+  fetch("http://127.0.0.1:3000/occurrencesOccurring")
     .then((res) => res.json())
     .then((out) => {
       $.each(out, function (index, value) {
-        table.row
-          .add([
-            value.id_ocorrencia,
-            value.freguesia,
-            value.id_equipa,
-            value.descricao_urgencia,
-            dataString,
-            value.creditos_ocorrencia,
-          ])
-          .draw();
+        console.log("teste");
+        table.row.add([value.freguesia, value.nome_equipa]).draw();
       });
     })
     .catch((err) => console.error(err));
@@ -225,4 +217,6 @@ function tabelaOcDecorrer() {
 $(document).ready(function () {
   $("#tabela-historico-ocorrencias").DataTable();
   tabelaHist();
+  $("#tabela-ocorrencias-decorrer").DataTable();
+  tabelaOcDecorrer();
 });
