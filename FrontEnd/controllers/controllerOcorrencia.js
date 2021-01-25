@@ -65,7 +65,7 @@ function confirmarOcorrencia() {
     .then((res) => res.text())
     .then((out) => {
       alert(out);
-      window.location.href = "http://127.0.0.1:5501/FrontEnd/Relatorio.html";
+      window.location.href = "http://127.0.0.1:5502/FrontEnd/Relatorio.html";
     })
     .catch((error) => {
       alert(error);
