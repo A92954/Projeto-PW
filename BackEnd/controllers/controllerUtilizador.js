@@ -1,4 +1,6 @@
 const connect = require("../database");
+const bcrypt = require("bcryptjs");
+const saltRounds = 10;
 
 //Funcao que le todos os dados refentes aos utilizadores
 function read(req, res) {
@@ -58,7 +60,7 @@ function readEspecialidadeUtilizador(req, res) {
 }
 
 //Funcao que permite alterar os dados de um utilizador, com excecao do username e especialidade
-function updateUtilizador(req, res) {
+/*function updateUtilizador(req, res) {
   const username = req.params.username;
   const nome = req.body.nome;
   const email_utilizador = req.body.email_utilizador;
@@ -76,7 +78,49 @@ function updateUtilizador(req, res) {
       console.log('Error while performing Query.', err);
     }
   });
-} 
+}  */
+
+function updateUtilizador(req, res) {
+
+  let username = req.params.username;
+  //receber os dados do formuário que são enviados por post
+  let nome = req.body.nome;
+  let email_utilizador = req.body.email_utilizador;
+  let password = req.body.password;
+
+  console.log("without hahsh:" + req.body.password);
+  var query = "";
+  bcrypt.hash(password, saltRounds).then(function (hash) {
+      console.log("with hash:" + hash);
+
+      let update = [
+          nome,
+          email_utilizador,
+          hash,
+          username
+      ];
+      var query = "UPDATE utilizador SET nome = ?, email_utilizador = ?, password= ? WHERE username=?";
+      connect.con.query (query, update,
+      function (err, rows, fields) {
+          if (!err) {
+            let query1 = "UPDATE users SET nome = ?, email_utilizador = ?, password= ? WHERE username=?";
+            connect.con.query(query1, update, 
+              function(err, rows, fields){
+              if (!err) {
+                  console.log("Number of records updated: " + rows.affectedRows);
+                  res.status(200).send({ "msg": "update with success" });
+              } else {
+                  res.status(400).send({ "msg": err.code });
+                  console.log('Error while performing Query.', err);
+              }
+            })
+          } else {
+              res.status(400).send({ "msg": err.code });
+              console.log('Error while performing Query.', err);
+          }
+      });
+  });
+}
 
 module.exports = {
   read: read,

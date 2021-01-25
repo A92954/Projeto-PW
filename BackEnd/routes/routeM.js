@@ -29,7 +29,7 @@ router.put("/users/:username",
     ], function (req, res) {
         const err = validationResult(req);
         if (!err.isEmpty()) {
-            return res.status(400).send({ msg: err.code});
+            return res.status(400).json({ msg: err.array()});
         }
         controllerUtilizador.updateUtilizador(req, res);
     });
