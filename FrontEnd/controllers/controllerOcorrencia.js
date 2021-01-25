@@ -1,10 +1,12 @@
 window.onload = function () {
   let user = localStorage.User;
+  console.log(user);
   getIdOp(user);
 };
 
 let id_ocorr;
 
+//buscar o id_operacional atraves do username e chama as funçoes Get Ocorrencia e Ver Ocorrencia Atual
 function getIdOp(ler) {
   fetch(`http://127.0.0.1:3000/users/${ler}/info`)
     .then((res) => res.json())
@@ -16,6 +18,7 @@ function getIdOp(ler) {
     .catch((err) => console.error(err));
 }
 
+//busca o id_ocorrencia atraves do id_operacional e chama as funçoes Ver Equipa, Material Usado e Ler Descriçao
 function getOcorr(id_op) {
   fetch(`http://127.0.0.1:3000/occurrences/${id_op}/accurring`)
     .then((res) => res.json())
@@ -29,7 +32,11 @@ function getOcorr(id_op) {
     .catch((err) => console.error(err));
 }
 
-//Chamada do id_equipa e das funçoes Ocorrencia Atual e Mostra Equipa
+document.getElementById("btn_iniciar").onclick = function () {
+  confirmarOcorrencia(id_ocorr);
+};
+
+//Chamada do id_equipa e da funçao Mostra Equipa
 function verEqOcorrAtual(ler) {
   //let table = $("#tabela-equipa-oco-atual").DataTable();
   fetch(`http://127.0.0.1:3000/teams/${ler}/view_team`, {
@@ -47,17 +54,31 @@ function verEqOcorrAtual(ler) {
     })
 
     .catch((err) => {
-      // alert("Erro!" + err);
+      alert("Erro!" + err);
     });
 }
-
-document.getElementById("btn_iniciar").onclick = function () {
-  confirmarOcorrencia();
-};
 
 //confirmar material e presença
-function confirmarOcorrencia() {
-  fetch("http://127.0.0.1:3000/occurrences/29/check_departure", {
+function confirmarOcorrencia(ler) {
+  fetch(`http://127.0.0.1:3000/occurrences/${ler}/check_departure`, {
+    //mudar a rota do fetch
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+  })
+    .then((res) => res.text())
+    .then((out) => {
+      alert(out);
+      confirmarMaterial(ler);
+      window.location.href = "http://127.0.0.1:5502/FrontEnd/Relatorio.html";
+    })
+    .catch((error) => {
+      alert(error);
+    });
+}
+
+////confirmar o material
+function confirmarMaterial(ler) {
+  fetch(`http://127.0.0.1:3000/materials/${ler}/confirm`, {
     //mudar a rota do fetch
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -72,24 +93,7 @@ function confirmarOcorrencia() {
     });
 }
 
-////confirmar o material FALTA FAZER
-function confirmarMaterial() {
-  fetch(`http://127.0.0.1:3000/materials/${j}/confirm`, {
-    //mudar a rota do fetch
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-  })
-    .then((res) => res.text())
-    .then((out) => {
-      alert(out);
-      window.location.href = "http://127.0.0.1:5502/FrontEnd/Relatorio.html";
-    })
-    .catch((error) => {
-      alert(error);
-    });
-}
-
-//mostrar materiais no relatorio
+//mostrar materiais na pagina principal e relatorio
 function materialUsado(ler) {
   fetch(`http://127.0.0.1:3000/materials/${ler}/material`, {
     //mudar a rota do fetch
@@ -162,7 +166,7 @@ function lerDescricao(ler) {
     .catch((err) => console.error(err));
 }
 
-//REFRESH DA TABELA
+//REFRESH DA TABELA ocorrencias passadas
 function tabelaHist() {
   let table = $("#tabela-historico-ocorrencias").DataTable();
   fetch("http://127.0.0.1:3000/occurrences/finished")
@@ -197,24 +201,16 @@ function tabelaHist() {
     .catch((err) => console.error(err));
 }
 
-//REFRESH DA TABELA
+//REFRESH DA TABELA ocorrencias em curso
 function tabelaOcDecorrer() {
-  let table = $("tabela-ocorrencias-decorrer").DataTable();
+  let table = $("#tabela-ocorrencias-decorrer").DataTable();
 
-  fetch("http://127.0.0.1:3000/occurrences/finished")
+  fetch("http://127.0.0.1:3000/occurrencesOccurring")
     .then((res) => res.json())
     .then((out) => {
       $.each(out, function (index, value) {
-        table.row
-          .add([
-            value.id_ocorrencia,
-            value.freguesia,
-            value.id_equipa,
-            value.descricao_urgencia,
-            dataString,
-            value.creditos_ocorrencia,
-          ])
-          .draw();
+        console.log("teste");
+        table.row.add([value.freguesia, value.nome_equipa]).draw();
       });
     })
     .catch((err) => console.error(err));
@@ -223,4 +219,6 @@ function tabelaOcDecorrer() {
 $(document).ready(function () {
   $("#tabela-historico-ocorrencias").DataTable();
   tabelaHist();
+  $("#tabela-ocorrencias-decorrer").DataTable();
+  tabelaOcDecorrer();
 });

@@ -1,4 +1,4 @@
-window.onload = function () {
+/*window.onload = function () {
   let user = localStorage.User;
   getIdOp(user);
 };
@@ -59,9 +59,9 @@ function verDiferencaTempos(ler) {
       /*  $.each(out, function (index, valor) {
          // document.getElementById("teste23").innerHTML = valor.tempo_deslocacao;
           alert(valor.tempo_deslocacao);*/
-      // console.log(out);
-      //document.getElementById("tempoDiferenca").value;
-      tempoDiferenca.innerText = out;
-    });
-  //});
-}
+// console.log(out);
+//document.getElementById("tempoDiferenca").value;
+//tempoDiferenca.innerText = out;
+//});
+//});
+//}

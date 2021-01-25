@@ -92,9 +92,9 @@
                     id="label_tempoEstimado"
                     >Tempo Estimado</label
                   >
-                  <div class="col-sm-4">
+                  <div class="col-sm-6">
                     <textarea
-                      enable
+                      placeholder="Em minutos"
                       class="col-sm-2 txtAreaTemposLocal"
                       id="tempoEstimado"
                       rows="1"
@@ -110,9 +110,9 @@
                     id="label_tempoReal"
                     >Tempo Real</label
                   >
-                  <div class="col-sm-4">
+                  <div class="col-sm-6">
                     <textarea
-                      enable
+                    placeholder="Em minutos"
                       class="col-sm-2 txtAreaTemposLocal"
                       id="tempoReal"
                       rows="1"
@@ -134,7 +134,7 @@
                     id="label_difTempo"
                     >Diferença</label
                   >
-                  <div class="col-sm-4">
+                  <div class="col-sm-6">
                     <textarea
                       disabled
                       class="col-sm-2 txtAreaTemposLocal"
@@ -186,28 +186,60 @@
             </div>
 
             <div class="row">
-              <!-- Grow In Utility -->
-              <div class="col-lg-12">
-                <div class="card position-relative">
-                  <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">
-                      Material utilizado
-                    </h6>
+              <div class="col-xl-8 col-lg-7">
+                  <div class="card shadow mb-4">
+                      <!-- Card Header - Dropdown -->
+                      <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">
+                          Material utilizado 
+                        </h6>
+                      </div>
+                      <!-- Card Body -->
+                      <div class="card-body">
+                        <div class="form-group">
+                          <label>Material utilizado:</label>
+                          <select
+                            multiple
+                            class="form-control listas"
+                            id="listaMatUtilizadoNoLocal"
+                          ></select>
+                        </div>
+                      </div>
                   </div>
-                  <div class="card-body">
-                    <div class="form-group">
-                      <label>Material utilizado:</label>
-                      <select
-                        multiple
-                        class="form-control listas"
-                        id="listaMatUtilizadoNoLocal"
-                      ></select>
-                    </div>
-                  </div>
-                </div>
-                <br />
               </div>
-            </div>
+              
+              <div class="col-xl-4 col-lg-5">
+                  <div class="card shadow mb-4">
+                      <!-- Card Header - Dropdown -->
+                      <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">
+                          Sobreviventes
+                        </h6>
+                      </div>
+                      <!-- Card Body -->
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <label>Indique a percentagem de sobreviventes</label>
+                          <br>
+                        <input
+                          type="number"
+                          min="0"
+                          max="100"
+                          id="vitimas-s"
+                         
+                         
+                        />
+                       
+                        <br>
+                        <br>
+                        <p>Preencha esta opção (obrigatória).</p>
+                        <p>O valor por defeito é 50%.</p>
+                        </div>
+                        
+                      </div>
+                  </div>
+              </div>
+          </div>
 
             <div class="modal-footer">
               <button
@@ -353,5 +385,6 @@
   type="text/javascript"
   src="./controllers/controllerConfirmarOcorrencia.js"
 ></script>
+<script type="text/javascript" src="/FrontEnd/controllers/controllerNoLocal.js"></script>
   </body>
 </html>
