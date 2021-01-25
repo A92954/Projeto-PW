@@ -49,6 +49,7 @@ router.get("/occurrences", controllerOcorrencia.read);
 router.get("/occurrences/:id_ocorrencia/description", controllerOcorrencia.readDescricao);
 router.get("/occurrences/finished", controllerOcorrencia.readAcabada);
 router.get("/occurrences/:id_ocorrencia", controllerOcorrencia.readOcorrenciaX);
+router.get("/occurrences/:id_ocorrencia/local", controllerOcorrencia.readFreguesiaOcorrenciaX);
 router.get("/occurrences/:id_ocorrencia/read_credit", controllerOcorrencia.readCreditoOcorrenciaX);
 router.get("/occurrences/:id_operacional/accurring", controllerOcorrencia.readOcorrenciaAtual);
 router.get("/occurrencesGraphic", controllerOcorrencia.readGrafico);

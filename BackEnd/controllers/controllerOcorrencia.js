@@ -95,6 +95,26 @@ function readOcorrenciaX(req, res) {
   });
 }
 
+//Funcao que le a freguesia de uma determinada ocorrencia para usar o metodo no Mapa
+function readFreguesiaOcorrenciaX(req, res) {
+  const id_ocorrencia = req.params.id_ocorrencia;
+  const query = connect.con.query('SELECT lo.freguesia FROM ocorrencia oc, localizacao lo WHERE oc.id_ocorrencia = ?', id_ocorrencia,
+  function(err, rows, fields) {
+    if (!err) {
+      if (rows.length == 0) {
+        res.status(404).send({ msg: "Data not found",});
+      }
+      else {
+        res.status(200).send(rows);
+      }
+    }
+    else {
+      res.status(400).send({ msg: err.code });
+      console.log("Error while performing Query.", err);
+    }
+  });
+}
+
 //Funcao que le os creditos de uma determinada ocorrencia
 function readCreditoOcorrenciaX(req, res) {
   const id_ocorrencia = req.params.id_ocorrencia;
@@ -578,6 +598,7 @@ module.exports = {
   readDescricao: readDescricao,
   readAcabada: readAcabada,
   readOcorrenciaX: readOcorrenciaX,
+  readFreguesiaOcorrenciaX: readFreguesiaOcorrenciaX,
   readCreditoOcorrenciaX: readCreditoOcorrenciaX,
   readOcorrenciaAtual: readOcorrenciaAtual,
   readGrafico: readGrafico,

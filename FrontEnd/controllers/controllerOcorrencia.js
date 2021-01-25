@@ -47,7 +47,7 @@ function verEqOcorrAtual(ler) {
     })
 
     .catch((err) => {
-      alert("Erro!" + err);
+      // alert("Erro!" + err);
     });
 }
 
@@ -90,7 +90,6 @@ function confirmarMaterial() {
     });
 }
 
-
 //mostrar materiais no relatorio
 function materialUsado(ler) {
   fetch(`http://127.0.0.1:3000/materials/${ler}/material`, {
@@ -129,7 +128,7 @@ function verOcorrenciaAtual(ler) {
       });
     })
     .catch((err) => {
-      alert("Erro!" + err);
+      //alert("Erro!" + err);
     });
 }
 
