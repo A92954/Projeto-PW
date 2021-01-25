@@ -92,9 +92,9 @@
                     id="label_tempoEstimado"
                     >Tempo Estimado</label
                   >
-                  <div class="col-sm-4">
+                  <div class="col-sm-6">
                     <textarea
-                      enable
+                      placeholder="Em minutos"
                       class="col-sm-2 txtAreaTemposLocal"
                       id="tempoEstimado"
                       rows="1"
@@ -110,9 +110,9 @@
                     id="label_tempoReal"
                     >Tempo Real</label
                   >
-                  <div class="col-sm-4">
+                  <div class="col-sm-6">
                     <textarea
-                      enable
+                    placeholder="Em minutos"
                       class="col-sm-2 txtAreaTemposLocal"
                       id="tempoReal"
                       rows="1"
@@ -134,7 +134,7 @@
                     id="label_difTempo"
                     >Diferença</label
                   >
-                  <div class="col-sm-4">
+                  <div class="col-sm-6">
                     <textarea
                       disabled
                       class="col-sm-2 txtAreaTemposLocal"
@@ -221,7 +221,6 @@
                         <div class="form-group">
                           <label>Indique a percentagem de sobreviventes</label>
                           <br>
-                          <br>
                         <input
                           type="range"
                           min="0"
@@ -229,8 +228,12 @@
                           max="100"
                           oninput="this.nextElementSibling.value = this.value"
                         />
-                        <output id="N-sobreviventes">%</output>
-                        <p id="text" style="display: none">Preencha esta opção.</p>
+                        
+                        <output id="N-sobreviventes">50</output>
+                        <br>
+                        <br>
+                        <p>Preencha esta opção (obrigatória).</p>
+                        <p>O valor por defeito é 50%.</p>
                         </div>
                         
                       </div>
@@ -243,7 +246,6 @@
                 type="button"
                 class="btn btn-primary"
                 id="btn_ConcluirOperacao"
-                onclick="verificacao()"
               >
                 Concluir operação
               </button>
