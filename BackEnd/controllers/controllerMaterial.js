@@ -82,25 +82,7 @@ function readConfirmarMaterialUsado(req, res) {
   });
 }
 
-/*
-//Funcao que le um id_ocorrencia e um id_material e altera o booleano, default false, para true, para confirmar o mesmo
-function updateConfirmarLevantamento(req, res) {
-  const id_ocorrencia = req.params.id_ocorrencia;
-  const id_material = req.params.id_material;
-  const update = [id_ocorrencia, id_material];
-  const query = connect.con.query('UPDATE ocorrencia_material SET confirmado_material = 1 WHERE id_ocorrencia = ? and id_material = ?', update, 
-  function(err, rows, fields) {
-    if (!err) {
-      console.log("Number of records updated: " + rows.affectedRows);
-      res.status(200).send("O material " + id_material + " foi levantado para a " + id_ocorrencia);
-    }
-    else {
-      res.status(400).send({"msg": err.code});
-      console.log('Error while performing Query.', err);
-    }
-  });
-}*/
-
+//Funcao que le um id_ocorrencia e altera o booleano, default false, para true, para confirmar os materiais da mesma
 function updateConfirmarLevantamento(req, res) {
   const id_ocorrencia = req.params.id_ocorrencia;
   let id_material;
