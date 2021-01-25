@@ -1,9 +1,27 @@
-window.onload() = function () {
+window.onload = function () {
   let user = localStorage.User;
+  verDados(user);
   document.getElementById("btnAtualiza").onclick = function () {
     atualizarUser(user);
   };
+
 };
+
+function verDados(user) {
+  fetch(`http://127.0.0.1:3000/users/${user}/info`, {
+    //mudar a rota do fetch
+    headers: { "Content-Type": "application/json" },
+    method: "GET",
+  })
+    .then((res) => res.json())
+    .then((out) => {
+      $.each(out, function (index, valor) {
+        document.getElementById("PerfilUser").innerHTML = valor.username;
+        document.getElementById("PerfilEspecialidade").innerHTML = valor.descricao_cargo;
+      });
+    })
+    
+}
 
 function atualizarUser(user) {
   var data = {};
