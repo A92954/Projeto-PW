@@ -3,6 +3,7 @@ window.onload = function () {
   getIdOp(user);
 };
 
+//buscar o id_operacional atraves do username e chama as funçoes Get Ocorrencia
 function getIdOp(ler) {
   fetch(`http://127.0.0.1:3000/users/${ler}/info`)
     .then((res) => res.json())
@@ -13,6 +14,7 @@ function getIdOp(ler) {
     .catch((err) => console.error(err));
 }
 
+//busca o id_ocorrencia atraves do id_operacional e chama as funçoes Ver Testemunhas, Verificar Tempo, Update Data do Fim e Cria Testemunha
 function getOcorr(id_op) {
   fetch(`http://127.0.0.1:3000/occurrences/${id_op}/accurring`)
     .then((res) => res.json())
@@ -60,6 +62,7 @@ function verificarTempos(ler) {
     });
 }
 
+//Obtem a diferença entre tempo estimado e tempo real
 function verDiferencaTempos(ler) {
   fetch(`http://127.0.0.1:3000/occurrences/${ler}/timeDiff`, {
     //mudar a rota do fetch
@@ -78,6 +81,7 @@ function verDiferencaTempos(ler) {
   //});
 }
 
+//Ver testemunhas de uma certa ocorrencia
 function getTestemunhas(ler) {
   let table = $("#tabela-testemunhas").DataTable();
   fetch(`http://127.0.0.1:3000/occurrences/${ler}/witnesses`)
@@ -101,6 +105,7 @@ function getTestemunhas(ler) {
     });
 }
 
+//cria testemunhas numa certa ocorrencia
 function createTestemunha(ler) {
   console.log("Adicionado com sucesso!");
   var data = {};
@@ -127,6 +132,7 @@ function createTestemunha(ler) {
   window.location.reload();
 }
 
+//le o material usado na pagina No-Local
 function materialUsadoNoLocal(ler) {
   fetch(`http://127.0.0.1:3000/materials/${ler}/material`, {
     //mudar a rota do fetch
