@@ -104,6 +104,7 @@ function updateConfirmarEquipa(req, res) {
   );
 }
 
+//Funcao que altera os creditos de uma determinada equipa consoante os creditos das ocorrencias que as mesmas
 function updateCreditoEquipa(req, res) {
   const id_ocorrencia = req.params.id_ocorrencia;
   let id_equipa;
@@ -132,7 +133,6 @@ function updateCreditoEquipa(req, res) {
 }
 
 /*
-//Funcao que altera os creditos de uma determinada equipa consoante os creditos das ocorrencias que as mesmas
 function updateCreditoEquipa(req, res) {
   const id_equipa = req.params.id_equipa;
   let creditos_equipa;
@@ -160,5 +160,5 @@ module.exports = {
   readRankingEquipa: readRankingEquipa,
   readMembrosEquipa: readMembrosEquipa,
   updateConfirmarEquipa: updateConfirmarEquipa,
-  //updateCreditoEquipa: updateCreditoEquipa
+  updateCreditoEquipa: updateCreditoEquipa
 };
