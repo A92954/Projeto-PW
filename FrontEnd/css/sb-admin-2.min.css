@@ -1,6 +1,10 @@
+#label_local {
+  margin-left: 30%;
+}
+
 #googleMap {
   width: 100%;
-  height: 800px;
+  height: 335px;
 }
 
 .fa-facebook-square .fa-instagram-square {
@@ -31,7 +35,7 @@
   overflow: auto;
 }
 
-#notas-testemunhas,
+#notas-testemunhas, #notasTestemunha,
 #textarea-vitimas,
 #exampleFormControlTextarea5,
 #outrasInformacoes {
