@@ -154,16 +154,10 @@ function readCreditoOcorrenciaX(req, res) {
           }
         );
       }
-<<<<<<< HEAD
     });
   });
 }*/
 
-=======
-    }
-  );
-}
->>>>>>> 59a6f99b25874a3df3995cccd7b7adb81bb40a4d
 
 //Funcao que contabiliza as ocorrencias de cada mes do ano corrente
 function readGrafico(req, res) {
