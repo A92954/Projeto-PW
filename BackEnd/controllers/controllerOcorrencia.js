@@ -61,6 +61,26 @@ function readAcabada(req, res) {
   );
 }
 
+function readOcorrenciaAtual(req, res) {
+  const id_operacional = req.params.id_operacional;
+  let id_estado;
+  let id_equipa;
+  let id_ocorrencia;
+  const query = connect.con.query('SELECT op.id_equipa,oc.id_estado,oc.id_ocorrencia FROM operacional op, ocorrencia oc WHERE op.id_equipa = oc.id_equipa AND op.id_operacional = ?',id_operacional,
+  function(err,rows,fields){
+    id_equipa = rows[0].id_equipa;
+    id_estado = rows[0].id_estado;
+    id_ocorrencia = rows[0].id_ocorrencia;
+    if(id_estado == 1){
+      const secondquery = connect.con.query('SELECT oc.id_ocorrencia,loc.freguesia,gu.descricao_urgencia,eq.nome_equipa,ma.nome_material,om.quantidade_usada,op.id_operacional FROM ocorrencia oc,localizacao loc, grau_urgencia gu, equipa eq, material ma, ocorrencia_material om, operacional op WHERE oc.id_local = loc.id_local AND oc.id_nivel = gu.id_nivel AND oc.id_equipa = eq.id_equipa AND ma.id_material = om.id_material AND om.id_ocorrencia = oc.id_ocorrencia  AND op.id_operacional = ?',id_operacional,
+      function(err,rows,fields){
+        res.send(rows);
+      })
+    }
+  })
+}
+
+
 //Funcao que le todos os dados de uma determinada ocorrencia
 function readOcorrenciaX(req, res) {
   const id_ocorrencia = req.params.id_ocorrencia;
@@ -104,7 +124,7 @@ function readCreditoOcorrenciaX(req, res) {
 }
 
 //Este metodo imprime apenas as ocorrencias que teem uma equipa atribuida e ainda esta a decorrer
-function readOcorrenciaAtual(req, res) {
+/*function readOcorrenciaAtual(req, res) {
   const id_operacional = req.params.id_operacional;
   let id_equipa;
   let id_estado;
@@ -134,9 +154,10 @@ function readOcorrenciaAtual(req, res) {
           }
         );
       }
-    }
-  );
-}
+    });
+  });
+}*/
+
 
 //Funcao que contabiliza as ocorrencias de cada mes do ano corrente
 function readGrafico(req, res) {
