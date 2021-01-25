@@ -23,6 +23,7 @@ function getOcorr(id_op) {
 
       verEqOcorrAtual(id_ocorr);
       materialUsado(id_ocorr);
+      lerDescricao(id_ocorr);
     })
     .catch((err) => console.error(err));
 }
@@ -53,7 +54,7 @@ function verEqOcorrAtual(ler) {
 document.getElementById("btn_iniciar").onclick = function () {
   confirmarOcorrencia();
 };
-// '+ id_ocorr +'
+
 //confirmar material e presença
 function confirmarOcorrencia() {
   fetch("http://127.0.0.1:3000/occurrences/29/check_departure", {
@@ -64,7 +65,7 @@ function confirmarOcorrencia() {
     .then((res) => res.text())
     .then((out) => {
       alert(out);
-      window.location.href = "http://127.0.0.1:5501/FrontEnd/Relatorio.html";
+      window.location.href = "http://127.0.0.1:5502/FrontEnd/Relatorio.html";
     })
     .catch((error) => {
       alert(error);
@@ -124,6 +125,19 @@ function mostraEq(ler) {
         table.row.add([value.id_operacional, value.username]).draw();
       });
     });
+}
+
+//mostrar observacoes no relatorio
+function lerDescricao(ler) {
+  fetch(`http://127.0.0.1:3000/occurrences/${ler}/description`)
+    .then((res) => res.json())
+    .then((out) => {
+      $.each(out, function (index, value) {
+        document.getElementById("exampleFormControlTextarea5").innerHTML =
+          out.descricao_pedido;
+      });
+    })
+    .catch((err) => console.error(err));
 }
 
 //REFRESH DA TABELA

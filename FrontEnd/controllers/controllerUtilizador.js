@@ -33,14 +33,12 @@ window.onload = function () {
       });
   }
 
-  
+  let user = localStorage.User;
+  document.getElementById("btnAtualiza").onclick = function () {
+    atualizarUser(user);
+  };
 
-};
-
-let user = localStorage.User;
-
-document.getElementById("btnAtualiza").onclick = function () {
-  atualizarUser(user);
+  document.getElementById("PerfilUser").innerHTML = user;
 };
 
 function atualizarUser(user) {

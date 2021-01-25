@@ -1,9 +1,4 @@
 window.onload = function () {
-  getTestemunhas();
-  materialUsadoNoLocal();
-  document.getElementById("btn_criarTestemunha").onclick = function () {
-    createTestemunha();
-    };
   let user = localStorage.User;
   getIdOp(user);
 };
@@ -23,6 +18,7 @@ function getOcorr(id_op) {
     .then((res) => res.json())
     .then((out) => {
       id_ocorr = out[0].id_ocorrencia;
+      materialUsadoNoLocal(id_ocorr);
       getTestemunhas(id_ocorr);
       document.getElementById("btn_criarTestemunha").onclick = function () {
         createTestemunha(id_ocorr);
@@ -59,7 +55,9 @@ function createTestemunha(ler) {
   var data = {};
   data.nome_testemunha = document.getElementById("nomeTestemunha").value;
   data.email_testemunha = document.getElementById("emailTestemunha").value;
-  data.profissao_testemunha = document.getElementById("nomeTestemunha").value;
+  data.profissao_testemunha = document.getElementById(
+    "profissaoTestemunha"
+  ).value;
   data.localidade_testemunha = document.getElementById("localTestemunha").value;
   data.notas_testemunha = document.getElementById("notasTestemunha").value;
   // var idocorrencia="4";   ${idocorrencia}
@@ -78,8 +76,8 @@ function createTestemunha(ler) {
   window.location.reload();
 }
 
-function materialUsadoNoLocal() {
-  fetch('http://127.0.0.1:3000/materials/4/confirm', {
+function materialUsadoNoLocal(ler) {
+  fetch(`http://127.0.0.1:3000/materials/${ler}/material`, {
     //mudar a rota do fetch
     headers: { "Content-Type": "application/json" },
     method: "GET",
