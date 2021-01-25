@@ -67,7 +67,7 @@ function confirmarOcorrencia(ler) {
   })
     .then((res) => res.text())
     .then((out) => {
-      alert(out);
+      //alert(ler);
       confirmarMaterial(ler);
       window.location.href = "http://127.0.0.1:5502/FrontEnd/Relatorio.html";
     })
@@ -78,15 +78,14 @@ function confirmarOcorrencia(ler) {
 
 ////confirmar o material
 function confirmarMaterial(ler) {
-  fetch(`http://127.0.0.1:3000/materials/${ler}/confirm`, {
+  fetch(`http://127.0.0.1:3000/materials/${ler}/withdraw`, {
     //mudar a rota do fetch
     method: "PUT",
     headers: { "Content-Type": "application/json" },
   })
     .then((res) => res.text())
     .then((out) => {
-      alert(out);
-      window.location.href = "http://127.0.0.1:5502/FrontEnd/Relatorio.html";
+      //window.location.href = "http://127.0.0.1:5502/FrontEnd/Relatorio.html";
     })
     .catch((error) => {
       alert(error);
