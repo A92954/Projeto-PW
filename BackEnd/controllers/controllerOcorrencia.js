@@ -170,17 +170,10 @@ function readCreditoOcorrenciaX(req, res) {
 //Este metodo imprime apenas as ocorrencias que teem uma equipa atribuida e ainda esta a decorrer
 function readOcorrenciaAtual(req, res) {
   const id_operacional = req.params.id_operacional;
-  let id_ocorrencia;
-  const query = connect.con.query('SELECT op.id_equipa, oc.id_ocorrencia FROM operacional op, ocorrencia oc, ocorrencia_material om WHERE op.id_equipa = oc.id_equipa AND oc.id_estado = 1 AND oc.id_ocorrencia = om.id_ocorrencia AND op.id_operacional = 1', id_operacional,
+  const query = connect.con.query('SELECT oc.id_ocorrencia, lo.freguesia, gu.descricao_urgencia, eq.nome_equipa, ma.nome_material, om.quantidade_usada, oc.data_ocorrencia, op.id_operacional, op.username FROM operacional op, ocorrencia oc, equipa eq, material ma, ocorrencia_material om, localizacao lo, grau_urgencia gu WHERE op.id_equipa = eq.id_equipa AND eq.id_equipa = oc.id_equipa AND oc.id_local = lo.id_local AND oc.id_nivel = gu.id_nivel AND oc.id_ocorrencia = om.id_ocorrencia AND ma.id_material = om.id_material AND op.id_operacional = ?', id_operacional,
   function(err, rows, fields) {
     console.log(rows);
-    id_ocorrencia = rows[0].id_ocorrencia;
-    console.log(id_ocorrencia);
-    const secondquery = connect.con.query('SELECT oc.id_ocorrencia, lo.freguesia, gu.descricao_urgencia, eq.nome_equipa, ma.nome_material, om.quantidade_usada, oc.data_ocorrencia, op.id_operacional, op.username FROM operacional op, ocorrencia oc, equipa eq, material ma, ocorrencia_material om, localizacao lo, grau_urgencia gu WHERE op.id_equipa = eq.id_equipa AND eq.id_equipa = oc.id_equipa AND oc.id_local = lo.id_local AND oc.id_nivel = gu.id_nivel AND oc.id_ocorrencia = om.id_ocorrencia AND ma.id_material = om.id_material AND oc.id_ocorrencia = ? AND op.id_operacional = ?', [id_ocorrencia, id_operacional],
-    function(err, rows, fields) {
-      console.log(rows);
-      res.send(rows);
-    });
+    res.send(rows);
   });
 }
 
