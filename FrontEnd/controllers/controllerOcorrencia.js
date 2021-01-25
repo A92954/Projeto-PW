@@ -162,6 +162,29 @@ function tabelaHist() {
     .catch((err) => console.error(err));
 }
 
+//REFRESH DA TABELA
+function tabelaOcDecorrer() {
+  let table = $("").DataTable();
+
+  fetch("http://127.0.0.1:3000/occurrences/finished")
+    .then((res) => res.json())
+    .then((out) => {
+      $.each(out, function (index, value) {
+        table.row
+          .add([
+            value.id_ocorrencia,
+            value.freguesia,
+            value.id_equipa,
+            value.descricao_urgencia,
+            dataString,
+            value.creditos_ocorrencia,
+          ])
+          .draw();
+      });
+    })
+    .catch((err) => console.error(err));
+}
+
 $(document).ready(function () {
   $("#tabela-historico-ocorrencias").DataTable();
   tabelaHist();
