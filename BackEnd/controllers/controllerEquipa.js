@@ -104,7 +104,6 @@ function updateConfirmarEquipa(req, res) {
   );
 }
 
-/*
 function updateCreditoEquipa(req, res) {
   const id_ocorrencia = req.params.id_ocorrencia;
   let id_equipa;
@@ -121,7 +120,7 @@ function updateCreditoEquipa(req, res) {
       function (err, rows, fields) {
         if (!err) {
           console.log("Number of records updated: " + rows.affectedRows);
-          res.status(200).send({ msg: "Foram atribuidos " +creditos_equipa+ " pontos à Equipa " +id_equipa});
+          res.status(200).send({ msg: "Foram atribuidos os pontos à Equipa " +id_equipa});
         }
         else {
           res.status(400).send({ msg: err.code });
@@ -130,7 +129,7 @@ function updateCreditoEquipa(req, res) {
       });
     });
   });
-}*/
+}
 
 /*
 //Funcao que altera os creditos de uma determinada equipa consoante os creditos das ocorrencias que as mesmas
