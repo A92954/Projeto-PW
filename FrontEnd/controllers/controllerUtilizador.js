@@ -32,13 +32,11 @@ window.onload = function () {
         alert(error);
       });
   }
+};
 
+document.getElementById("btnAtualiza").onclick = function () {
   let user = localStorage.User;
-  document.getElementById("btnAtualiza").onclick = function () {
-    atualizarUser(user);
-  };
-
-  document.getElementById("PerfilUser").innerHTML = user;
+  atualizarUser(user);
 };
 
 function atualizarUser(user) {
