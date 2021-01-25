@@ -1,5 +1,5 @@
 let yNivel = [];
-chartPie();
+//chartPie();
 // Set new default font family and font color to mimic Bootstrap's default styling
 (Chart.defaults.global.defaultFontFamily = "Nunito"),
   '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
@@ -20,7 +20,7 @@ Chart.defaults.global.defaultFontColor = "#858796";
 }*/
 
 // Pie Chart Example
-function chartPie() {
+/*function chartPie() {
   fetch(`http://127.0.0.1:3000/occurrencesLevel`)
     .then((res) => res.json())
     .then((out) => {
@@ -28,7 +28,7 @@ function chartPie() {
       yNivel.push(out[1].Numero_Ocorrencias);
       yNivel.push(out[2].Numero_Ocorrencias);
       yNivel.push(out[3].Numero_Ocorrencias);
-      yNivel.push(/*out[4].Numero_ocorrencias*/ 8);
+      yNivel.push(/*out[4].Numero_ocorrencias 8);
       console.log(yNivel);
     })
     .catch((err) => console.error(err));
@@ -77,4 +77,4 @@ function chartPie() {
       cutoutPercentage: 80,
     },
   });
-}
+}*/

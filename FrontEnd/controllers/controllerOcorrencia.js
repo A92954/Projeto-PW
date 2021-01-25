@@ -1,5 +1,6 @@
 window.onload = function () {
   let user = localStorage.User;
+  console.log(user);
   getIdOp(user);
 };
 
@@ -21,15 +22,17 @@ function getOcorr(id_op) {
     .then((res) => res.json())
     .then((out) => {
       id_ocorr = out[0].id_ocorrencia;
-      document.getElementById("btn_iniciar").onclick = function () {
-        confirmarOcorrencia(id_ocorr);
-      };
+
       verEqOcorrAtual(id_ocorr);
       materialUsado(id_ocorr);
       lerDescricao(id_ocorr);
     })
     .catch((err) => console.error(err));
 }
+
+document.getElementById("btn_iniciar").onclick = function () {
+  confirmarOcorrencia(id_ocorr);
+};
 
 //Chamada do id_equipa e das funçoes Ocorrencia Atual e Mostra Equipa
 function verEqOcorrAtual(ler) {
@@ -49,7 +52,7 @@ function verEqOcorrAtual(ler) {
     })
 
     .catch((err) => {
-      // alert("Erro!" + err);
+      alert("Erro!" + err);
     });
 }
 
