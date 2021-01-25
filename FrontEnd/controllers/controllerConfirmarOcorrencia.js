@@ -1,5 +1,5 @@
 //const { updateDuracaoOcorrencia } = require("../../BackEnd/controllers/controllerOcorrencia");
-window.onload = function () {
+/*window.onload = function () {
   let user = localStorage.User;
   getIdOp(user);
 };
@@ -133,3 +133,4 @@ function enviaDados(ler) {
       alert("Email enviado ao Centro de Operações");
     });
 }
+*/

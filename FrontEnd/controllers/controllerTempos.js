@@ -1,4 +1,4 @@
-window.onload = function () {
+/*window.onload = function () {
   let user = localStorage.User;
   getIdOp(user);
 };
@@ -46,8 +46,8 @@ function verificarTempos(ler) {
     .catch((error) => {
       alert(error);
     });
-}
-
+}*/
+/*
 function verDiferencaTempos(ler) {
   fetch(`http://127.0.0.1:3000/occurrences/${ler}/timeDiff`, {
     //mudar a rota do fetch
@@ -61,7 +61,8 @@ function verDiferencaTempos(ler) {
           alert(valor.tempo_deslocacao);*/
       // console.log(out);
       //document.getElementById("tempoDiferenca").value;
-      tempoDiferenca.innerText = out;
+     /* tempoDiferenca.innerText = out;
     });
   //});
 }
+*/

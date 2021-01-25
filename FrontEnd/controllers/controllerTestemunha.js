@@ -1,4 +1,4 @@
-window.onload = function () {
+/*window.onload = function () {
   let user = localStorage.User;
   getIdOp(user);
 };
@@ -92,3 +92,4 @@ function materialUsadoNoLocal(ler) {
       });
     });
 }
+*/
