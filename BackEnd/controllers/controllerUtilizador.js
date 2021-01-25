@@ -22,7 +22,7 @@ function read(req, res) {
 function readUtilizadorX(req, res) {
   const username = req.params.username;
   const query = connect.con.query(
-    "SELECT u.username, op.id_operacional FROM utilizador u, operacional op WHERE u.username = op.username and u.username = ?",
+    "SELECT u.username, op.id_operacional, ca.descricao_cargo FROM utilizador u, operacional op, cargo ca WHERE u.username = op.username and ca.id_cargo = u.id_cargo and u.username = ?",
     username,
     function (err, rows, fields) {
       if (!err) {
