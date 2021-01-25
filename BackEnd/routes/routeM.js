@@ -52,6 +52,7 @@ router.get("/occurrences/:id_ocorrencia", controllerOcorrencia.readOcorrenciaX);
 router.get("/occurrences/:id_ocorrencia/read_credit", controllerOcorrencia.readCreditoOcorrenciaX);
 router.get("/occurrences/:id_operacional/accurring", controllerOcorrencia.readOcorrenciaAtual);
 router.get("/occurrencesGraphic", controllerOcorrencia.readGrafico);
+router.get("/occurrencesLevel", controllerOcorrencia.readGraficoNivel);
 router.get("/occurrences/:id_ocorrencia/sendmail", controllerOcorrencia.readDadosOcorrencia);
 router.get("/occurrences/:id_ocorrencia/timeDiff", controllerOcorrencia.readDiferencaTempo);
 router.get("/occurrences/:id_ocorrencia/witnesses", controllerOcorrencia.readTestemunha);
@@ -106,7 +107,7 @@ router.put("/agents/:id_ocorrencia/put_credit", controllerOperacional.updateCred
 router.get("/materials", controllerMaterial.read);
 router.get("/materials/:id_ocorrencia/material", controllerMaterial.readMaterialOcorrencia);
 router.get("/materials/:id_material/confirm", controllerMaterial.readConfirmarMaterialUsado);
-router.put("/materials/:id_ocorrencia/:id_material/withdraw", controllerMaterial.updateConfirmarLevantamento);
+router.put("/materials/:id_ocorrencia/withdraw", controllerMaterial.updateConfirmarLevantamento);
 
 //Testemunha
 

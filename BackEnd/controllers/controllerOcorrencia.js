@@ -181,6 +181,26 @@ function readGrafico(req, res) {
   });
 }
 
+//Funcao que contabiliza o grau de urgencia total
+function readGraficoNivel(req, res) {
+  const query = connect.con.query('SELECT id_nivel, COUNT(id_nivel) AS Numero_Ocorrencias FROM ocorrencia WHERE id_nivel IN (SELECT id_nivel FROM ocorrencia) GROUP BY id_nivel',
+  function (err, rows, fields) {
+    console.log(query.sql);
+    if(err){
+      console.log(err);
+      res.status(jsonMessages.db.dbError.status).send(jsonMessages.db.dbError);
+    }
+    else{
+      if(rows.length == 0){
+        res.status(jsonMessages.db.noRecords.status).send(jsonMessages.db.noRecords);
+      }
+      else{
+        res.send(rows);
+      }
+    }
+  });
+};
+
 //Envia um email ao Centro de Operações com os dados de uma ocorrência terminada
 function readDadosOcorrencia(req, res){
   const id_ocorrencia = req.params.id_ocorrencia;
@@ -560,6 +580,7 @@ module.exports = {
   readCreditoOcorrenciaX: readCreditoOcorrenciaX,
   readOcorrenciaAtual: readOcorrenciaAtual,
   readGrafico: readGrafico,
+  readGraficoNivel: readGraficoNivel,
   readDadosOcorrencia: readDadosOcorrencia,
   readTestemunha: readTestemunha,
   readDiferencaTempo: readDiferencaTempo,
