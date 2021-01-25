@@ -34,7 +34,7 @@ function update_DataFim(ler) {
   })
     .then((res) => res.text())
     .then((out) => {
-      alert("1");
+      //alert("1");
       update_PercentagemSobreviventes(ler);
     })
     .catch((error) => {
@@ -50,7 +50,7 @@ function update_PercentagemSobreviventes(ler) {
   })
     .then((res) => res.text())
     .then((out) => {
-      alert("2");
+      // alert("2");
       update_DuracaoOcorrencia(ler);
     })
     .catch((error) => {
@@ -66,7 +66,7 @@ function update_DuracaoOcorrencia(ler) {
   })
     .then((res) => res.text())
     .then((out) => {
-      alert("3");
+      // alert("3");
       update_CreditoOcorrencia(ler);
     })
     .catch((error) => {
@@ -82,7 +82,7 @@ function update_CreditoOcorrencia(ler) {
   })
     .then((res) => res.text())
     .then((out) => {
-      alert("4");
+      // alert("4");
       update_CreditoEquipa(ler);
     })
     .catch((error) => {
@@ -98,7 +98,7 @@ function update_CreditoEquipa(ler) {
   })
     .then((res) => res.text())
     .then((out) => {
-      alert("5");
+      alert("Créditos atribuídos à equipa!");
       update_CreditoOperacional(ler);
     })
     .catch((error) => {
@@ -114,7 +114,7 @@ function update_CreditoOperacional(ler) {
   })
     .then((res) => res.text())
     .then((out) => {
-      alert("6");
+      alert("Créditos atribuídos aos operacionais!");
     })
     .catch((error) => {
       alert(error);
@@ -130,6 +130,6 @@ function enviaDados(ler) {
   })
     .then((res) => res.json())
     .then((out) => {
-      alert("7");
+      alert("Email enviado ao Centro de Operações");
     });
 }

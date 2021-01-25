@@ -34,12 +34,7 @@ window.onload = function () {
   }
 };
 
-document.getElementById("btnAtualiza").onclick = function () {
-  let user = localStorage.User;
-  atualizarUser(user);
-};
-
-function atualizarUser(user) {
+/*function atualizarUser(user) {
   var data = {};
   //data.username = document.getElementById("PerfilUser").value;
   data.nome = document.getElementById("PerfilNome1").value;
@@ -63,4 +58,4 @@ function atualizarUser(user) {
     .catch((error) => {
       console.error("Error:", error);
     });
-}
+}*/

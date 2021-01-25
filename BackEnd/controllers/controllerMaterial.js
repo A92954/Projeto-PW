@@ -82,20 +82,24 @@ function readConfirmarMaterialUsado(req, res) {
   });
 }
 
-//Funcao que le um id_ocorrencia e um id_material e altera o booleano, default false, para true, para confirmar o mesmo
+//Funcao que le um id_ocorrencia e altera o booleano, default false, para true, para confirmar os materiais da mesma
 function updateConfirmarLevantamento(req, res) {
   const id_ocorrencia = req.params.id_ocorrencia;
-  const id_material = req.params.id_material;
-  const update = [id_ocorrencia, id_material];
-  const query = connect.con.query('UPDATE ocorrencia_material SET confirmado_material = 1 WHERE id_ocorrencia = ? and id_material = ?', update, 
+  let id_material;
+  const query = connect.con.query('SELECT id_material FROM ocorrencia_material WHERE id_ocorrencia = ?', id_ocorrencia,
   function(err, rows, fields) {
-    if (!err) {
-      console.log("Number of records updated: " + rows.affectedRows);
-      res.status(200).send("O material " + id_material + " foi levantado para a " + id_ocorrencia);
-    }
-    else {
-      res.status(400).send({"msg": err.code});
-      console.log('Error while performing Query.', err);
+    console.log(rows);
+    for(let i = 0; i < rows.length; i++) {
+      id_material = rows[i].id_material;
+      const update1 = [id_material, id_ocorrencia];
+      const secondquery = connect.con.query('UPDATE ocorrencia_material SET confirmado_material = 1 WHERE id_material = ? AND id_ocorrencia = ?', update1,
+      function(err, rows, fields) {
+        console.log(secondquery.sql);
+        if(err) {
+          res.status(400).send({ msg: err.code });
+        }
+        else res.send("Os materiais da ocorrencia " +id_ocorrencia+ " foram confirmados");
+      });
     }
   });
 }
