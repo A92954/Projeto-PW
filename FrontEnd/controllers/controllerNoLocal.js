@@ -157,13 +157,14 @@ function update_DataFim(ler) {
 }
 
 function update_PercentagemSobreviventes(ler) {
-alert(ler);
+
   var data = {};
   data.percentagem_sobrevivente = document.getElementById("vitimas-s").value;
 
   fetch(`http://127.0.0.1:3000/occurrences/${ler}/survival`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
   })
     .then((res) => res.text())
     .then((out) => {
