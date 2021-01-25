@@ -1,5 +1,7 @@
-#label_local {
+#imagem-espera {
   margin-left: 30%;
+  width: 50%;
+  height: 50%;
 }
 
 #googleMap {
@@ -35,7 +37,7 @@
   overflow: auto;
 }
 
-#notas-testemunhas, #notasTestemunha,
+#notasTestemunha,
 #textarea-vitimas,
 #exampleFormControlTextarea5,
 #outrasInformacoes {
