@@ -1,5 +1,6 @@
 window.onload = function () {
   let user = localStorage.User;
+  console.log(user);
   getIdOp(user);
 };
 
@@ -21,15 +22,17 @@ function getOcorr(id_op) {
     .then((res) => res.json())
     .then((out) => {
       id_ocorr = out[0].id_ocorrencia;
-      document.getElementById("btn_iniciar").onclick = function () {
-        confirmarOcorrencia(id_ocorr);
-      };
+
       verEqOcorrAtual(id_ocorr);
       materialUsado(id_ocorr);
       lerDescricao(id_ocorr);
     })
     .catch((err) => console.error(err));
 }
+
+document.getElementById("btn_iniciar").onclick = function () {
+  confirmarOcorrencia(id_ocorr);
+};
 
 //Chamada do id_equipa e das funçoes Ocorrencia Atual e Mostra Equipa
 function verEqOcorrAtual(ler) {
@@ -49,7 +52,7 @@ function verEqOcorrAtual(ler) {
     })
 
     .catch((err) => {
-      // alert("Erro!" + err);
+      alert("Erro!" + err);
     });
 }
 
@@ -198,21 +201,14 @@ function tabelaHist() {
 
 //REFRESH DA TABELA
 function tabelaOcDecorrer() {
-  let table = $("tabela-ocorrencias-decorrer").DataTable();
+  let table = $("#tabela-ocorrencias-decorrer").DataTable();
 
-  fetch("http://127.0.0.1:3000/occurrences/finished")
+  fetch("http://127.0.0.1:3000/occurrencesOccurring")
     .then((res) => res.json())
     .then((out) => {
       $.each(out, function (index, value) {
-        table.row
-          .add([
-            value.id_ocorrencia,
-            value.freguesia,
-            value.nome_equipa,
-            value.descricao_urgencia,
-
-          ])
-          .draw();
+        console.log("teste");
+        table.row.add([value.freguesia, value.nome_equipa]).draw();
       });
     })
     .catch((err) => console.error(err));
@@ -221,4 +217,6 @@ function tabelaOcDecorrer() {
 $(document).ready(function () {
   $("#tabela-historico-ocorrencias").DataTable();
   tabelaHist();
+  $("#tabela-ocorrencias-decorrer").DataTable();
+  tabelaOcDecorrer();
 });
