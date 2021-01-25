@@ -211,6 +211,7 @@ function readDadosOcorrencia(req, res){
   let data_fim_ocorrencia;
   const query = connect.con.query('SELECT id_estado FROM ocorrencia WHERE id_ocorrencia = ? ', id_ocorrencia,
   function (err, rows, fields) {
+    console.log(rows);
     id_estado = rows[0].id_estado;
     if (id_estado == 2) {
       const secondquery = connect.con.query('SELECT oc.id_ocorrencia, loc.freguesia, eq.nome_equipa, oc.data_ocorrencia, oc.data_fim_ocorrencia FROM ocorrencia oc, equipa eq, localizacao loc WHERE oc.id_equipa = eq.id_equipa AND oc.id_local = loc.id_local AND oc.id_ocorrencia = ?', id_ocorrencia,
@@ -225,8 +226,8 @@ function readDadosOcorrencia(req, res){
             smtpTransport({
               service: "Gmail",
               auth: {
-                user: "pmar.ot.2021@gmail.com",
-                pass: "pmarot2021",
+                user: "pw.gcodepatrol@gmail.com",
+                pass: "codepatrol123",
               },
               tls: {
                 rejectUnauthorized: false,
@@ -239,9 +240,9 @@ function readDadosOcorrencia(req, res){
             }
           });
           var mailOptions = {
-            from: "pmar.ot.2021@gmail.com",
-            to: "pw.policiamaritima@gmail.com",
-            cc: "pmar.ot.2021@gmail.com",
+            from: "pw.gcodepatrol@gmail.com",
+            to: "ricardomagalhaes168@gmail.com",
+            cc: "pw.gcodepatrol@gmail.com",
             subject: "Dados da Ocorrência",
             text: "Olá, \nVimos por este meio fornecer-vos as informações relativas à ocorrência: " +id_ocorrencia+ ".\nFreguesia: " +freguesia +" \nNome Equipa: " +nome_equipa +" \nData da ocorrência: " +data_ocorrencia +" - " +data_fim_ocorrencia +" \nAtenciosamente Responsavel Operações no terreno!",
           };
