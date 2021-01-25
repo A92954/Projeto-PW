@@ -72,6 +72,24 @@ function confirmarOcorrencia() {
     });
 }
 
+////confirmar o material FALTA FAZER
+function confirmarMaterial() {
+  fetch(`http://127.0.0.1:3000/materials/${j}/confirm`, {
+    //mudar a rota do fetch
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+  })
+    .then((res) => res.text())
+    .then((out) => {
+      alert(out);
+      window.location.href = "http://127.0.0.1:5502/FrontEnd/Relatorio.html";
+    })
+    .catch((error) => {
+      alert(error);
+    });
+}
+
+
 //mostrar materiais no relatorio
 function materialUsado(ler) {
   fetch(`http://127.0.0.1:3000/materials/${ler}/material`, {

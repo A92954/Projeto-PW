@@ -59,6 +59,7 @@ function atualizarUser(user) {
     //Then with the data from the response in JSON...
     .then((data) => {
       console.log("Success:", data);
+      alert(user);
     })
     //Then with the error genereted...
     .catch((error) => {
