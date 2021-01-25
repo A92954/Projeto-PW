@@ -37,6 +37,8 @@ window.onload = function () {
   document.getElementById("btnAtualiza").onclick = function () {
     atualizarUser(user);
   };
+
+  document.getElementById("PerfilUser").innerHTML = user;
 };
 
 function atualizarUser(user) {
