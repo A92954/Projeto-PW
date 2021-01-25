@@ -75,7 +75,6 @@ function readOcorrenciaAtual(req, res) {
   })
 }
 
-
 //Funcao que le todos os dados de uma determinada ocorrencia
 function readOcorrenciaX(req, res) {
   const id_ocorrencia = req.params.id_ocorrencia;
@@ -280,6 +279,22 @@ function readDiferencaTempo(req, res){
       }
       else {
         res.status(200).send(diferencaTempo.toString());
+      }
+    }
+    else res.status(400).send({ msg: err.code });
+  });
+}
+
+//Funcao que le todas as ocorrencias a decorrer, ou seja, o id_estado tem que estar Em Progresso 
+function readOcorrenciaDecorrer(req, res) {
+  const query = connect.con.query('SELECT oc.id_ocorrencia, lo.freguesia, eq.nome_equipa, gu.descricao_urgencia FROM ocorrencia oc, localizacao lo, equipa eq, grau_urgencia gu WHERE oc.id_equipa = eq.id_equipa AND oc.id_local = lo.id_local AND oc.id_nivel = gu.id_nivel AND id_estado = 1',
+  function(err, rows, fields) {
+    if (!err) {
+      if (rows.length == 0) {
+        res.status(404).send({ msg: "Data not found" });
+      }
+      else {
+        res.status(200).send(rows);
       }
     }
     else res.status(400).send({ msg: err.code });
@@ -548,6 +563,7 @@ module.exports = {
   readDadosOcorrencia: readDadosOcorrencia,
   readTestemunha: readTestemunha,
   readDiferencaTempo: readDiferencaTempo,
+  readOcorrenciaDecorrer: readOcorrenciaDecorrer,
   updateCreditoOcorrencia: updateCreditoOcorrencia,
   updateConfirmarPartidaOcorrencia: updateConfirmarPartidaOcorrencia,
   updateDuracaoOcorrencia: updateDuracaoOcorrencia,
