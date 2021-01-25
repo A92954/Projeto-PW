@@ -1,5 +1,6 @@
 window.onload() = function () {
   let user = localStorage.User;
+  console.log(user);
   document.getElementById("btnAtualiza").onclick = function () {
     atualizarUser(user);
   };

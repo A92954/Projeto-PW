@@ -21,7 +21,9 @@ function getOcorr(id_op) {
     .then((res) => res.json())
     .then((out) => {
       id_ocorr = out[0].id_ocorrencia;
-
+      document.getElementById("btn_iniciar").onclick = function () {
+        confirmarOcorrencia(id_ocorr);
+      };
       verEqOcorrAtual(id_ocorr);
       materialUsado(id_ocorr);
       lerDescricao(id_ocorr);
@@ -51,13 +53,9 @@ function verEqOcorrAtual(ler) {
     });
 }
 
-document.getElementById("btn_iniciar").onclick = function () {
-  confirmarOcorrencia();
-};
-
 //confirmar material e presença
-function confirmarOcorrencia() {
-  fetch("http://127.0.0.1:3000/occurrences/29/check_departure", {
+function confirmarOcorrencia(ler) {
+  fetch(`http://127.0.0.1:3000/occurrences/${ler}/check_departure`, {
     //mudar a rota do fetch
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -65,6 +63,7 @@ function confirmarOcorrencia() {
     .then((res) => res.text())
     .then((out) => {
       alert(out);
+      confirmarMaterial(ler);
       window.location.href = "http://127.0.0.1:5502/FrontEnd/Relatorio.html";
     })
     .catch((error) => {
@@ -73,8 +72,8 @@ function confirmarOcorrencia() {
 }
 
 ////confirmar o material FALTA FAZER
-function confirmarMaterial() {
-  fetch(`http://127.0.0.1:3000/materials/${j}/confirm`, {
+function confirmarMaterial(ler) {
+  fetch(`http://127.0.0.1:3000/materials/${ler}/confirm`, {
     //mudar a rota do fetch
     method: "PUT",
     headers: { "Content-Type": "application/json" },
