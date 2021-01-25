@@ -41,7 +41,7 @@ app.use(session({
   require('./config/passport/passport.js')(passport, models.user);
   //Sync Database
   models.sequelize.sync().then(function() {
-    console.log('BOA! Base de dados OK');
+    console.log('A Base de Dados está de roda no ar!');
   
   }).catch(function(err) {
     console.log(err, "Algo de errado nao esta certo com a Base de Dados");
