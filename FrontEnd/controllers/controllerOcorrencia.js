@@ -208,10 +208,9 @@ function tabelaOcDecorrer() {
           .add([
             value.id_ocorrencia,
             value.freguesia,
-            value.id_equipa,
+            value.nome_equipa,
             value.descricao_urgencia,
-            dataString,
-            value.creditos_ocorrencia,
+
           ])
           .draw();
       });
