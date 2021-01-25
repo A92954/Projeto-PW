@@ -11,6 +11,7 @@ function getIdOp(ler) {
     .then((out) => {
       let id_oper = out[0].id_operacional;
       getOcorr(id_oper);
+      verOcorrenciaAtual(id_oper);
     })
     .catch((err) => console.error(err));
 }
@@ -42,7 +43,6 @@ function verEqOcorrAtual(ler) {
         "Equipa: " + out[0].nome_equipa;
       let id_eq = out[0].id_equipa;
 
-      verOcorrenciaAtual(id_eq);
       mostraEq(id_eq);
     })
 
@@ -81,12 +81,16 @@ function materialUsado(ler) {
   })
     .then((res) => res.json())
     .then((out) => {
-      $.each(out, function (index, valor) {
-        var x = document.getElementById("exampleFormControlSelect3");
-        var c = document.createElement("option");
-        c.text = valor.quantidade_usada + " --> " + valor.nome_material;
-        x.options.add(c, 1);
-      });
+      if (
+        document.getElementById("exampleFormControlSelect3").options.length == 0
+      ) {
+        $.each(out, function (index, valor) {
+          var x = document.getElementById("exampleFormControlSelect3");
+          var c = document.createElement("option");
+          c.text = valor.quantidade_usada + " --> " + valor.nome_material;
+          x.options.add(c, 1);
+        });
+      }
     });
 }
 
