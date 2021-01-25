@@ -21,6 +21,8 @@ function getOcorr(id_op) {
     .then((out) => {
       id_ocorr = out[0].id_ocorrencia;
 
+      materialUsadoNoLocal(id_ocorr);
+
       $(document).ready(function () {
         $("#tabela-testemunhas").DataTable();
         getTestemunhas(id_ocorr);
