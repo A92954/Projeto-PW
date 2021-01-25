@@ -46,8 +46,8 @@ function verificarTempos(ler) {
     .catch((error) => {
       alert(error);
     });
-}
-
+}*/
+/*
 function verDiferencaTempos(ler) {
   fetch(`http://127.0.0.1:3000/occurrences/${ler}/timeDiff`, {
     //mudar a rota do fetch

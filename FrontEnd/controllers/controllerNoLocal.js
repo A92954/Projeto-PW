@@ -3,7 +3,7 @@ window.onload = function () {
   getIdOp(user);
 };
 
-//buscar o id_operacional atraves do username e chama as funçoes Get Ocorrencia
+//procura o id_operacional atraves do username e chama as funçoes Get Ocorrencia
 function getIdOp(ler) {
   fetch(`http://127.0.0.1:3000/users/${ler}/info`)
     .then((res) => res.json())
@@ -14,7 +14,7 @@ function getIdOp(ler) {
     .catch((err) => console.error(err));
 }
 
-//busca o id_ocorrencia atraves do id_operacional e chama as funçoes Ver Testemunhas, Verificar Tempo, Update Data do Fim e Cria Testemunha
+//procura o id_ocorrencia atraves do id_operacional e chama as funçoes Ver Testemunhas, Verificar Tempo, Update Data do Fim e Cria Testemunha
 function getOcorr(id_op) {
   fetch(`http://127.0.0.1:3000/occurrences/${id_op}/accurring`)
     .then((res) => res.json())
@@ -41,11 +41,10 @@ function getOcorr(id_op) {
     .catch((err) => console.error(err));
 }
 
+//Recebe os tempos estimado e real
 function verificarTempos(ler) {
   var data = {};
-  data.tempo_estimado_deslocacao = document.getElementById(
-    "tempoEstimado"
-  ).value;
+  data.tempo_estimado_deslocacao = document.getElementById("tempoEstimado").value;
   data.tempo_deslocacao = document.getElementById("tempoReal").value;
   fetch(`http://127.0.0.1:3000/occurrences/${ler}/times`, {
     method: "PUT",
@@ -55,35 +54,26 @@ function verificarTempos(ler) {
     .then((res) => res.text())
     .then((out) => {
       alert(out);
-      //window.location.reload();
       verDiferencaTempos(ler);
-      //alert(data);
     })
     .catch((error) => {
       alert(error);
     });
 }
 
-//Obtem a diferença entre tempo estimado e tempo real
+//Calculo da diferença dos tempos estimado e real em minutos
 function verDiferencaTempos(ler) {
   fetch(`http://127.0.0.1:3000/occurrences/${ler}/timeDiff`, {
-    //mudar a rota do fetch
     headers: { "Content-Type": "application/json" },
     method: "GET",
   })
     .then((res) => res.json())
     .then((out) => {
-      /*  $.each(out, function (index, valor) {
-           // document.getElementById("teste23").innerHTML = valor.tempo_deslocacao;
-            alert(valor.tempo_deslocacao);*/
-      // console.log(out);
-      //document.getElementById("tempoDiferenca").value;
       tempoDiferenca.innerText = out;
     });
-  //});
 }
 
-//Ver testemunhas de uma certa ocorrencia
+//Procura testemunhas de uma certa ocorrencia
 function getTestemunhas(ler) {
   let table = $("#tabela-testemunhas").DataTable();
   fetch(`http://127.0.0.1:3000/occurrences/${ler}/witnesses`)
@@ -107,7 +97,7 @@ function getTestemunhas(ler) {
     });
 }
 
-//cria testemunhas numa certa ocorrencia
+//Cria testemunhas numa certa ocorrencia
 function createTestemunha(ler) {
   console.log("Adicionado com sucesso!");
   var data = {};
@@ -134,7 +124,7 @@ function createTestemunha(ler) {
   window.location.reload();
 }
 
-//le o material usado na pagina No-Local
+//Imprime o material usado na pagina No-Local
 function materialUsadoNoLocal(ler) {
   fetch(`http://127.0.0.1:3000/materials/${ler}/material`, {
     //mudar a rota do fetch
@@ -154,13 +144,11 @@ function materialUsadoNoLocal(ler) {
 
 function update_DataFim(ler) {
   fetch(`http://127.0.0.1:3000/occurrences/${ler}/finishdate`, {
-    //mudar a rota do fetch
     method: "PUT",
     headers: { "Content-Type": "application/json" },
   })
     .then((res) => res.text())
     .then((out) => {
-      //alert("1");
       update_PercentagemSobreviventes(ler);
     })
     .catch((error) => {
@@ -169,14 +157,17 @@ function update_DataFim(ler) {
 }
 
 function update_PercentagemSobreviventes(ler) {
+alert(ler);
+  var data = {};
+  data.percentagem_sobrevivente = document.getElementById("vitimas-s").value;
+
   fetch(`http://127.0.0.1:3000/occurrences/${ler}/survival`, {
-    //mudar a rota do fetch
     method: "PUT",
     headers: { "Content-Type": "application/json" },
   })
     .then((res) => res.text())
     .then((out) => {
-      // alert("2");
+      alert(out);
       update_DuracaoOcorrencia(ler);
     })
     .catch((error) => {
@@ -186,13 +177,11 @@ function update_PercentagemSobreviventes(ler) {
 
 function update_DuracaoOcorrencia(ler) {
   fetch(`http://127.0.0.1:3000/occurrences/${ler}/duration`, {
-    //mudar a rota do fetch
     method: "PUT",
     headers: { "Content-Type": "application/json" },
   })
     .then((res) => res.text())
     .then((out) => {
-      // alert("3");
       update_CreditoOcorrencia(ler);
     })
     .catch((error) => {
@@ -202,13 +191,11 @@ function update_DuracaoOcorrencia(ler) {
 
 function update_CreditoOcorrencia(ler) {
   fetch(`http://127.0.0.1:3000/occurrences/${ler}/credit`, {
-    //mudar a rota do fetch
     method: "PUT",
     headers: { "Content-Type": "application/json" },
   })
     .then((res) => res.text())
     .then((out) => {
-      // alert("4");
       update_CreditoEquipa(ler);
     })
     .catch((error) => {
@@ -217,8 +204,7 @@ function update_CreditoOcorrencia(ler) {
 }
 
 function update_CreditoEquipa(ler) {
-  fetch(`http://127.0.0.1:3000/occurrences/${ler}/credit_team`, {
-    //mudar a rota do fetch
+  fetch(`http://127.0.0.1:3000/teams/${ler}/credit_team`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
   })
@@ -233,14 +219,14 @@ function update_CreditoEquipa(ler) {
 }
 
 function update_CreditoOperacional(ler) {
-  fetch(`http://127.0.0.1:3000/occurrences/${ler}/put_credit`, {
-    //mudar a rota do fetch
+  fetch(`http://127.0.0.1:3000/agents/${ler}/put_credit`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
   })
     .then((res) => res.text())
     .then((out) => {
       alert("Créditos atribuídos aos operacionais!");
+      enviaDados(ler);
     })
     .catch((error) => {
       alert(error);
@@ -250,7 +236,6 @@ function update_CreditoOperacional(ler) {
 //mostrar materiais no relatorio
 function enviaDados(ler) {
   fetch(`http://127.0.0.1:3000/occurrences/${ler}/sendmail`, {
-    //mudar a rota do fetch
     headers: { "Content-Type": "application/json" },
     method: "GET",
   })
