@@ -1,3 +1,4 @@
+//LOGIN
 window.onload = function () {
   document.getElementById("btnLogin").onclick = function () {
     login();
@@ -7,7 +8,6 @@ window.onload = function () {
   let username;
   // Autenticar administrador na área privada
   function login() {
-    //data
     username = document.getElementById("inputUser").value;
     var data = {};
     data.username = document.getElementById("inputUser").value;

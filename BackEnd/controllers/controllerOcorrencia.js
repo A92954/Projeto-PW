@@ -171,7 +171,7 @@ function readCreditoOcorrenciaX(req, res) {
 function readOcorrenciaAtual(req, res) {
   const id_operacional = req.params.id_operacional;
   let id_ocorrencia;
-  const query = connect.con.query('SELECT op.id_equipa, oc.id_ocorrencia FROM operacional op, ocorrencia oc, ocorrencia_material om WHERE op.id_equipa = oc.id_equipa AND oc.id_estado = 1 AND oc.id_ocorrencia = om.id_ocorrencia AND op.id_operacional = 1', id_operacional,
+  const query = connect.con.query('SELECT op.id_equipa, oc.id_ocorrencia FROM operacional op, ocorrencia oc, ocorrencia_material om WHERE op.id_equipa = oc.id_equipa AND oc.id_estado = 1 AND oc.id_ocorrencia = om.id_ocorrencia AND op.id_operacional = ?', id_operacional,
   function(err, rows, fields) {
     console.log(rows);
     id_ocorrencia = rows[0].id_ocorrencia;

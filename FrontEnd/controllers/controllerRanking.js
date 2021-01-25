@@ -1,3 +1,4 @@
+//imprime o ranking dos operacionais
 function readRankOp() {
   let table = $("#tabela-ranking-operacionais").DataTable();
 
@@ -23,6 +24,7 @@ $(document).ready(function () {
   readRankOp();
 });
 
+//imprime o ranking da equipa
 function readRankEq() {
   let table = $("#tabela-ranking-equipa").DataTable();
 
@@ -35,7 +37,6 @@ function readRankEq() {
             value.Ranking_equipa,
             value.creditos_equipa,
             value.id_equipa,
-            "filler",
             value.Numero_Ocorrencias,
           ])
           .draw();
