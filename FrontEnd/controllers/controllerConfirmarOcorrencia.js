@@ -1,6 +1,6 @@
 //const { updateDuracaoOcorrencia } = require("../../BackEnd/controllers/controllerOcorrencia");
-/*
-document.getElementById("btn_criarTestemunha").onclick = function () {
+
+document.getElementById("btn_ConcluirOperacao").onclick = function () {
   update_DataFim();
 };
 
@@ -9,7 +9,6 @@ var id_ocorr = "4";
 
 function update_DataFim() {
     console.log(id_ocorr);
-    alert("1");
     fetch(`http://127.0.0.1:3000/occurrences/${id_ocorr}/finishdate`, {
       //mudar a rota do fetch
       method: "PUT",
@@ -17,7 +16,7 @@ function update_DataFim() {
     })
       .then((res) => res.text())
       .then((out) => {
-     
+        alert("1");
         update_PercentagemSobreviventes();
       })
       .catch((error) => {
@@ -26,7 +25,7 @@ function update_DataFim() {
   }
 
 
-  function update_PercentagemSobreviventes) {
+  function update_PercentagemSobreviventes() {
     console.log(id_ocorr);
     fetch(`http://127.0.0.1:3000/occurrences/${id_ocorr}/survival`, {
       //mudar a rota do fetch
@@ -114,6 +113,18 @@ function update_DataFim() {
         alert(error);
       });
   }
-*/
 
+//mostrar materiais no relatorio
+function enviaDados() {
+  fetch(`http://127.0.0.1:3000/materials/${ler}/material`, {
+    //mudar a rota do fetch
+    headers: { "Content-Type": "application/json" },
+    method: "GET",
+  })
+    .then((res) => res.json())
+    .then((out) => {
+     alert("7");
+      });
+    
+}
  
