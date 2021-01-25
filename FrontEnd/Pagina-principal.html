@@ -202,7 +202,7 @@
                 <div class="row">
                   <div class="col-lg-6">
                     <div class="p-4">
-                      <h6 id="label_local"><img src="" alt=""></h6>
+                      <h6 id="label_local"><img src="/FrontEnd/img/espera.png" alt=""></h6>
                       <br />
                       <h6 id="label_urgencia"></h6>
                       <br />
@@ -313,7 +313,7 @@
               <div class="row">
 
                 <!-- Area Chart -->
-                <div class="col-xl-8 col-lg-7">
+                <div class="col-xl-6 col-lg-6">
                     <div class="card shadow mb-4">
                         <!-- Card Header - Dropdown -->
                         <div class="card-header py-3">
@@ -331,31 +331,18 @@
                     </div>
                 </div>
   
-                <!-- Pie Chart -->
-                <div class="col-xl-4 col-lg-5">
+                <!-- mapa com as bolinhas -->
+                <div class="col-xl-6 col-lg-6">
                     <div class="card shadow mb-4">
                         <!-- Card Header - Dropdown -->
                         <div class="card-header py-3">
                           <h6 class="m-0 font-weight-bold text-primary">
-                            Repartição do nível de urgência
+                            Mapa
                           </h6>
                         </div>
                         <!-- Card Body -->
                         <div class="card-body">
-                          <div class="chart-pie pt-4 pb-2">
-                              <canvas id="myPieChart"></canvas>
-                          </div>
-                          <div class="mt-4 text-center small">
-                              <span class="mr-2">
-                                  <i class="fas fa-circle text-primary"></i> Nível 1
-                              </span>
-                              <span class="mr-2">
-                                  <i class="fas fa-circle text-success"></i> Nível 2
-                              </span>
-                              <span class="mr-2">
-                                  <i class="fas fa-circle text-info"></i> Nível 3
-                              </span>
-                          </div>
+                          <div id="googleMap"></div>
                       </div>
                     </div>
                 </div>
@@ -829,6 +816,9 @@
     <!-- Controllers -->
    
     <script type="text/javascript" src="./controllers/controllerOcorrencia.js"></script>
+
+    <!-- MAPA -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3sd_nCr1dMkHNlyCfLutv5ROv3m7jHnQ&callback=myMap"></script>
   
   </body>
 </html>
