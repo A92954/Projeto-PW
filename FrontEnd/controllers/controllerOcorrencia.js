@@ -113,6 +113,7 @@ function verOcorrenciaAtual(ler) {
 //mostrar membros da equipa
 function mostraEq(ler) {
   let table = $("#tabela-equipa-oco-atual").DataTable();
+  table.clear();
   fetch(`http://127.0.0.1:3000/teams/${ler}/members`, {
     headers: { "Content-Type": "application/json" },
     method: "GET",
@@ -143,7 +144,6 @@ function lerDescricao(ler) {
 //REFRESH DA TABELA
 function tabelaHist() {
   let table = $("#tabela-historico-ocorrencias").DataTable();
-
   fetch("http://127.0.0.1:3000/occurrences/finished")
     .then((res) => res.json())
     .then((out) => {

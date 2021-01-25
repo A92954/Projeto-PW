@@ -108,27 +108,39 @@ function updateCreditoEquipa(req, res) {
   const id_ocorrencia = req.params.id_ocorrencia;
   let id_equipa;
   let creditos_equipa;
-  const query = connect.con.query('SELECT id_equipa FROM ocorrencia WHERE id_ocorrencia = ?', id_ocorrencia,
-  function(err, rows, fields) {
-    id_equipa = rows[0].id_equipa;
-    console.log(id_equipa);
-    const secondquery = connect.con.query('SELECT SUM(creditos_ocorrencia) AS creditos_equipa FROM ocorrencia WHERE id_equipa = ?', id_equipa,
+  const query = connect.con.query(
+    "SELECT id_equipa FROM ocorrencia WHERE id_ocorrencia = ?",
+    id_ocorrencia,
     function (err, rows, fields) {
-      creditos_equipa = rows[0].creditos_equipa;
-      const update = [creditos_equipa, id_equipa];
-      const thirdquery = connect.con.query('UPDATE equipa SET creditos_equipa = ? WHERE id_equipa = ?', update,
-      function (err, rows, fields) {
-        if (!err) {
-          console.log("Number of records updated: " + rows.affectedRows);
-          res.status(200).send({ msg: "Foram atribuidos os pontos à Equipa " +id_equipa});
+      id_equipa = rows[0].id_equipa;
+      console.log(id_equipa);
+      const secondquery = connect.con.query(
+        "SELECT SUM(creditos_ocorrencia) AS creditos_equipa FROM ocorrencia WHERE id_equipa = ?",
+        id_equipa,
+        function (err, rows, fields) {
+          creditos_equipa = rows[0].creditos_equipa;
+          const update = [creditos_equipa, id_equipa];
+          const thirdquery = connect.con.query(
+            "UPDATE equipa SET creditos_equipa = ? WHERE id_equipa = ?",
+            update,
+            function (err, rows, fields) {
+              if (!err) {
+                console.log("Number of records updated: " + rows.affectedRows);
+                res
+                  .status(200)
+                  .send({
+                    msg: "Foram atribuidos os pontos à Equipa " + id_equipa,
+                  });
+              } else {
+                res.status(400).send({ msg: err.code });
+                console.log("Error while performing Query.", err);
+              }
+            }
+          );
         }
-        else {
-          res.status(400).send({ msg: err.code });
-          console.log("Error while performing Query.", err);
-        }
-      });
-    });
-  });
+      );
+    }
+  );
 }
 
 /*
@@ -160,5 +172,5 @@ module.exports = {
   readRankingEquipa: readRankingEquipa,
   readMembrosEquipa: readMembrosEquipa,
   updateConfirmarEquipa: updateConfirmarEquipa,
-  //updateCreditoEquipa: updateCreditoEquipa
+  updateCreditoEquipa: updateCreditoEquipa,
 };
