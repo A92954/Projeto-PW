@@ -14,8 +14,8 @@ router.get("/", function (req, res) {res.send("Pagina principal");});
 router.get("/users", controllerUtilizador.read);
 router.get("/users/:username/info", controllerUtilizador.readUtilizadorX);
 router.get("/users/:username/role", controllerUtilizador.readEspecialidadeUtilizador);
-router.put("/users/:username", 
-    [
+router.put("/users/:username", controllerUtilizador.updateUtilizador);
+  /*  [
         body('nome')
             .not()
             .isEmpty()
@@ -32,7 +32,7 @@ router.put("/users/:username",
             return res.status(400).json({ msg: err.array()});
         }
         controllerUtilizador.updateUtilizador(req, res);
-    });
+    });*/
 
 //Equipa
 
