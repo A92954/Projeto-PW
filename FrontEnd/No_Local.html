@@ -120,7 +120,7 @@
                     ></textarea>
                   </div>
                   <div class="col-sm-2">
-                    <button type="button" class="btn btn-primary">
+                    <button id="btn_calcularDiferenca" type="button" class="btn btn-primary">
                       Calcular Diferença
                     </button>
                   </div>
@@ -209,32 +209,15 @@
               </div>
             </div>
 
-            <form id="form" action="/FrontEnd/Pagina-principal.html">
-              <div class="modal-body">
-                <h6>Indique a percentagem de sobreviventes</h6>
-                <input
-                  type="range"
-                  min="0"
-                  id="vitimas-s"
-                  max="100"
-                  oninput="this.nextElementSibling.value = this.value"
-                />
-                <output id="N-sobreviventes">%</output>
-                <p id="text" style="display: none">Preencha esta opção.</p>
-              </div>
-              <div class="modal-footer">
-                <button
-                  id="botao"
-                  type="submit"
-                  class="btn btn-primary"
-                  onclick="verificacao()"
-                >
-                  Concluir operação
-                </button>
-              </div>
-            </form>
-
-            
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-primary"
+                id="btn_ConcluirOperacao"
+              >
+                Concluir operação
+              </button>
+            </div>
             <!-- Footer -->
             <footer class="page-footer font-small mdb-color pt-4">
               <div class="footer-copyright text-center text-black-50 py-3">
@@ -363,8 +346,18 @@
       src="./controllers/controllerTestemunha.js"
     ></script>
     <script
+<<<<<<< HEAD
+    type="text/javascript"
+    src="./controllers/controllerTempos.js"
+  ></script>
+  <script
+  type="text/javascript"
+  src="./controllers/controllerConfirmarOcorrencia.js"
+></script>
+=======
       type="text/javascript"
       src="./controllers/controllerTempos.js"
     ></script>
+>>>>>>> 5ea3e695814cc6addca9dca90fd539e063c57207
   </body>
 </html>
