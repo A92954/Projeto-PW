@@ -1,22 +1,27 @@
-//quando inicia a página faz
 window.onload = function () {
-  getOcorr();
+  let user = localStorage.User;
+  getIdOp(user);
 };
 
 let id_ocorr;
 
-function getOcorr() {
-  fetch("http://127.0.0.1:3000/occurrences/7/accurring")
+function getIdOp(ler) {
+  fetch(`http://127.0.0.1:3000/users/${ler}/info`)
     .then((res) => res.json())
     .then((out) => {
-      //let id_ocorr;
+      let id_oper = out[0].id_operacional;
+      getOcorr(id_oper);
+    })
+    .catch((err) => console.error(err));
+}
+
+function getOcorr(id_op) {
+  fetch(`http://127.0.0.1:3000/occurrences/${id_op}/accurring`)
+    .then((res) => res.json())
+    .then((out) => {
       id_ocorr = out[0].id_ocorrencia;
+
       verEqOcorrAtual(id_ocorr);
-
-      //document.getElementById("btnTestemunhas").onclick = function () {
-      //  confirmarOcorrencia(id_ocorr);
-      //};
-
       materialUsado(id_ocorr);
     })
     .catch((err) => console.error(err));
@@ -35,6 +40,7 @@ function verEqOcorrAtual(ler) {
       document.getElementById("label_nomeEquipa").innerHTML =
         "Equipa: " + out[0].nome_equipa;
       let id_eq = out[0].id_equipa;
+
       verOcorrenciaAtual(id_eq);
       mostraEq(id_eq);
     })
@@ -50,40 +56,20 @@ document.getElementById("btn_iniciar").onclick = function () {
 // '+ id_ocorr +'
 //confirmar material e presença
 function confirmarOcorrencia() {
-  console.log(id_ocorr);
-  fetch('http://127.0.0.1:3000/occurrences/29/check_departure', {
+  fetch("http://127.0.0.1:3000/occurrences/29/check_departure", {
     //mudar a rota do fetch
     method: "PUT",
     headers: { "Content-Type": "application/json" },
   })
     .then((res) => res.text())
     .then((out) => {
-     alert(out);
-     window.location.href=("http://127.0.0.1:5501/FrontEnd/Relatorio.html");
-      
+      alert(out);
+      window.location.href = "http://127.0.0.1:5501/FrontEnd/Relatorio.html";
     })
     .catch((error) => {
       alert(error);
     });
 }
-
-//confirmar material e presença
-/*function confirmarOcorrencia() {
-  fetch('http://127.0.0.1:3000/occurrences/'+ id_ocorr +'/check_departure', {
-    //mudar a rota do fetch
-    headers: { "Content-Type": "application/json" },
-    method: "GET",
-  })
-    .then((res) => res.json())
-    .then((out) => {
-      $.each(out, function (index, valor) {
-        var x = document.getElementById("exampleFormControlSelect2");
-        var c = document.createElement("option");
-        c.text = valor.quantidade_usada + " --> " + valor.nome_material;
-        x.options.add(c, 1);
-      });
-    });
-}*/
 
 //mostrar materiais no relatorio
 function materialUsado(ler) {
@@ -135,7 +121,7 @@ function mostraEq(ler) {
     .then((out) => {
       $("#tabela-equipa-oco-atual tbody").empty();
       $.each(out, function (index, value) {
-        table.row.add([value.id_equipa, value.username]).draw();
+        table.row.add([value.id_operacional, value.username]).draw();
       });
     });
 }

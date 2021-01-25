@@ -94,7 +94,7 @@
                   >
                   <div class="col-sm-4">
                     <textarea
-                      disabled
+                      enable
                       class="col-sm-2 txtAreaTemposLocal"
                       id="tempoEstimado"
                       rows="1"
@@ -112,13 +112,19 @@
                   >
                   <div class="col-sm-4">
                     <textarea
-                      disabled
+                      enable
                       class="col-sm-2 txtAreaTemposLocal"
                       id="tempoReal"
                       rows="1"
                       cols="9"
                     ></textarea>
                   </div>
+                  <div class="col-sm-2">
+                    <button id="btn_calcularDiferenca" type="button" class="btn btn-primary">
+                      Calcular Diferença
+                    </button>
+                  </div>
+                  <br />
                 </div>
 
                 <div class="form-group row">
@@ -181,7 +187,7 @@
 
             <div class="row">
               <!-- Grow In Utility -->
-              <div class="col-lg-6">
+              <div class="col-lg-12">
                 <div class="card position-relative">
                   <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">
@@ -189,85 +195,17 @@
                     </h6>
                   </div>
                   <div class="card-body">
-                    <div class="confirmar-l-material">
-                      <ul class="list-group list-group-flush listas">
-                        <li class="list-group-item">
-                          <div class="custom-control custom-checkbox">
-                            <label class="custom-control-label">10 Bóias</label>
-                            <br />
-                          </div>
-                        </li>
-                        <li class="list-group-item">
-                          <div class="custom-control custom-checkbox">
-                            <label class="custom-control-label"
-                              >2 Coletes salva-vidas</label
-                            >
-                            <br />
-                          </div>
-                        </li>
-                        <li class="list-group-item">
-                          <div class="custom-control custom-checkbox">
-                            <label class="custom-control-label"
-                              >7 Botijas de oxigénio</label
-                            >
-                            <br />
-                          </div>
-                        </li>
-                        <li class="list-group-item">
-                          <div class="custom-control custom-checkbox">
-                            <label class="custom-control-label">5 Cordas</label>
-                            <br />
-                          </div>
-                        </li>
-                        <li class="list-group-item">
-                          <div class="custom-control custom-checkbox">
-                            <label class="custom-control-label"
-                              >20 Prancha</label
-                            >
-                            <br />
-                          </div>
-                        </li>
-                        <li class="list-group-item">
-                          <div class="custom-control custom-checkbox">
-                            <label class="custom-control-label">1 Balde</label>
-                            <br />
-                          </div>
-                        </li>
-                        <li class="list-group-item">
-                          <div class="custom-control custom-checkbox">
-                            <label class="custom-control-label">2 Pa</label>
-                            <br />
-                          </div>
-                        </li>
-                        <li class="list-group-item">
-                          <div class="custom-control custom-checkbox">
-                            <label class="custom-control-label"
-                              >87 Oculos</label
-                            >
-                            <br />
-                          </div>
-                        </li>
-                      </ul>
+                    <div class="form-group">
+                      <label>Material utilizado:</label>
+                      <select
+                        multiple
+                        class="form-control listas"
+                        id="listaMatUtilizadoNoLocal"
+                      ></select>
                     </div>
                   </div>
                 </div>
                 <br />
-              </div>
-
-              <div class="col-lg-6">
-                <!-- Notas -->
-                <div class="card position-relative">
-                  <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Notas</h6>
-                  </div>
-                  <div class="card-body">
-                    <textarea
-                      class="form-control"
-                      id="textarea-notas"
-                      rows="12"
-                    ></textarea>
-                  </div>
-                </div>
               </div>
             </div>
 
@@ -275,9 +213,7 @@
               <button
                 type="button"
                 class="btn btn-primary"
-                id="btnTestemunhas"
-                data-toggle="modal"
-                data-target="#concluir-operacao"
+                id="btn_ConcluirOperacao"
               >
                 Concluir operação
               </button>
@@ -362,8 +298,12 @@
                 </div>
 
                 <div class="modal-footer">
-                  <a 
-                    ><button id="btn_criarTestemunha" type="button" class="btn btn-primary"> 
+                  <a
+                    ><button
+                      id="btn_criarTestemunha"
+                      type="button"
+                      class="btn btn-primary"
+                    >
                       Confirmar
                     </button></a
                   >
@@ -372,60 +312,7 @@
             </div>
           </div>
 
-          <!-- Concluir operação Modal (isto so vai aparecer para o operacional que confirmou o material)-->
-          <div
-            class="modal fade"
-            id="concluir-operacao"
-            tabindex="-1"
-            role="dialog"
-            aria-labelledby="exampleModalCenterTitle"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <img
-                    class="modal-title"
-                    id="exampleModalLongTitle"
-                    src="/FrontEnd/img/icone.jpg"
-                    width="100rem"
-                  />
-
-                  <button
-                    type="button"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <form id="form" action="/FrontEnd/Pagina-principal.html">
-                  <div class="modal-body">
-                    <h6>Indique a percentagem de sobreviventes</h6>
-                    <input
-                      type="range"
-                      min="0"
-                      id="vitimas-s"
-                      max="100"
-                      oninput="this.nextElementSibling.value = this.value"
-                    />
-                    <output id="N-sobreviventes">%</output>
-                    <p id="text" style="display: none">Preencha esta opção.</p>
-                  </div>
-                  <div class="modal-footer">
-                    <button
-                      id="botao"
-                      type="submit"
-                      class="btn btn-primary"
-                      onclick="verificacao()"
-                    >
-                      Concluir
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
+          
           </div>
         </div>
       </div>
@@ -458,5 +345,19 @@
       type="text/javascript"
       src="./controllers/controllerTestemunha.js"
     ></script>
+    <script
+<<<<<<< HEAD
+    type="text/javascript"
+    src="./controllers/controllerTempos.js"
+  ></script>
+  <script
+  type="text/javascript"
+  src="./controllers/controllerConfirmarOcorrencia.js"
+></script>
+=======
+      type="text/javascript"
+      src="./controllers/controllerTempos.js"
+    ></script>
+>>>>>>> 5ea3e695814cc6addca9dca90fd539e063c57207
   </body>
 </html>

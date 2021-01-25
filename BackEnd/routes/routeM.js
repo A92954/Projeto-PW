@@ -41,7 +41,7 @@ router.get("/teams/:id_ocorrencia/view_team", controllerEquipa.readEquipaOcorren
 router.get("/teamsRanking", controllerEquipa.readRankingEquipa);
 router.get("/teams/:id_equipa/members", controllerEquipa.readMembrosEquipa);
 router.put("/teams/:id_equipa/check_team", controllerEquipa.updateConfirmarEquipa);
-router.put("/teams/:id_equipa/credit_team", controllerEquipa.updateCreditoEquipa);
+//router.put("/teams/:id_operacional/credit_team", controllerEquipa.updateCreditoEquipa);
 
 //Ocorrencia
 

@@ -75,11 +75,13 @@ $(document).ready(function () {
 
     $("#tabela-equipa-oco-decorrer").DataTable().clear();
     $("#tabela-testemunha-acabado").DataTable().clear();
+
     var id_ocorr = $("td", this).eq(0).text(); //eq(2) increase the value inside eq() will display the txt column wise.
     $("#id_ocorr_selec").text(id_ocorr);
 
     verEqOcorr(id_ocorr);
     materialUsadoPassado(id_ocorr);
+    lerDescricao(id_ocorr);
 
     $(document).ready(function () {
       $("#tabela-testemunha-acabado").DataTable();
@@ -92,11 +94,6 @@ $(document).ready(function () {
 });
 $("#tabela-historico-ocorrencias").on("keyup", function () {
   tableInstance.search(this.value).draw(); // try this easy code and check if works at first
-});
-
-$("#historico-popup").on("hidden.bs.modal", function (e) {
-  $("#tabela-equipa-oco-decorrer").DataTable().destroy();
-  $("#tabela-testemunha-acabado").DataTable().destroy();
 });
 
 function getTestemunha(par) {
@@ -142,13 +139,9 @@ function getEquipa(par) {
   fetch(`http://127.0.0.1:3000/teams/${par}/members`)
     .then((res) => res.json())
     .then((out) => {
-      if (out.isEmpty()) {
-        alert("Não existe Equipa");
-      } else {
-        $.each(out, function (index, value) {
-          table.row.add([value.id_operacional, value.username]).draw();
-        });
-      }
+      $.each(out, function (index, value) {
+        table.row.add([value.id_operacional, value.username]).draw();
+      });
     })
     .catch((err) => console.error(err));
 }
@@ -168,6 +161,18 @@ function materialUsadoPassado(ler) {
         x.options.add(c, 1);
       });
     });
+}
+
+function lerDescricao(ler) {
+  fetch(`http://127.0.0.1:3000/occurrences/${ler}/description`)
+    .then((res) => res.json())
+    .then((out) => {
+      $.each(out, function (index, value) {
+        document.getElementById("outrasInformacoes").innerHTML =
+          out.descricao_pedido;
+      });
+    })
+    .catch((err) => console.error(err));
 }
 
 // TENTAR SUBLINHAR A LINHA DO RANKING DO GAJO (acho q está só da para fazer qd der o login, para sabermos quem está ligado)

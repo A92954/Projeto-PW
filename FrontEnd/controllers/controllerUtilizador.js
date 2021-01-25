@@ -1,12 +1,14 @@
 window.onload = function () {
   document.getElementById("btnLogin").onclick = function () {
-    login12();
+    login();
     console.log("clicado");
   };
 
+  let username;
   // Autenticar administrador na área privada
-  function login12() {
+  function login() {
     //data
+    username = document.getElementById("inputUser").value;
     var data = {};
     data.username = document.getElementById("inputUser").value;
     data.password = document.getElementById("inputPassword").value;
@@ -17,28 +19,36 @@ window.onload = function () {
     })
       .then((res) => res.json())
       .then((out) => {
-        alert(out.msg);
-        window.location.href =
-          "http://127.0.0.1:5502/FrontEnd/Pagina-principal.html";
+        console.log(out);
+        if (out.msg == "Success") {
+          localStorage.setItem("User", username);
+          window.location.href =
+            "http://127.0.0.1:5502/FrontEnd/Pagina-principal.html";
+        } else {
+          alert("Username ou password errado");
+        }
       })
       .catch((error) => {
         alert(error);
       });
   }
+
+  let user = localStorage.User;
+  document.getElementById("btnAtualiza").onclick = function () {
+    atualizarUser(user);
+  };
 };
 
-function atualizarUser() {
+function atualizarUser(user) {
   var data = {};
-  var username = "Portela_20";
   //data.username = document.getElementById("PerfilUser").value;
   data.nome = document.getElementById("PerfilNome1").value;
   data.email_utilizador = document.getElementById("PerfilEmail1").value;
   data.password = document.getElementById("password-perfil1").value;
 
-  console.log(data); //debugging para ver os dados que foram enviados
-  //chamada fetch para envio dos dados para o servior via POST
+  console.log(data);
 
-  fetch(`http://127.0.0.1:3000/users/${username}`, {
+  fetch(`http://127.0.0.1:3000/users/${user}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
@@ -51,22 +61,5 @@ function atualizarUser() {
     //Then with the error genereted...
     .catch((error) => {
       console.error("Error:", error);
-    });
-}
-
-function mostraNome() {
-  fetch("http://127.0.0.1:3000/agents/7/agent", {
-    headers: { "Content-Type": "application/json" },
-    method: "GET",
-  })
-    .then((res) => res.json())
-    .then((out) => {
-      $.each(out, function (index, valor) {
-        //
-        document.getElementById("span_nome").innerHTML = valor.username;
-      });
-    })
-    .catch((err) => {
-      alert("Erro!" + err);
     });
 }
