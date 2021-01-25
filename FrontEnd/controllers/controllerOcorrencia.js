@@ -11,6 +11,7 @@ function getIdOp(ler) {
     .then((out) => {
       let id_oper = out[0].id_operacional;
       getOcorr(id_oper);
+      verOcorrenciaAtual(id_oper);
     })
     .catch((err) => console.error(err));
 }
@@ -42,7 +43,6 @@ function verEqOcorrAtual(ler) {
         "Equipa: " + out[0].nome_equipa;
       let id_eq = out[0].id_equipa;
 
-      verOcorrenciaAtual(id_eq);
       mostraEq(id_eq);
     })
 
@@ -72,6 +72,24 @@ function confirmarOcorrencia() {
     });
 }
 
+////confirmar o material FALTA FAZER
+function confirmarMaterial() {
+  fetch(`http://127.0.0.1:3000/materials/${j}/confirm`, {
+    //mudar a rota do fetch
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+  })
+    .then((res) => res.text())
+    .then((out) => {
+      alert(out);
+      window.location.href = "http://127.0.0.1:5502/FrontEnd/Relatorio.html";
+    })
+    .catch((error) => {
+      alert(error);
+    });
+}
+
+
 //mostrar materiais no relatorio
 function materialUsado(ler) {
   fetch(`http://127.0.0.1:3000/materials/${ler}/material`, {
@@ -81,12 +99,16 @@ function materialUsado(ler) {
   })
     .then((res) => res.json())
     .then((out) => {
-      $.each(out, function (index, valor) {
-        var x = document.getElementById("exampleFormControlSelect3");
-        var c = document.createElement("option");
-        c.text = valor.quantidade_usada + " --> " + valor.nome_material;
-        x.options.add(c, 1);
-      });
+      if (
+        document.getElementById("exampleFormControlSelect3").options.length == 0
+      ) {
+        $.each(out, function (index, valor) {
+          var x = document.getElementById("exampleFormControlSelect3");
+          var c = document.createElement("option");
+          c.text = valor.quantidade_usada + " --> " + valor.nome_material;
+          x.options.add(c, 1);
+        });
+      }
     });
 }
 
@@ -161,6 +183,29 @@ function tabelaHist() {
           ("0" + m.getUTCMinutes()).slice(-2) +
           ":" +
           ("0" + m.getUTCSeconds()).slice(-2);
+        table.row
+          .add([
+            value.id_ocorrencia,
+            value.freguesia,
+            value.id_equipa,
+            value.descricao_urgencia,
+            dataString,
+            value.creditos_ocorrencia,
+          ])
+          .draw();
+      });
+    })
+    .catch((err) => console.error(err));
+}
+
+//REFRESH DA TABELA
+function tabelaOcDecorrer() {
+  let table = $("tabela-ocorrencias-decorrer").DataTable();
+
+  fetch("http://127.0.0.1:3000/occurrences/finished")
+    .then((res) => res.json())
+    .then((out) => {
+      $.each(out, function (index, value) {
         table.row
           .add([
             value.id_ocorrencia,

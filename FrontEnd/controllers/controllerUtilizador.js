@@ -32,13 +32,6 @@ window.onload = function () {
         alert(error);
       });
   }
-
-  let user = localStorage.User;
-  document.getElementById("btnAtualiza").onclick = function () {
-    atualizarUser(user);
-  };
-
-  document.getElementById("PerfilUser").innerHTML = user;
 };
 
 function atualizarUser(user) {
@@ -59,6 +52,7 @@ function atualizarUser(user) {
     //Then with the data from the response in JSON...
     .then((data) => {
       console.log("Success:", data);
+      alert(user);
     })
     //Then with the error genereted...
     .catch((error) => {

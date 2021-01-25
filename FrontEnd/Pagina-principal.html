@@ -290,11 +290,9 @@
               <div class="card-body">
                 <div class="page-wrapper">
                   <div class="post-slider"></div>
-
-               
                       <table
                       class="table table-bordered table-hover"
-                      id="tabela-historico-ocorrenciasd"
+                      id="tabela-ocorrencias-decorrer"
                       width="100%"
                       cellspacing="0"
                     >
@@ -302,11 +300,8 @@
                         <tr>
                           <th>Id Ocorrência</th>
                           <th>Local</th>
-                          <th>Id Equipa</th>
-                          <th>Urgência</th>
-                          <th>Data</th>
-                          <th>Creditos</th>
-                          
+                          <th>Nome equipa</th>
+                          <th>Urgência</th>                          
                         </tr>
                       </thead>
                       <tbody>
@@ -315,57 +310,60 @@
                   </div>
                 </div>
               </div>
-            </div>
+              <div class="row">
 
-            <div class="row">
-              <!-- Grow In Utility -->
-              <div class="col-lg-6">
-                <div class="card position-relative">
-                  <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">
-                      Estatisticas
-                    </h6>
-                  </div>
-                  <div class="card-body">
-                    <p id="ocorrencia-estatisticas">Ocorrências</p>
-                    <div class="chart-area">
-                      <canvas id="myAreaChart"></canvas>
+                <!-- Area Chart -->
+                <div class="col-xl-8 col-lg-7">
+                    <div class="card shadow mb-4">
+                        <!-- Card Header - Dropdown -->
+                        <div class="card-header py-3">
+                          <h6 class="m-0 font-weight-bold text-primary">
+                            Estatisticas 
+                          </h6>
+                        </div>
+                        <!-- Card Body -->
+                        <div class="card-body">
+                          <p id="ocorrencia-estatisticas">Ocorrências</p>
+                          <div class="chart-area">
+                            <canvas id="myAreaChart"></canvas>
+                          </div>
+                        </div>
                     </div>
-                  </div>
                 </div>
-                <br />
-              </div>
-
-              <!-- Fade In Utility -->
-              <div class="col-lg-6">
-                <div class="card position-relative">
-                  <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Mapa</h6>
-                  </div>
-                  <div class="card-body">
-                    <div class="mb-3">
-                      <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14541.811701055367!2d-8.837681158482384!3d41.68269214328957!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd25b623bbbb8c9b%3A0x5a6a4406378370ad!2sCabedelo%2C%204935-157%20Viana%20do%20Castelo!5e1!3m2!1spt-PT!2spt!4v1605662914747!5m2!1spt-PT!2spt"
-                        width="100%"
-                        height="315"
-                        frameborder="0"
-                        class="mapa"
-                        allowfullscreen
-                      ></iframe>
+  
+                <!-- Pie Chart -->
+                <div class="col-xl-4 col-lg-5">
+                    <div class="card shadow mb-4">
+                        <!-- Card Header - Dropdown -->
+                        <div class="card-header py-3">
+                          <h6 class="m-0 font-weight-bold text-primary">
+                            Repartição do nível de urgência
+                          </h6>
+                        </div>
+                        <!-- Card Body -->
+                        <div class="card-body">
+                          <div class="chart-pie pt-4 pb-2">
+                              <canvas id="myPieChart"></canvas>
+                          </div>
+                          <div class="mt-4 text-center small">
+                              <span class="mr-2">
+                                  <i class="fas fa-circle text-primary"></i> Nível 1
+                              </span>
+                              <span class="mr-2">
+                                  <i class="fas fa-circle text-success"></i> Nível 2
+                              </span>
+                              <span class="mr-2">
+                                  <i class="fas fa-circle text-info"></i> Nível 3
+                              </span>
+                          </div>
+                      </div>
                     </div>
-                  </div>
                 </div>
-              </div>
             </div>
+            </div>
+            
           </div>
-        </div>
-
-        <!-- /.container-fluid -->
-
-        <!-- End of Main Content -->
-
-        <!-- Footer -->
-        <footer class="page-footer font-small mdb-color pt-4">
+          <footer class="page-footer font-small mdb-color pt-4">
           <div class="footer-copyright text-center text-black-50 py-3">
             © 2020 Copyright:
             <a class="inactiveLink"> Secure4All</a>
@@ -380,8 +378,14 @@
 
           </div>
         </footer>
-        <!-- Footer -->
+        </div>
+
+        <!-- /.container-fluid -->
+
+        <!-- End of Main Content -->
+
       </div>
+      
       <!-- End of Content Wrapper -->
     </div>
     <!-- End of Page Wrapper -->
@@ -814,6 +818,7 @@
 
     <!-- Page level custom scripts -->
     <script src="/FrontEnd/js/demo/chart-area-demo.js"></script>
+    <script src="/FrontEnd/js/demo/chart-pie-demo.js"></script>
 
     <!-- Page level plugins -->
     <script src="/FrontEnd/vendor/datatables/jquery.dataTables.min.js"></script>

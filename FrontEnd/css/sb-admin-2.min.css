@@ -27,7 +27,9 @@
 }
 
 #notas-testemunhas,
-#textarea-vitimas {
+#textarea-vitimas,
+#exampleFormControlTextarea5,
+#outrasInformacoes {
   resize: none;
 }
 
