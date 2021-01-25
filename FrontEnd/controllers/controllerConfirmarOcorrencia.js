@@ -115,8 +115,8 @@ function update_DataFim() {
   }
 
 //mostrar materiais no relatorio
-function enviaDados() {
-  fetch(`http://127.0.0.1:3000/materials/${ler}/material`, {
+function enviaDados() {   
+  fetch(`http://127.0.0.1:3000/occurrences/${ler}/sendmail`, {
     //mudar a rota do fetch
     headers: { "Content-Type": "application/json" },
     method: "GET",
