@@ -160,5 +160,5 @@ module.exports = {
   readRankingEquipa: readRankingEquipa,
   readMembrosEquipa: readMembrosEquipa,
   updateConfirmarEquipa: updateConfirmarEquipa,
-  //updateCreditoEquipa: updateCreditoEquipa
+  updateCreditoEquipa: updateCreditoEquipa
 };

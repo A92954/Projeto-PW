@@ -178,7 +178,7 @@ function tabelaHist() {
 
 //REFRESH DA TABELA
 function tabelaOcDecorrer() {
-  let table = $("").DataTable();
+  let table = $("tabela-ocorrencias-decorrer").DataTable();
 
   fetch("http://127.0.0.1:3000/occurrences/finished")
     .then((res) => res.json())
