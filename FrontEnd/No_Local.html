@@ -186,34 +186,64 @@
             </div>
 
             <div class="row">
-              <!-- Grow In Utility -->
-              <div class="col-lg-12">
-                <div class="card position-relative">
-                  <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">
-                      Material utilizado
-                    </h6>
+              <div class="col-xl-8 col-lg-7">
+                  <div class="card shadow mb-4">
+                      <!-- Card Header - Dropdown -->
+                      <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">
+                          Material utilizado 
+                        </h6>
+                      </div>
+                      <!-- Card Body -->
+                      <div class="card-body">
+                        <div class="form-group">
+                          <label>Material utilizado:</label>
+                          <select
+                            multiple
+                            class="form-control listas"
+                            id="listaMatUtilizadoNoLocal"
+                          ></select>
+                        </div>
+                      </div>
                   </div>
-                  <div class="card-body">
-                    <div class="form-group">
-                      <label>Material utilizado:</label>
-                      <select
-                        multiple
-                        class="form-control listas"
-                        id="listaMatUtilizadoNoLocal"
-                      ></select>
-                    </div>
-                  </div>
-                </div>
-                <br />
               </div>
-            </div>
+              
+              <div class="col-xl-4 col-lg-5">
+                  <div class="card shadow mb-4">
+                      <!-- Card Header - Dropdown -->
+                      <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">
+                          Sobreviventes
+                        </h6>
+                      </div>
+                      <!-- Card Body -->
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <label>Indique a percentagem de sobreviventes</label>
+                          <br>
+                          <br>
+                        <input
+                          type="range"
+                          min="0"
+                          id="vitimas-s"
+                          max="100"
+                          oninput="this.nextElementSibling.value = this.value"
+                        />
+                        <output id="N-sobreviventes">%</output>
+                        <p id="text" style="display: none">Preencha esta opção.</p>
+                        </div>
+                        
+                      </div>
+                  </div>
+              </div>
+          </div>
 
             <div class="modal-footer">
               <button
                 type="button"
                 class="btn btn-primary"
                 id="btn_ConcluirOperacao"
+                onclick="verificacao()"
               >
                 Concluir operação
               </button>
