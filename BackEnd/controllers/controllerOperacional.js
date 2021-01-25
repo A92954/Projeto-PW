@@ -120,34 +120,36 @@ function readRankingOperacional(req, res) {
 
 //Funcao que altera os creditos de um determinado operacional, com o criterio de distribuicao igualitaria para cada um dos operacionais da equipa
 function updateCreditoOperacional(req, res) {
-  const id_operacional = req.params.id_operacional;
+  const id_ocorrencia = req.params.id_ocorrencia;
   let id_equipa;
   let creditos_equipa;
   let pontos_gamificacao;
   let numero_operacional_equipa;
-  const query = connect.con.query('SELECT id_equipa, pontos_gamificacao FROM operacional WHERE id_operacional = ?', id_operacional,
+  const query = connect.con.query('SELECT id_equipa FROM ocorrencia WHERE id_ocorrencia = ?', id_ocorrencia,
   function(err, rows, fields) {
-    if (err) return res.status(500).end();
     id_equipa = rows[0].id_equipa;
-    pontos_gamificacao = rows[0].pontos_gamificacao;
     const secondquery = connect.con.query('SELECT creditos_equipa FROM equipa WHERE id_equipa = ?', id_equipa,
     function(err, rows, fields) {
       creditos_equipa = rows[0].creditos_equipa;
-      const thirdquery = connect.con.query('SELECT COUNT(id_operacional) AS Numero_Operacionais FROM operacional WHERE id_equipa = ?', id_equipa,
+      const thirdquery = connect.con.query('SELECT pontos_gamificacao FROM operacional WHERE id_equipa = ?', id_equipa,
       function(err, rows, fields) {
-        numero_operacional_equipa = rows[0].Numero_Operacionais;
-        pontos_gamificacao = pontos_gamificacao + (creditos_equipa/numero_operacional_equipa);
-        const update = [pontos_gamificacao, id_equipa];
-        const forthquery = connect.con.query('UPDATE operacional SET pontos_gamificacao = ? WHERE id_equipa = ?', update,
+        pontos_gamificacao = rows[0].pontos_gamificacao;
+        const forthquery = connect.con.query('SELECT COUNT(id_operacional) AS Numero_Operacionais FROM operacional WHERE id_equipa = ?', id_equipa,
         function(err, rows, fields) {
-          if (!err) {
-            console.log("Number of records updated: " + rows.affectedRows);
-            res.status(200).send({ msg: "Foram atribuidos " +pontos_gamificacao+ " pontos para cada um dos operacionais da respetiva equipa"});
-          }
-          else {
-            res.status(400).send({ msg: err.code});
-            console.log('Error while performing Query.', err);
-          }
+          numero_operacional_equipa = rows[0].Numero_Operacionais;
+          pontos_gamificacao = pontos_gamificacao + (creditos_equipa/numero_operacional_equipa);
+          const update = [pontos_gamificacao, id_equipa];
+          const fifthquery = connect.con.query('UPDATE operacional SET pontos_gamificacao = ? WHERE id_equipa = ?', update,
+          function(err, rows, fields) {
+            if (!err) {
+              console.log("Number of records updated: " + rows.affectedRows);
+              res.status(200).send({ msg: "Foram atribuidos " +pontos_gamificacao+ " pontos para cada um dos operacionais da respetiva equipa"});
+            }
+            else {
+              res.status(400).send({ msg: err.code});
+              console.log('Error while performing Query.', err);
+            }
+          });
         });
       });
     });
