@@ -244,5 +244,6 @@ function enviaDados(ler) {
     .then((res) => res.json())
     .then((out) => {
       alert("Email enviado ao Centro de Operações");
+      window.location.href = "http://127.0.0.1:5502/FrontEnd/Pagina-principal";
     });
 }
