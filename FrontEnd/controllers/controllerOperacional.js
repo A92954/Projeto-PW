@@ -8,7 +8,7 @@ window.onload = function () {
 
 //mostra o username e especialidade no Perfil do Utilizador logado
 function verDados(user) {
-  fetch(`https://a92954.github.io/users/${user}/info`, {
+  fetch(`http://127.0.0.1:3000/users/${user}/info`, {
     //mudar a rota do fetch
     headers: { "Content-Type": "application/json" },
     method: "GET",
@@ -33,7 +33,7 @@ function atualizarUser() {
 
   console.log(data);
 
-  fetch(`https://a92954.github.io/users/${localStorage.User}`, {
+  fetch(`http://127.0.0.1:3000/users/${localStorage.User}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),

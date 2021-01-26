@@ -12,7 +12,7 @@ window.onload = function () {
     var data = {};
     data.username = document.getElementById("inputUser").value;
     data.password = document.getElementById("inputPassword").value;
-    fetch("https://a92954.github.io/signin/", {
+    fetch("http://127.0.0.1:3000/signin/", {
       headers: { "Content-Type": "application/json" },
       method: "POST",
       body: JSON.stringify(data),
@@ -23,7 +23,7 @@ window.onload = function () {
         if (out.msg == "Success") {
           localStorage.setItem("User", username);
           window.location.href =
-            "https://a92954.github.io/FrontEnd/Pagina-principal.html";
+            "http://127.0.0.1:5502/FrontEnd/Pagina-principal.html";
         } else {
           alert("Username ou password errado");
         }
@@ -43,7 +43,7 @@ window.onload = function () {
 
   console.log(data);
 
-  fetch(`https://a92954.github.io/users/${user}`, {
+  fetch(`http://127.0.0.1:3000/users/${user}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
