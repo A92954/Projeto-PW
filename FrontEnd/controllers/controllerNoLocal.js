@@ -5,7 +5,7 @@ window.onload = function () {
 
 //procura o id_operacional atraves do username e chama as funçoes Get Ocorrencia
 function getIdOp(ler) {
-  fetch(`http://127.0.0.1:3000/users/${ler}/info`)
+  fetch(`https://a92954.github.io/users/${ler}/info`)
     .then((res) => res.json())
     .then((out) => {
       let id_oper = out[0].id_operacional;
@@ -16,7 +16,7 @@ function getIdOp(ler) {
 
 //procura o id_ocorrencia atraves do id_operacional e chama as funçoes Ver Testemunhas, Verificar Tempo, Update Data do Fim e Cria Testemunha
 function getOcorr(id_op) {
-  fetch(`http://127.0.0.1:3000/occurrences/${id_op}/accurring`)
+  fetch(`https://a92954.github.io/occurrences/${id_op}/accurring`)
     .then((res) => res.json())
     .then((out) => {
       id_ocorr = out[0].id_ocorrencia;
@@ -44,9 +44,11 @@ function getOcorr(id_op) {
 //Recebe os tempos estimado e real
 function verificarTempos(ler) {
   var data = {};
-  data.tempo_estimado_deslocacao = document.getElementById("tempoEstimado").value;
+  data.tempo_estimado_deslocacao = document.getElementById(
+    "tempoEstimado"
+  ).value;
   data.tempo_deslocacao = document.getElementById("tempoReal").value;
-  fetch(`http://127.0.0.1:3000/occurrences/${ler}/times`, {
+  fetch(`https://a92954.github.io/occurrences/${ler}/times`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
@@ -63,7 +65,7 @@ function verificarTempos(ler) {
 
 //Calculo da diferença dos tempos estimado e real em minutos
 function verDiferencaTempos(ler) {
-  fetch(`http://127.0.0.1:3000/occurrences/${ler}/timeDiff`, {
+  fetch(`https://a92954.github.io/occurrences/${ler}/timeDiff`, {
     headers: { "Content-Type": "application/json" },
     method: "GET",
   })
@@ -76,7 +78,7 @@ function verDiferencaTempos(ler) {
 //Procura testemunhas de uma certa ocorrencia
 function getTestemunhas(ler) {
   let table = $("#tabela-testemunhas").DataTable();
-  fetch(`http://127.0.0.1:3000/occurrences/${ler}/witnesses`)
+  fetch(`https://a92954.github.io/occurrences/${ler}/witnesses`)
     .then((res) => res.json())
 
     .then((out) => {
@@ -110,7 +112,7 @@ function createTestemunha(ler) {
   data.notas_testemunha = document.getElementById("notasTestemunha").value;
   // var idocorrencia="4";   ${idocorrencia}
   console.log(data);
-  fetch(`http://127.0.0.1:3000/witnesses/${ler}/registration`, {
+  fetch(`https://a92954.github.io/witnesses/${ler}/registration`, {
     headers: { "Content-Type": "application/json" },
     method: "POST",
     body: JSON.stringify(data),
@@ -126,7 +128,7 @@ function createTestemunha(ler) {
 
 //Imprime o material usado na pagina No-Local
 function materialUsadoNoLocal(ler) {
-  fetch(`http://127.0.0.1:3000/materials/${ler}/material`, {
+  fetch(`https://a92954.github.io/materials/${ler}/material`, {
     //mudar a rota do fetch
     headers: { "Content-Type": "application/json" },
     method: "GET",
@@ -143,7 +145,7 @@ function materialUsadoNoLocal(ler) {
 }
 
 function update_DataFim(ler) {
-  fetch(`http://127.0.0.1:3000/occurrences/${ler}/finishdate`, {
+  fetch(`https://a92954.github.io/occurrences/${ler}/finishdate`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
   })
@@ -157,11 +159,10 @@ function update_DataFim(ler) {
 }
 
 function update_PercentagemSobreviventes(ler) {
-
   var data = {};
   data.percentagem_sobrevivente = document.getElementById("vitimas-s").value;
 
-  fetch(`http://127.0.0.1:3000/occurrences/${ler}/survival`, {
+  fetch(`https://a92954.github.io/occurrences/${ler}/survival`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
@@ -177,7 +178,7 @@ function update_PercentagemSobreviventes(ler) {
 }
 
 function update_DuracaoOcorrencia(ler) {
-  fetch(`http://127.0.0.1:3000/occurrences/${ler}/duration`, {
+  fetch(`https://a92954.github.io/occurrences/${ler}/duration`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
   })
@@ -191,7 +192,7 @@ function update_DuracaoOcorrencia(ler) {
 }
 
 function update_CreditoOcorrencia(ler) {
-  fetch(`http://127.0.0.1:3000/occurrences/${ler}/credit`, {
+  fetch(`https://a92954.github.io/occurrences/${ler}/credit`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
   })
@@ -205,7 +206,7 @@ function update_CreditoOcorrencia(ler) {
 }
 
 function update_CreditoEquipa(ler) {
-  fetch(`http://127.0.0.1:3000/teams/${ler}/credit_team`, {
+  fetch(`https://a92954.github.io/teams/${ler}/credit_team`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
   })
@@ -220,7 +221,7 @@ function update_CreditoEquipa(ler) {
 }
 
 function update_CreditoOperacional(ler) {
-  fetch(`http://127.0.0.1:3000/agents/${ler}/put_credit`, {
+  fetch(`https://a92954.github.io/agents/${ler}/put_credit`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
   })
@@ -236,7 +237,7 @@ function update_CreditoOperacional(ler) {
 
 //mostrar materiais no relatorio
 function enviaDados(ler) {
-  fetch(`http://127.0.0.1:3000/occurrences/${ler}/sendmail`, {
+  fetch(`https://a92954.github.io/occurrences/${ler}/sendmail`, {
     headers: { "Content-Type": "application/json" },
     method: "GET",
   })

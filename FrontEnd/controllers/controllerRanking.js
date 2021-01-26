@@ -2,7 +2,7 @@
 function readRankOp() {
   let table = $("#tabela-ranking-operacionais").DataTable();
 
-  fetch("http://127.0.0.1:3000/agentsRanking")
+  fetch("https://a92954.github.io/agentsRanking")
     .then((res) => res.json())
     .then((out) => {
       $.each(out, function (index, value) {
@@ -28,7 +28,7 @@ $(document).ready(function () {
 function readRankEq() {
   let table = $("#tabela-ranking-equipa").DataTable();
 
-  fetch("http://127.0.0.1:3000/teamsRanking")
+  fetch("https://a92954.github.io/teamsRanking")
     .then((res) => res.json())
     .then((out) => {
       $.each(out, function (index, value) {

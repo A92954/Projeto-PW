@@ -8,7 +8,7 @@ let id_ocorr;
 
 //buscar o id_operacional atraves do username e chama as funçoes Get Ocorrencia e Ver Ocorrencia Atual
 function getIdOp(ler) {
-  fetch(`http://127.0.0.1:3000/users/${ler}/info`)
+  fetch(`https://a92954.github.io/users/${ler}/info`)
     .then((res) => res.json())
     .then((out) => {
       let id_oper = out[0].id_operacional;
@@ -20,7 +20,7 @@ function getIdOp(ler) {
 
 //busca o id_ocorrencia atraves do id_operacional e chama as funçoes Ver Equipa, Material Usado e Ler Descriçao
 function getOcorr(id_op) {
-  fetch(`http://127.0.0.1:3000/occurrences/${id_op}/accurring`)
+  fetch(`https://a92954.github.io/occurrences/${id_op}/accurring`)
     .then((res) => res.json())
     .then((out) => {
       id_ocorr = out[0].id_ocorrencia;
@@ -39,7 +39,7 @@ document.getElementById("btn_iniciar").onclick = function () {
 //Chamada do id_equipa e da funçao Mostra Equipa
 function verEqOcorrAtual(ler) {
   //let table = $("#tabela-equipa-oco-atual").DataTable();
-  fetch(`http://127.0.0.1:3000/teams/${ler}/view_team`, {
+  fetch(`https://a92954.github.io/teams/${ler}/view_team`, {
     headers: { "Content-Type": "application/json" },
     method: "GET",
   })
@@ -60,7 +60,7 @@ function verEqOcorrAtual(ler) {
 
 //confirmar material e presença
 function confirmarOcorrencia(ler) {
-  fetch(`http://127.0.0.1:3000/occurrences/${ler}/check_departure`, {
+  fetch(`https://a92954.github.io/occurrences/${ler}/check_departure`, {
     //mudar a rota do fetch
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -69,7 +69,7 @@ function confirmarOcorrencia(ler) {
     .then((out) => {
       //alert(ler);
       confirmarMaterial(ler);
-      window.location.href = "http://127.0.0.1:5502/FrontEnd/Relatorio.html";
+      window.location.href = "https://a92954.github.io/FrontEnd/Relatorio.html";
     })
     .catch((error) => {
       alert(error);
@@ -78,14 +78,14 @@ function confirmarOcorrencia(ler) {
 
 ////confirmar o material
 function confirmarMaterial(ler) {
-  fetch(`http://127.0.0.1:3000/materials/${ler}/withdraw`, {
+  fetch(`https://a92954.github.io/materials/${ler}/withdraw`, {
     //mudar a rota do fetch
     method: "PUT",
     headers: { "Content-Type": "application/json" },
   })
     .then((res) => res.text())
     .then((out) => {
-      //window.location.href = "http://127.0.0.1:5502/FrontEnd/Relatorio.html";
+      //window.location.href = "https://a92954.github.io/FrontEnd/Relatorio.html";
     })
     .catch((error) => {
       alert(error);
@@ -94,7 +94,7 @@ function confirmarMaterial(ler) {
 
 //mostrar materiais na pagina principal e relatorio
 function materialUsado(ler) {
-  fetch(`http://127.0.0.1:3000/materials/${ler}/material`, {
+  fetch(`https://a92954.github.io/materials/${ler}/material`, {
     //mudar a rota do fetch
     headers: { "Content-Type": "application/json" },
     method: "GET",
@@ -116,7 +116,7 @@ function materialUsado(ler) {
 
 //mostrar informacoes da ocorrencia atual
 function verOcorrenciaAtual(ler) {
-  fetch(`http://127.0.0.1:3000/occurrences/${ler}/accurring`, {
+  fetch(`https://a92954.github.io/occurrences/${ler}/accurring`, {
     headers: { "Content-Type": "application/json" },
     method: "GET",
   })
@@ -138,7 +138,7 @@ function verOcorrenciaAtual(ler) {
 function mostraEq(ler) {
   let table = $("#tabela-equipa-oco-atual").DataTable();
   table.clear();
-  fetch(`http://127.0.0.1:3000/teams/${ler}/members`, {
+  fetch(`https://a92954.github.io/teams/${ler}/members`, {
     headers: { "Content-Type": "application/json" },
     method: "GET",
   })
@@ -154,7 +154,7 @@ function mostraEq(ler) {
 
 //mostrar observacoes no relatorio
 function lerDescricao(ler) {
-  fetch(`http://127.0.0.1:3000/occurrences/${ler}/description`)
+  fetch(`https://a92954.github.io/occurrences/${ler}/description`)
     .then((res) => res.json())
     .then((out) => {
       $.each(out, function (index, value) {
@@ -168,7 +168,7 @@ function lerDescricao(ler) {
 //REFRESH DA TABELA ocorrencias passadas
 function tabelaHist() {
   let table = $("#tabela-historico-ocorrencias").DataTable();
-  fetch("http://127.0.0.1:3000/occurrences/finished")
+  fetch("https://a92954.github.io/occurrences/finished")
     .then((res) => res.json())
     .then((out) => {
       $.each(out, function (index, value) {
@@ -204,7 +204,7 @@ function tabelaHist() {
 function tabelaOcDecorrer() {
   let table = $("#tabela-ocorrencias-decorrer").DataTable();
 
-  fetch("http://127.0.0.1:3000/occurrencesOccurring")
+  fetch("https://a92954.github.io/occurrencesOccurring")
     .then((res) => res.json())
     .then((out) => {
       $.each(out, function (index, value) {
