@@ -79,7 +79,6 @@ function confirmarOcorrencia(ler) {
 ////confirmar o material
 function confirmarMaterial(ler) {
   fetch(`http://127.0.0.1:3000/materials/${ler}/withdraw`, {
-    //mudar a rota do fetch
     method: "PUT",
     headers: { "Content-Type": "application/json" },
   })
